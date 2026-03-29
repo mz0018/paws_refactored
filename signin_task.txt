@@ -1,9 +1,9 @@
-User signs in → send credentials via HTTPS
-Server validates → generate token (JWT/session ID)
+(done)User signs in → send credentials via HTTPS
+(done)Server validates → generate token (JWT/session ID)
 Set cookie → HttpOnly, Secure, SameSite=Strict, Path=/, short expiry
 Browser stores cookie → JS cannot access it
 API requests → browser auto-sends cookie
 Server validates → allow/deny access
 Optional refresh → separate secure cookie for long sessions
-Avoid localStorage → use sessionStorage only if JS access is required
+(done)Avoid localStorage → use sessionStorage only if JS access is required
 Always → sanitize input + enable CSP + short-lived tokens

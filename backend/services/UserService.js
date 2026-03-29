@@ -1,5 +1,6 @@
 import User from '../models/user.model.js'
 import argon2 from 'argon2'
+import jwt from 'jsonwebtoken'
 
 import ErrorController from '../controllers/ErrorController.js'
 class UserService {
@@ -45,7 +46,13 @@ class UserService {
             throw new ErrorController('Invalid username or password', 401)
         }
 
-        //Next step generate token
+        const token = jwt.sign(
+            { id: user._id, userName: user.userName },
+            process.env.JWT_SECRET,
+            { expiresIn: '15m' }
+        )
+
+        return token
     }
 }
 

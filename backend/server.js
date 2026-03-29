@@ -1,4 +1,5 @@
 import express from 'express'
+import cookieParser from 'cookie-parser'
 import userRoute from './routes/userRoute.js'
 import connection from './config/connection.js'
 
@@ -7,6 +8,8 @@ import { errorHandler } from './middleware/errorHandler.js'
 const app = express()
 
 app.use(express.json())
+app.use(cookieParser())
+
 app.use('/api/users', userRoute)
 
 app.use(errorHandler)

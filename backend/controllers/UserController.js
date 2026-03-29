@@ -27,9 +27,21 @@ class UserController {
         try {
             const credentials = req.body
 
-            const result = await UserService.signinUser(credentials)
+            const token = await UserService.signinUser(credentials)
 
-            res.status(200).json(result)
+            res.cookie('authToken', token, {
+                httpOnly: true,
+                secure: false,
+                sameSite: 'Strict',
+                maxAge: 15 * 60 * 1000,
+                path: '/'
+            })
+
+            res.status(200).json({
+                message: 'Login 200',
+                token,
+                testUser: credentials.userName
+            })
             
         } catch (error) {
             next(error)
