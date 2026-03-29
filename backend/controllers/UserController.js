@@ -1,9 +1,26 @@
+import UserService from '../services/UserService.js'
 class UserController {
 
-    async verifyUser(req, res) {
-        res.status(200).json({
-            message: 'User Verified'
-        })
+    verifyUser = async (req, res, next) => {
+        try {
+            const result = UserService.verifyUser()
+            res.status(200).json(result)
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    signupUser = async (req, res, next) => {
+        try {
+            const userData = req.body;
+
+            const result = UserService.signupUser(userData)
+
+            res.status(201).json(result)
+
+        } catch (error) {
+            next(error)
+        }
     }
 }
 
