@@ -9,5 +9,6 @@ const router = express.Router()
 
 router.get('/verify', UserController.verifyUser)
 router.post('/signup', validate(signupSchema), UserController.signupUser)
+router.post('/signin', UserController.signinUser)
 
 export default router

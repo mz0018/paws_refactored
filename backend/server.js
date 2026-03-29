@@ -2,10 +2,14 @@ import express from 'express'
 import userRoute from './routes/userRoute.js'
 import connection from './config/connection.js'
 
+import { errorHandler } from './middleware/errorHandler.js'
+
 const app = express()
 
 app.use(express.json())
 app.use('/api/users', userRoute)
+
+app.use(errorHandler)
 
 const start_server = async () => {
     try {
