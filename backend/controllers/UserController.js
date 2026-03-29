@@ -14,7 +14,7 @@ class UserController {
         try {
             const userData = req.body;
 
-            const result = UserService.signupUser(userData)
+            const result = await UserService.signupUser(userData)
 
             res.status(201).json(result)
 
