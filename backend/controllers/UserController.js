@@ -39,8 +39,8 @@ class UserController {
 
             res.status(200).json({
                 message: 'Login 200',
-                token,
-                testUser: credentials.userName
+                // token,
+                user: credentials.userName
             })
             
         } catch (error) {

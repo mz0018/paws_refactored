@@ -7,8 +7,17 @@ import { errorHandler } from './middleware/errorHandler.js'
 
 const app = express()
 
+app.set('trust proxy', true)
+
 app.use(express.json())
 app.use(cookieParser())
+
+//IP Checker lang to sah!
+// app.use((req, res, next) => {
+//     console.log(`IP: ${req.ip}`)
+//     console.log(`Connection: ${req.connection.remoteAddress}`)
+//     next()
+// })
 
 app.use('/api/users', userRoute)
 
