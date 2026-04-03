@@ -10,7 +10,7 @@ interface AuthContextType {
   user: AuthUser | null
   loading: boolean
   verifyAuth: () => Promise<void>
-  logout: () => void
+  signOut: () => Promise<void>
 }
 
 const AuthContext = createContext<AuthContextType | null>(null)
@@ -46,13 +46,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     verifyAuth()
   }, [])
 
-  const logout = async () => {
+  const signOut = async () => {
     await fetch(`${import.meta.env.VITE_API_URL}/api/users/signout`, { method: 'POST' })
     setUser(null)
   }
 
   return (
-    <AuthContext.Provider value={{ user, loading, verifyAuth, logout }}>
+    <AuthContext.Provider value={{ user, loading, verifyAuth, signOut }}>
       {children}
     </AuthContext.Provider>
   )
