@@ -6,6 +6,7 @@ export const useSignin = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [userName, setUserName] = useState<string>("")
     const [password, setPassword] = useState<string>("")
+    const [hasError, setHasError] = useState<string>("")
 
     const { verifyAuth } = useAuth()
     const navigate = useNavigate()
@@ -25,7 +26,13 @@ export const useSignin = () => {
             if (res.ok) {
                 navigate('/admin/dashboard')
             } else {
-                console.log("Signin failed: Invalid credentials")
+                if (res.status === 401) {
+                    setHasError("Invalid credentials. Please try again.")
+                } else if (res.status === 429) {
+                    setHasError("Too many requests. Please try again later.")
+                } else {
+                    setHasError("An error occurred during sign-in. Please try again later.")
+                }
             }
 
         } catch (error) {
@@ -35,6 +42,6 @@ export const useSignin = () => {
         }
     }
 
-    return { handleSubmit, isLoading, setUserName, userName, setPassword, password }
+    return { handleSubmit, isLoading, setUserName, userName, setPassword, password, hasError }
 
 }

@@ -1,36 +1,34 @@
 import { useSignin } from '../hooks/useSignin'
+import { Form } from '../ui/form/Form';
+import { Input } from '../ui/form/input';
+import { Button } from '../ui/form/Buttons';
+import { ErrorText } from '../ui/form/ErrorText';
 
 const Signin = () => {
-  const { handleSubmit, isLoading, setUserName, userName, setPassword, password } = useSignin()
+  const { handleSubmit, isLoading, setUserName, userName, setPassword, password, hasError } = useSignin()
 
   return (
     <div>
-      <h1>Sign In</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="email">Email:</label>
-          <input
-            type="text"
-            id="email"
+      <Form onSubmit={handleSubmit}>
+          <Input
+            type='text'
             value={userName}
+            placeholder='Enter your username'
             onChange={(e) => setUserName(e.target.value)}
-            required
           />
-        </div>
-        <div>
-          <label htmlFor="password">Password:</label>
-          <input
-            type="text"
-            id="password"
+          <Input
+            type='password'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            required
+            placeholder='Enter your password'
           />
-        </div>
-        <button type="submit" disabled={isLoading}>
+
+          <ErrorText message={hasError} />
+
+        <Button type='submit' disabled={isLoading}>
           {isLoading ? "Signing In..." : "Sign In"}
-        </button>
-      </form>
+        </Button>
+      </Form>
     </div>
   );
 };
