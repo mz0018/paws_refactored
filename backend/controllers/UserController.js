@@ -30,7 +30,7 @@ class UserController {
             const token = await UserService.signinUser(credentials)
 
             res.cookie('authToken', token, {
-                httpOnly: true,
+                httpOnly: false, // Set to true in production with HTTPS
                 secure: false,
                 sameSite: 'Strict',
                 maxAge: 15 * 60 * 1000,

@@ -10,7 +10,7 @@ const Signin = () => {
         <div>
           <label htmlFor="email">Email:</label>
           <input
-            type="email"
+            type="text"
             id="email"
             value={userName}
             onChange={(e) => setUserName(e.target.value)}
@@ -20,7 +20,7 @@ const Signin = () => {
         <div>
           <label htmlFor="password">Password:</label>
           <input
-            type="password"
+            type="text"
             id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}

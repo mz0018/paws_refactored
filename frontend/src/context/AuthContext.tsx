@@ -20,8 +20,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [loading, setLoading] = useState<boolean>(true)
 
   const verifyAuth = async () => {
+
+    if (!document.cookie.includes('authToken=')) {
+      setLoading(false)
+      return
+    }
+
     try {
-      const res = await fetch('/api/users/verify', { credentials: 'include' })
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/users/verify`, { credentials: 'include' })
 
       if (res.ok) {
         const data = await res.json()
@@ -41,7 +47,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   }, [])
 
   const logout = async () => {
-    await fetch('/api/auth/signout', { method: 'POST' })
+    await fetch(`${import.meta.env.VITE_API_URL}/api/users/signout`, { method: 'POST' })
     setUser(null)
   }
 

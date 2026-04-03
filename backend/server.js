@@ -1,3 +1,4 @@
+import cors from 'cors'
 import express from 'express'
 import cookieParser from 'cookie-parser'
 import userRoute from './routes/userRoute.js'
@@ -18,6 +19,11 @@ app.use(cookieParser())
 //     console.log(`Connection: ${req.connection.remoteAddress}`)
 //     next()
 // })
+
+app.use(cors({
+    origin: 'http://localhost:5173',
+    credentials: true
+}))
 
 app.use('/api/users', userRoute)
 

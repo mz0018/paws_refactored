@@ -6,6 +6,7 @@ import App from './App.tsx'
 import ProtectedRoutes from './utils/ProtectedRoutes.tsx'
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+import { AuthProvider } from './context/AuthContext.tsx'
 
 const Signin = lazy(() => import('./pages/Signin.tsx'))
 const Dashboard = lazy(() => import('./pages/admin/Dashboard.tsx'))
@@ -23,8 +24,10 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <Suspense fallback={<div>Loading...</div>}>
-      <RouterProvider router={router} />
-    </Suspense>
+    <AuthProvider>
+      <Suspense fallback={<div>Loading...</div>}>
+        <RouterProvider router={router} />
+      </Suspense>
+    </AuthProvider>
   </StrictMode>,
 )
