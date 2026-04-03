@@ -3,7 +3,7 @@ class UserController {
 
     verifyUser = async (req, res, next) => {
         try {
-            const result = UserService.verifyUser()
+            const result = UserService.verifyUser(req.user)
             res.status(200).json(result)
         } catch (error) {
             next(error)
@@ -43,6 +43,15 @@ class UserController {
                 user: credentials.userName
             })
             
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    signoutUser = async (req, res, next) => {
+        try {
+            res.clearCookie('authToken', { path: '/' })
+            res.status(200).json({ message: 'Logout successful' })
         } catch (error) {
             next(error)
         }

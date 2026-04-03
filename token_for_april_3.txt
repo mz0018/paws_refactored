@@ -1,0 +1,30 @@
+Here's your resume token for this session:
+---
+=== AUTH IMPLEMENTATION SESSION TOKEN ===
+SESSION_ID: auth_session_2026_04_02_paws
+CURRENT_STATE:
+- Frontend: React 19 + React Router v7 + Vite + TypeScript (C:\Users\Admin\Desktop\paws)
+- Backend: Express.js + MongoDB + JWT in HttpOnly cookie
+- Auth files exist but have issues: AuthContext.tsx, ProtectedRoutes.tsx
+AGREED IMPLEMENTATION:
+BACKEND CHANGES:
+1. File: backend/controllers/UserController.js
+   - Replace verifyUser() with getMe() that returns { user: req.user }
+   - Add signoutUser() that clears the authToken cookie
+2. File: backend/routes/userRoute.js
+   - Change: router.get('/verify', ...) → router.get('/me', authorizeViaCookie, UserController.getMe)
+   - Add: router.post('/signout', UserController.signoutUser)
+FRONTEND CHANGES:
+1. File: frontend/src/context/AuthContext.tsx
+   - Change fetch URL from '/api/auth/me' to '/api/users/me'
+   - Add credentials: 'include' to fetch calls
+   - Change logout URL from '/api/auth/signout' to '/api/users/signout'
+   - Add credentials: 'include' to logout fetch
+2. Optional: Create frontend/.env with VITE_API_URL=http://localhost:5000
+ISSUES TO FIX:
+- AuthContext uses wrong endpoints (/api/auth/* instead of /api/users/*)
+- Missing credentials: 'include' in fetch calls
+- Backend verifyUser doesn't return user data from JWT
+- No signout endpoint exists
+STATUS: Plan agreed, ready for implementation
+==========================================

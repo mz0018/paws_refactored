@@ -5,8 +5,8 @@ import jwt from 'jsonwebtoken'
 import ErrorController from '../controllers/ErrorController.js'
 class UserService {
     
-    verifyUser() {
-        return { message: 'User Verified' }
+    verifyUser(user) {
+        return { user }
     }
 
     async signupUser(userData) {

@@ -13,5 +13,6 @@ const router = express.Router()
 router.get('/verify', authorizeViaCookie, UserController.verifyUser)
 router.post('/signup', validate(signupSchema), signupRateLimiter, UserController.signupUser)
 router.post('/signin', signinRateLimiter, UserController.signinUser)
+router.post('/signout', UserController.signoutUser)
 
 export default router
