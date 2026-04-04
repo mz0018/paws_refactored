@@ -1,10 +1,7 @@
-import { BtnSignout } from '../../components/buttons/BtnSignout'
-
 const Dashboard = () => {
     return (
         <>
-        Dashboard
-        <BtnSignout />
+        Hello user, welcome to the admin dashboard!
         </>
     )
 }

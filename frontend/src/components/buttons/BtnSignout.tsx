@@ -7,7 +7,7 @@ export const BtnSignout = () => {
 
     const handleSignOut = async () => {
         await signOut()
-        navigate('/signin')
+        navigate('/signin', { replace: true })
     }
 
     return (
