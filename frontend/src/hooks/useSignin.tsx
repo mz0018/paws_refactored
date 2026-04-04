@@ -6,7 +6,11 @@ export const useSignin = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [userName, setUserName] = useState<string>("")
     const [password, setPassword] = useState<string>("")
-    const [hasError, setHasError] = useState<string>("")
+    const [hasError, setHasError] = useState<{
+        userName?: string
+        password?: string
+        general?: string
+    }>({})
 
     const { verifyAuth } = useAuth()
     const navigate = useNavigate()
@@ -14,6 +18,22 @@ export const useSignin = () => {
     const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
         e.preventDefault()
         setIsLoading(true)
+
+        const newErrors: { userName?: string; password?: string } = {}
+
+        if (!userName.trim()) {
+            newErrors.userName = "Username is required."
+        }
+
+        if (!password.trim()) {
+            newErrors.password = "Password is required."
+        }
+
+        if (Object.keys(newErrors).length > 0) {
+            setHasError(newErrors)
+            setIsLoading(false)
+            return
+        }
         
         try {
             const res = await fetch(`${import.meta.env.VITE_API_URL}/api/users/signin`, {
@@ -27,11 +47,11 @@ export const useSignin = () => {
                 navigate('/admin/dashboard')
             } else {
                 if (res.status === 401) {
-                    setHasError("Invalid credentials. Please try again.")
+                    setHasError({ general: "Invalid credentials. Please try again." })
                 } else if (res.status === 429) {
-                    setHasError("Too many requests. Please try again later.")
+                    setHasError({ general: "Too many requests. Please try again later." })
                 } else {
-                    setHasError("An error occurred during sign-in. Please try again later.")
+                    setHasError({ general: "An error occurred during sign-in. Please try again later." })
                 }
             }
 
