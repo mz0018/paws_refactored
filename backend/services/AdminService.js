@@ -1,11 +1,20 @@
+import Product from '../models/product.model.js'
+
+import ErrorController from '../controllers/ErrorController.js'
 class AdminService {
 
     async addProduct(product) {
 
-        const message = `Product added successfully`
+        const existingProduct = await Product.findOne({ productName: product.productName });
 
-        return { message }
+        if (existingProduct) {
+            throw new ErrorController('Product with this name already exists', 409);
+        }
 
+        const newProduct = new Product(product);
+        await newProduct.save();
+
+        return { message: 'Product added successfully' };
     }
 
 }
