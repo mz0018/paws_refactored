@@ -44,6 +44,7 @@ export const useSignin = () => {
             })
 
             if (res.ok) {
+                await verifyAuth()
                 navigate('/admin/dashboard')
             } else {
                 if (res.status === 401) {

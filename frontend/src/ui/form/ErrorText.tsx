@@ -1,3 +1,5 @@
+import { CircleAlert } from 'lucide-react'
+
 type ErrorProps = {
     message?: string
 }
@@ -6,6 +8,9 @@ export const ErrorText = ({ message }: ErrorProps) => {
     if (!message) return null
 
     return (
-        <small className='text-red-500'>{message}</small>
+        <div className="bg-red-50 p-2 flex items-center gap-2 text-red-500 tracking-wide font-semibold">
+            <CircleAlert size={18} />
+            <small>{message}</small>
+        </div>
     )
 }
