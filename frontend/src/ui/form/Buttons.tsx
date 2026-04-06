@@ -6,7 +6,7 @@ export const Button = ({ className = '', ...props }: ButtonProps) => {
     return (
         <button
             {...props}
-            className={`cursor-pointer px-4 py-2 rounded-sm bg-blue-500 text-white tracking-wider ${className}`} 
+            className={`cursor-pointer p-4 rounded-sm bg-blue-500 text-white tracking-wider ${className}`} 
         />
     )
 }

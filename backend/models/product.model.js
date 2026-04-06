@@ -10,7 +10,6 @@ const productModel = new mongoose.Schema(
     images: [
       {
         url: { type: String, required: true },
-        alt: { type: String, default: '' },
       },
     ],
   },
