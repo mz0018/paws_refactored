@@ -14,6 +14,8 @@ app.set('trust proxy', true)
 app.use(express.json())
 app.use(cookieParser())
 
+app.use(express.urlencoded({ extended: true }))
+
 //IP Checker lang to sah!
 // app.use((req, res, next) => {
 //     console.log(`IP: ${req.ip}`)
