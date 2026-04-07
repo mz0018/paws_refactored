@@ -1,52 +1,43 @@
-import { useState } from 'react'
+import { Form } from '../../ui/form/Form'
 import { Input } from '../../ui/form/Input'
-
-
+import { Button } from '../../ui/form/Buttons'
+import { ErrorText } from '../../ui/form/ErrorText'
+import { ProductImages } from '../../ui/form/ProductImages'
+import { useAddProduct } from '../../hooks/useAddProduct'
 
 const AddProducts = () => {
 
-    const [files, setFiles] = useState<File[]>([])
-
-    const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const input = e.currentTarget
-
-        if (!input.files) return
-
-        const selectedFiles = Array.from(input.files)
-
-        setFiles(prev => [...prev, ...selectedFiles])
-    }
-
-    const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
-        e.preventDefault()
-
-        const formData = new FormData(e.currentTarget)
-
-        files.forEach(file => formData.append('images', file))
-
-        console.log(Object.fromEntries(formData.entries()))
-        console.log(formData.getAll('images'))
-    }
+    const { isLoading, hasError, files, handleFileChange, handleSubmit } = useAddProduct()
 
     return (
         <>
             <h1>Add Product</h1>
             <p>This is the add product page.</p>
 
-            <form onSubmit={handleSubmit}>
-                <Input type='text' name='name' placeholder='Product Name' required />
-                <Input type='text' name='category' placeholder='ProductCategory' required />
-                <Input type='text' name='description' placeholder='Product Description' required />
-                <Input type='number' name='price' placeholder='Product Price' required />
-                <Input type='number' name='stock' placeholder='Product Stock' required />
+            <Form onSubmit={handleSubmit}>
+                <Input type='text' name='name' placeholder='Product Name' />
+                <Input type='text' name='category' placeholder='ProductCategory' />
+                <Input type='text' name='description' placeholder='Product Description' />
+                <Input type='number' name='price' placeholder='Product Price' />
+                <Input type='number' name='stock' placeholder='Product Stock' />
 
-                <input type='file' name='images' accept='image/*' onChange={handleFileChange} multiple />
+                <Input type='file' accept='image/*' onChange={handleFileChange} multiple />
 
-                <button type='submit'>Add Product</button>
-            </form>
+                <ErrorText message={hasError.productName} />
+                <ErrorText message={hasError.productCategory} />
+                <ErrorText message={hasError.productDescription} />
+                <ErrorText message={hasError.productPrice} />
+                <ErrorText message={hasError.productStock} />
+                <ErrorText message={hasError.productImages} />
+                <ErrorText message={hasError.general} />
+
+                <Button type='submit' disabled={isLoading}>
+                    {isLoading ? 'Adding Product...' : 'Add Product'}
+                </Button>
+            </Form>
 
             {files.map(file => (
-                <img key={file.name} src={URL.createObjectURL(file)} alt={file.name} width={100} />
+                <ProductImages key={file.name} src={URL.createObjectURL(file)} alt={file.name} />
             ))}
         </>
     )
