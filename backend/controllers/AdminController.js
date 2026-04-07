@@ -6,7 +6,7 @@ class AdminController {
         console.log('Received body:', req.body)
         console.log('Received files:', req.files)
         try {
-            const result = await AdminService.addProduct(req.body, req.files)
+            const result = await AdminService.addProduct(req.body, req.files.images)
             res.status(201).json(result)
         } catch (error) {
             next(error)

@@ -29,4 +29,3 @@ export const addProductSchema = z.object({
         .default(0),
 })
 
-//fix still saved when intentionally invalid an input, but still save the product and r2
