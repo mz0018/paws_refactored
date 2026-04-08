@@ -57,6 +57,7 @@ export const useSignin = () => {
             }
 
         } catch (error) {
+            setHasError({ general: 'Something went wrong. Please try again later.' })
             console.error("Signin failed:", error)
         } finally {
             setIsLoading(false)

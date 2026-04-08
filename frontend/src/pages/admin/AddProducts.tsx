@@ -16,10 +16,10 @@ const AddProducts = () => {
             <p>This is the add product page.</p>
 
             <Form onSubmit={handleSubmit}>
-                <Input type='text' name='name' placeholder='Product Name' error={hasError.productName} />
-                <Input type='text' name='category' placeholder='ProductCategory' error={hasError.productCategory} />
-                <Input type='text' name='description' placeholder='Product Description' error={hasError.productDescription} />
-                <Input type='number' name='price' placeholder='Product Price' error={hasError.productPrice} />
+                <Input type='text' name='productName' placeholder='Product Name' error={hasError.productName} />
+                <Input type='text' name='productCategory' placeholder='Product Category' error={hasError.productCategory} />
+                <Input type='text' name='productDescription' placeholder='Product Description' error={hasError.productDescription} />
+                <Input type='number' name='productPrice' placeholder='Product Price' error={hasError.productPrice} />
                 <Input type='number' name='stock' placeholder='Product Stock' error={hasError.productStock} />
 
                 <Input type='file' accept='image/*' onChange={handleFileChange} multiple error={hasError.productImages} />
