@@ -76,7 +76,17 @@ export const useAddProduct = () => {
                 } else if (res.status === 429) {
                     setHasError({ general: 'Too many requests. Please try again later.' })
                 } else if (res.status === 400) {
-                    setHasError({ productImages: 'Invalid file type. Only JPEG, PNG, and WEBP are allowed.' })
+                    const data = await res.json()
+                    if (data.errors) {
+                        const fieldErrors: Record<string, string> = {}
+
+                        data.errors.forEach((error: { field: string, message: string }) => {
+                            fieldErrors[error.field] = error.message
+                        })
+                        setHasError(fieldErrors)
+                    } else {
+                        setHasError({ general: data.message || 'Invalid request data' })
+                    }
                 }
             }
 

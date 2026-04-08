@@ -1,9 +1,0 @@
-useAddProduct.tsx:63 
- POST http://localhost:5000/api/admin/add-product 400 (Bad Request)
-handleSubmit	@	useAddProduct.tsx:63
-<form>		
-Form	@	Form.tsx:7
-<Form>		
-AddProducts	@	AddProducts.tsx:18
-<...>		
-(anonymous)	@	main.tsx:28

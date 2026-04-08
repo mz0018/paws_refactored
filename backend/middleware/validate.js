@@ -1,11 +1,17 @@
+import { is } from "zod/v4/locales";
+
 export const validate = (schema) => (req, res, next) => {
   const result = schema.safeParse(req.body);
 
   if (!result.success) {
-    const firstError = result.error.issues?.[0];
+    const errors = result.error.issues.map(issue => ({
+      field: issue.path[0],
+      message: issue.message
+    }))
 
     return res.status(400).json({
-      message: firstError?.message || "Invalid request data",
+      message: "Invalid request data",
+      errors
     });
   }
 
