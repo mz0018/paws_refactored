@@ -4,6 +4,7 @@ import { Button } from '../../ui/form/Buttons'
 import { ErrorText } from '../../ui/form/ErrorText'
 import { ProductImages } from '../../ui/form/ProductImages'
 import { useAddProduct } from '../../hooks/useAddProduct'
+import { ClipLoader } from 'react-spinners'
 
 const AddProducts = () => {
 
@@ -15,24 +16,26 @@ const AddProducts = () => {
             <p>This is the add product page.</p>
 
             <Form onSubmit={handleSubmit}>
-                <Input type='text' name='name' placeholder='Product Name' />
-                <Input type='text' name='category' placeholder='ProductCategory' />
-                <Input type='text' name='description' placeholder='Product Description' />
-                <Input type='number' name='price' placeholder='Product Price' />
-                <Input type='number' name='stock' placeholder='Product Stock' />
+                <Input type='text' name='name' placeholder='Product Name' error={hasError.productName} />
+                <Input type='text' name='category' placeholder='ProductCategory' error={hasError.productCategory} />
+                <Input type='text' name='description' placeholder='Product Description' error={hasError.productDescription} />
+                <Input type='number' name='price' placeholder='Product Price' error={hasError.productPrice} />
+                <Input type='number' name='stock' placeholder='Product Stock' error={hasError.productStock} />
 
-                <Input type='file' accept='image/*' onChange={handleFileChange} multiple />
+                <Input type='file' accept='image/*' onChange={handleFileChange} multiple error={hasError.productImages} />
 
-                <ErrorText message={hasError.productName} />
-                <ErrorText message={hasError.productCategory} />
-                <ErrorText message={hasError.productDescription} />
-                <ErrorText message={hasError.productPrice} />
-                <ErrorText message={hasError.productStock} />
-                <ErrorText message={hasError.productImages} />
-                <ErrorText message={hasError.general} />
+                <ErrorText message={
+                    hasError.productName ||
+                    hasError.productCategory ||
+                    hasError.productDescription ||
+                    hasError.productPrice ||
+                    hasError.productStock ||
+                    hasError.productImages ||
+                    hasError.general
+                } />
 
                 <Button type='submit' disabled={isLoading}>
-                    {isLoading ? 'Adding Product...' : 'Add Product'}
+                    {isLoading ? <ClipLoader size={20} color='white' /> : 'Add Product'}
                 </Button>
             </Form>
 
