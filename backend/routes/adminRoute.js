@@ -8,11 +8,16 @@ import { productUploadLimiter } from '../middleware/productUploadLimiter.js'
 const router = express.Router()
 
 router.post(
-    '/add-product',
+    '/add-product/:user_id',
     productUploadLimiter,
     upload.fields([{ name: 'images', maxCount: 5 }]),
     validate(addProductSchema),
     AdminController.addProduct
+)
+
+router.get(
+    '/get-product/:user_id',
+    AdminController.getProduct
 )
 
 export default router

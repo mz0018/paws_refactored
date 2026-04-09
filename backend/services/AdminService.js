@@ -4,7 +4,12 @@ import ErrorController from '../controllers/ErrorController.js'
 import R2Service from '../services/R2Service.js'
 class AdminService {
 
-    async addProduct(product_data, product_images) {
+    async addProduct(product_data, params, product_images) {
+        const { user_id } = params
+
+        if (!user_id) {
+            throw new ErrorController('User Id not set', 404)
+        }
 
         const existingProduct = await Product.findOne({ productName: product_data.productName });
 
@@ -32,12 +37,28 @@ class AdminService {
         const product = {
             ...product_data,
             images: images,
+            createdBy: user_id,
         }
 
         const newProduct = new Product(product);
         await newProduct.save();
 
         return { message: 'Product added successfully' };
+    }
+
+    async getProduct(params) {
+
+        const { user_id } = params
+        if (!user_id) {
+            throw new ErrorController('User Id not set', 404)
+        }
+
+        const count = await Product.countDocuments({ createdBy: user_id })
+
+        return ({ 
+            message: `User Id: ${user_id}`,
+            count: `Number of product related to user: ${count}`
+        })
     }
 
 }
