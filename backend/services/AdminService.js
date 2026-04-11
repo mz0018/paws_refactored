@@ -4,17 +4,17 @@ import ErrorController from '../controllers/ErrorController.js'
 import R2Service from '../services/R2Service.js'
 class AdminService {
 
-    async addProduct(product_data, params, product_images) {
-        const { user_id } = params
+    async addProduct(product_data, user, product_images) {
+        const user_id = user?.userId || user?.id
 
         if (!user_id) {
             throw new ErrorController('User Id not set', 404)
         }
 
-        const existingProduct = await Product.findOne({ productName: product_data.productName });
+        const existingProduct = await Product.findOne({ productName: product_data.productName })
 
         if (existingProduct) {
-            throw new ErrorController('Product with this name already exists', 409);
+            throw new ErrorController('Product with this name already exists', 409)
         }
 
         let images = []
@@ -46,19 +46,13 @@ class AdminService {
         return { message: 'Product added successfully' };
     }
 
-    async getProduct(params) {
+    async getProduct({ userId }) {
 
-        const { user_id } = params
-        if (!user_id) {
+        if (!userId) {
             throw new ErrorController('User Id not set', 404)
         }
 
-        const count = await Product.countDocuments({ createdBy: user_id })
-
-        return ({ 
-            message: `User Id: ${user_id}`,
-            count: `Number of product related to user: ${count}`
-        })
+        
     }
 
 }

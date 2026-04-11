@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { useAuth } from '../context/AuthContext'
 
 export const useAddProduct = () => {
-    const { user } = useAuth()
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [files, setFiles] = useState<File[]>([])
     const [hasError, setHasError] = useState<{ 
@@ -59,16 +58,10 @@ export const useAddProduct = () => {
             return
         }
 
-        if (!user?.id) {
-            setHasError({ general: 'Unauthorized upload, Please sign in again.' })
-            setIsLoading(false)
-            return
-        }
-
         try {
             files.forEach(file => formData.append('images', file))
 
-            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/add-product/${user?.id}`, {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/add-product`, {
                 method: 'POST',
                 body: formData,
                 credentials: 'include'
@@ -77,7 +70,6 @@ export const useAddProduct = () => {
             if (res.ok) {
                 console.log(Object.fromEntries(formData.entries()))
                 console.log(formData.getAll('images'))
-                // console.log('User Id: ', user?.id)
                 resetForm(form)
             } else {
                 if (res.status === 409) {

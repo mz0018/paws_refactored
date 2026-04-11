@@ -1,4 +1,4 @@
-1. **Database Indexes** (#6) - Foundation for performance
+1. (DONE)Database Indexes** (#6) - Foundation for performance
 2. **Select Only Needed Fields** (#4) - Specify fields in queries
 3. **Pagination** (#2) - Add `page`/`limit`/`cursor` params
 4. **Filter, Sort, Search** (#3) - Add query params

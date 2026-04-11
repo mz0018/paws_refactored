@@ -9,7 +9,7 @@ import { productUploadLimiter } from '../middleware/productUploadLimiter.js'
 const router = express.Router()
 
 router.post(
-    '/add-product/:user_id',
+    '/add-product',
     authorizeViaCookie,
     productUploadLimiter,
     upload.fields([{ name: 'images', maxCount: 5 }]),

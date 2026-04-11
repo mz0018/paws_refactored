@@ -21,4 +21,7 @@ const productModel = new mongoose.Schema(
   { timestamps: true }
 );
 
+productModel.index({ productName: 1 })
+productModel.index({ createdBy: 1 })
+
 export default mongoose.model('Product', productModel);
