@@ -1,4 +1,6 @@
 import { useViewDetailedProduct } from '../../hooks/useViewDetailedProduct'
+import { Image } from '../../ui/form/Image'
+
 const ViewDetailedProduct = () => {
     const { product, loading } = useViewDetailedProduct()
     if (loading) return <p>Loading...</p>
@@ -12,7 +14,7 @@ const ViewDetailedProduct = () => {
             <p>Stock: {product.stock}</p>
             
             {product.images?.map((img, index) => (
-                <img key={index} src={img.url} alt={`Product image ${index + 1}`} />
+                <Image className='h-32 w-32' key={index} src={img.url} alt={`Product image ${index + 1}`} />
             ))}
 
             <p>Created at: {product.createdAt}</p>

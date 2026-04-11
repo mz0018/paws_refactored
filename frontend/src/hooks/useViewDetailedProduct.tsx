@@ -36,7 +36,6 @@ export const useViewDetailedProduct = () => {
             })
             const data = await res.json()
             setProduct(data)
-            console.log(data)
         } catch (err) {
             console.error('Something went wrong: ', err)
         } finally {
