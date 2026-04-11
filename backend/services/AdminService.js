@@ -1,3 +1,4 @@
+import mongoose from 'mongoose'
 import Product from '../models/product.model.js'
 
 import ErrorController from '../controllers/ErrorController.js'
@@ -43,14 +44,38 @@ class AdminService {
         return { message: 'Product added successfully' };
     }
 
-    async getProduct(user_id) {
+    async getProduct(user_id, options = {}) {
+
+        const { cursor, limit = 10 } = options
+
+        const query = { createdBy: user_id }
+
+        if (cursor) {
+            query._id = { $gt: new  mongoose.Types.ObjectId(cursor) }
+        }
 
         const products = await Product.find(
-            { createdBy: user_id },
+            query,
             { productName: 1, productPrice: 1, images: 1, _id: 1 }
-        )
+        ).sort({ _id: 1 }).limit(limit + 1)
 
-        return products
+        const hasNextPage = products.length > limit
+        if (hasNextPage) {
+            products.pop()
+        }
+        
+        const nextCursor = products.length > 0 
+            ? products[products.length - 1]._id.toString() 
+            : null
+
+        return {
+            products,
+            pagination: {
+                nextCursor,
+                hasNextPage,
+                limit
+            }
+        }
         
     }
 

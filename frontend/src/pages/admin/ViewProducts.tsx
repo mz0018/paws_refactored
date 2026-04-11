@@ -4,7 +4,7 @@ import { useEffect } from 'react'
 import { Image } from '../../ui/form/Image'
 
 const ViewProducts = () => {
-    const { isLoading, products, error, fetchProducts } = useGetProduct()
+    const { isLoading, products, error, fetchProducts, nextCursor, hasNextPage } = useGetProduct()
     useEffect(() => {
         fetchProducts()
     }, [])
@@ -32,6 +32,12 @@ const ViewProducts = () => {
                         </Link>
                     ))}
                 </div>
+            )}
+
+             {hasNextPage && (
+                <button onClick={() => fetchProducts(nextCursor)}>
+                    {isLoading ? 'Loading...' : 'Load More'}
+                </button>
             )}
         </div>
     )

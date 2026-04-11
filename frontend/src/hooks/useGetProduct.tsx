@@ -3,21 +3,38 @@ import { useState } from 'react'
 export const useGetProduct = () => {    
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [products, setProducts] = useState<any[]>([])
+    const [nextCursor, setNextCursor] = useState<string | undefined>(undefined)
+    const [hasNextPage, setHasNextPage] = useState<boolean>(true)
     const [error, setError] = useState<string | null>(null)
 
-    const fetchProducts = async () => {
+    const fetchProducts = async (cursor?: string) => {
         setIsLoading(true)
         setError(null)
 
+        let url = `${import.meta.env.VITE_API_URL}/api/admin/get-product?limit=10`
+
+        if (cursor) {
+            url += `&cursor=${cursor}`
+        }
+
         try {
-            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/get-product`, {
-                method: 'GET',
+            const res = await fetch(url, {
                 credentials: 'include'
             })
 
             if (res.ok) {
                 const data = await res.json()
-                setProducts(data)
+                
+                if (cursor) {
+                    setProducts(prev => [...prev, ...data.products])
+                    setNextCursor(data.pagination.nextCursor || undefined)
+                    setHasNextPage(data.pagination.hasNextPage)
+                } else {
+                    setProducts(data.products)
+                    setNextCursor(data.pagination.nextCursor || undefined)
+                    setHasNextPage(data.pagination.hasNextPage)
+                }
+
             } else {
                 setError('Failed to fetch products')
             }
@@ -28,5 +45,5 @@ export const useGetProduct = () => {
         }
     }
 
-    return { isLoading, products, error, fetchProducts}
+    return { isLoading, products, error, fetchProducts, nextCursor, hasNextPage }
 }
