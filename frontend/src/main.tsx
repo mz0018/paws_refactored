@@ -13,6 +13,7 @@ const AdminLayout = lazy(() => import('./layout/AdminLayout.tsx'))
 const Dashboard = lazy(() => import('./pages/admin/Dashboard.tsx'))
 const ViewProducts = lazy(() => import('./pages/admin/ViewProducts.tsx'))
 const AddProducts = lazy(() => import('./pages/admin/AddProducts.tsx'))
+const ViewDetailedProduct = lazy(() => import('./pages/admin/ViewDetailedProduct.tsx'))
 const Settings = lazy(() => import('./pages/admin/Settings.tsx'))
 
 const router = createBrowserRouter([
@@ -25,6 +26,7 @@ const router = createBrowserRouter([
         children: [
           { path: "dashboard", element: <Dashboard /> },
           { path: "products", element: <ViewProducts />},
+          { path: "products/:id", element: <ViewDetailedProduct /> },
           { path: "products/add", element: <AddProducts /> },
           { path: "settings", element: <Settings /> }
         ]

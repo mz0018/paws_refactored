@@ -18,8 +18,15 @@ router.post(
 )
 
 router.get(
-    '/get-product/:user_id',
+    '/get-product',
+    authorizeViaCookie,
     AdminController.getProduct
+)
+
+router.get(
+    '/get-product/:id',
+    authorizeViaCookie,
+    AdminController.getProductById
 )
 
 export default router

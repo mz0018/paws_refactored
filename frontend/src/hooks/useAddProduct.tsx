@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { useAuth } from '../context/AuthContext'
 
 export const useAddProduct = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false)

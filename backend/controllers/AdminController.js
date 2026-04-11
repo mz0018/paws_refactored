@@ -4,7 +4,7 @@ class AdminController {
 
     async addProduct(req, res, next) {
         try {
-            const result = await AdminService.addProduct(req.body, req.user, req.files.images)
+            const result = await AdminService.addProduct(req.body, req.user_id, req.files.images)
             res.status(201).json(result)
         } catch (error) {
             next(error)
@@ -13,7 +13,16 @@ class AdminController {
 
     async getProduct(req, res, next) {
         try {
-            const result = await AdminService.getProduct(req.params)
+            const result = await AdminService.getProduct(req.user_id)
+            res.status(201).json(result)
+        } catch (error) {
+            next(error)
+        }
+    }
+
+    async getProductById(req, res, next) {
+        try {
+            const result = await AdminService.getProductById(req.params)
             res.status(201).json(result)
         } catch (error) {
             next(error)

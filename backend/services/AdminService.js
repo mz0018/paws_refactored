@@ -4,12 +4,9 @@ import ErrorController from '../controllers/ErrorController.js'
 import R2Service from '../services/R2Service.js'
 class AdminService {
 
-    async addProduct(product_data, user, product_images) {
-        const user_id = user?.userId || user?.id
+    //authorizeViaCookie handles the user_id checker!
 
-        if (!user_id) {
-            throw new ErrorController('User Id not set', 404)
-        }
+    async addProduct(product_data, user_id, product_images) {
 
         const existingProduct = await Product.findOne({ productName: product_data.productName })
 
@@ -46,13 +43,27 @@ class AdminService {
         return { message: 'Product added successfully' };
     }
 
-    async getProduct({ userId }) {
+    async getProduct(user_id) {
 
-        if (!userId) {
-            throw new ErrorController('User Id not set', 404)
+        const products = await Product.find(
+            { createdBy: user_id },
+            { productName: 1, productPrice: 1, images: 1, _id: 1 }
+        )
+
+        return products
+        
+    }
+
+    async getProductById(product_id) {
+        const id = product_id?.id
+
+        if (!id) {
+            throw new ErrorController('Product ID is required.')
         }
 
-        
+        const product = await Product.findById(id)
+
+        return product
     }
 
 }
