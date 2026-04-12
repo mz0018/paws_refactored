@@ -1,6 +1,7 @@
 import { Form } from '../../ui/form/Form'
 import { Input } from '../../ui/form/Input'
 import { Button } from '../../ui/form/Buttons'
+import { Select } from '../../ui/form/Select'
 import { ErrorText } from '../../ui/form/ErrorText'
 import { ProductImages } from '../../ui/form/ProductImages'
 import { useAddProduct } from '../../hooks/useAddProduct'
@@ -17,7 +18,7 @@ const AddProducts = () => {
 
             <Form onSubmit={handleSubmit}>
                 <Input type='text' name='productName' placeholder='Product Name' error={hasError.productName} />
-                <Input type='text' name='productCategory' placeholder='Product Category' error={hasError.productCategory} />
+                <Select name='productCategory' error={hasError.productCategory} />
                 <Input type='text' name='productDescription' placeholder='Product Description' error={hasError.productDescription} />
                 <Input type='number' name='productPrice' placeholder='Product Price' error={hasError.productPrice} />
                 <Input type='number' name='stock' placeholder='Product Stock' error={hasError.productStock} />
