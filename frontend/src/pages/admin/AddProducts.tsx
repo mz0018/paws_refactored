@@ -7,6 +7,8 @@ import { ProductImages } from '../../ui/form/ProductImages'
 import { useAddProduct } from '../../hooks/useAddProduct'
 import { ClipLoader } from 'react-spinners'
 
+import { PRODUCT_CATEGORIES } from '../../mocks/categories'
+
 const AddProducts = () => {
 
     const { isLoading, hasError, files, handleFileChange, handleSubmit } = useAddProduct()
@@ -18,7 +20,14 @@ const AddProducts = () => {
 
             <Form onSubmit={handleSubmit}>
                 <Input type='text' name='productName' placeholder='Product Name' error={hasError.productName} />
-                <Select name='productCategory' error={hasError.productCategory} />
+                <Select name='productCategory' error={hasError.productCategory}>
+                    <option value="">Select Category</option>
+                    {PRODUCT_CATEGORIES.map(category => (
+                        <option key={category} value={category}>
+                            {category}
+                        </option>
+                    ))}
+                </Select>
                 <Input type='text' name='productDescription' placeholder='Product Description' error={hasError.productDescription} />
                 <Input type='number' name='productPrice' placeholder='Product Price' error={hasError.productPrice} />
                 <Input type='number' name='stock' placeholder='Product Stock' error={hasError.productStock} />
