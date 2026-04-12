@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useGetProduct } from '../../hooks/useGetProduct'
 import { useEffect } from 'react'
-import { Image } from '../../ui/form/Image'
+import { ProductContainer } from '../../ui/form/ProductContainer'
 
 const ViewProducts = () => {
     const { isLoading, products, error, fetchProducts, nextCursor, hasNextPage } = useGetProduct()
@@ -19,17 +19,9 @@ const ViewProducts = () => {
             {products.length === 0 ? (
                 <p>No products found.</p>
             ) : (
-                <div className="grid">
+                <div className="grid grid-cols-5 gap-5">
                     {products.map((product) => (
-                        <Link key={product._id} to={`/admin/products/${product._id}`}>
-                            <Image
-                                src={product.images[0]?.url} 
-                                alt={product.productName} 
-                                className='w-12 h-12'
-                            />
-                            <h3>{product.productName}</h3>
-                            <p>${product.productPrice}</p>
-                        </Link>
+                        <ProductContainer key={product._id} product={product} />
                     ))}
                 </div>
             )}
