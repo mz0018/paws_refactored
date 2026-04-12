@@ -46,12 +46,16 @@ class AdminService {
 
     async getProduct(user_id, options = {}) {
 
-        const { cursor, limit = 10 } = options
+        const { cursor, limit = 10, search } = options
 
         const query = { createdBy: user_id }
 
         if (cursor) {
             query._id = { $gt: new  mongoose.Types.ObjectId(cursor) }
+        }
+
+        if (search && search.trim()) {
+            query.productName = { $regex: search.trim(), $options: 'i' }
         }
 
         const products = await Product.find(

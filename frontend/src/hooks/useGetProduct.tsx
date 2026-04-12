@@ -7,7 +7,7 @@ export const useGetProduct = () => {
     const [hasNextPage, setHasNextPage] = useState<boolean>(true)
     const [error, setError] = useState<string | null>(null)
 
-    const fetchProducts = async (cursor?: string) => {
+    const fetchProducts = async (cursor?: string, searchQuery?: string) => {
         setIsLoading(true)
         setError(null)
 
@@ -15,6 +15,10 @@ export const useGetProduct = () => {
 
         if (cursor) {
             url += `&cursor=${cursor}`
+        }
+
+        if (searchQuery && searchQuery.trim()) {
+            url += `&search=${encodeURIComponent(searchQuery.trim())}`
         }
 
         try {

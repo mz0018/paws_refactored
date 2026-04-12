@@ -1,18 +1,26 @@
 import { Link } from 'react-router-dom'
 import { useGetProduct } from '../../hooks/useGetProduct'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { ProductContainer } from '../../ui/form/ProductContainer'
+import { SearchBar } from '../../components/SearchBar'
+import { useDebounce } from '../../hooks/useDebounce'
 
 const ViewProducts = () => {
+    const [searchQuery, setSearchQuery] = useState<string>('')
+    const debouncedSearch = useDebounce(searchQuery, 300)
     const { isLoading, products, error, fetchProducts, nextCursor, hasNextPage } = useGetProduct()
     useEffect(() => {
-        fetchProducts()
-    }, [])
+        fetchProducts(undefined, debouncedSearch)
+    }, [debouncedSearch])
     if (isLoading) return <p>Loading...</p>
     if (error) return <p>{error}</p>
     return (
-        <div>
+        <>
             <h1>My Products</h1>
+            <SearchBar
+                onChange={(e) => setSearchQuery(e.target.value)}
+                value={searchQuery}
+            />
             <Link to="add" className="text-blue-500 hover:underline">
                 Go to Add Product
             </Link>
@@ -31,7 +39,7 @@ const ViewProducts = () => {
                     {isLoading ? 'Loading...' : 'Load More'}
                 </button>
             )}
-        </div>
+        </>
     )
 }
 export default ViewProducts
