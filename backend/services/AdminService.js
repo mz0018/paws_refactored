@@ -46,7 +46,7 @@ class AdminService {
 
     async getProduct(user_id, options = {}) {
 
-        const { cursor, limit = 10, search } = options
+        const { cursor, limit = 10, search, category } = options
 
         const query = { createdBy: user_id }
 
@@ -56,6 +56,10 @@ class AdminService {
 
         if (search && search.trim()) {
             query.productName = { $regex: search.trim(), $options: 'i' }
+        }
+
+        if (category && category.trim()) {
+            query.productCategory = category.trim()
         }
 
         const products = await Product.find(

@@ -14,8 +14,8 @@ const ViewProducts = () => {
     const { isLoading, products, error, fetchProducts, nextCursor, hasNextPage } = useGetProduct()
 
     useEffect(() => {
-        fetchProducts(undefined, debouncedSearch)
-    }, [debouncedSearch])
+        fetchProducts(undefined, debouncedSearch, filteredBy)
+    }, [debouncedSearch, filteredBy])
 
     if (isLoading) return <p>Loading...</p>
     if (error) return <p>{error}</p>
