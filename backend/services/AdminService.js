@@ -3,6 +3,8 @@ import Product from '../models/product.model.js'
 
 import ErrorController from '../controllers/ErrorController.js'
 import R2Service from '../services/R2Service.js'
+
+import { getSortOptions } from '../utils/sortOptions.js'
 class AdminService {
 
     //authorizeViaCookie handles the user_id checker!
@@ -46,7 +48,7 @@ class AdminService {
 
     async getProduct(user_id, options = {}) {
 
-        const { cursor, limit = 10, search, category } = options
+        const { cursor, limit = 10, search, category, sort } = options
 
         const query = { createdBy: user_id }
 
@@ -65,7 +67,7 @@ class AdminService {
         const products = await Product.find(
             query,
             { productName: 1, productPrice: 1, images: 1, _id: 1 }
-        ).sort({ _id: 1 }).limit(limit + 1)
+        ).sort(getSortOptions(sort)).limit(limit + 1)
 
         const hasNextPage = products.length > limit
         if (hasNextPage) {

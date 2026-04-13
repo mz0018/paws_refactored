@@ -4,18 +4,20 @@ import { useEffect, useState } from 'react'
 import { ProductContainer } from '../../ui/form/ProductContainer'
 import { SearchBar } from '../../components/SearchBar'
 import { FilterBy } from '../../components/FilterBy'
+import { SortBy } from '../../components/SortBy'
 import { useDebounce } from '../../hooks/useDebounce'
 
 const ViewProducts = () => {
     const [searchQuery, setSearchQuery] = useState<string>('')
     const [filteredBy, setFilteredBy] = useState<string>('')
+    const [sortBy, setSortBy] = useState<string>('')
 
     const debouncedSearch = useDebounce(searchQuery, 300)
     const { isLoading, products, error, fetchProducts, nextCursor, hasNextPage } = useGetProduct()
 
     useEffect(() => {
-        fetchProducts(undefined, debouncedSearch, filteredBy)
-    }, [debouncedSearch, filteredBy])
+        fetchProducts(undefined, debouncedSearch, filteredBy, sortBy)
+    }, [debouncedSearch, filteredBy, sortBy])
 
     if (isLoading) return <p>Loading...</p>
     if (error) return <p>{error}</p>
@@ -34,6 +36,11 @@ const ViewProducts = () => {
                 value={filteredBy} 
             />
 
+            <SortBy 
+                onChange={(e) => setSortBy(e.target.value)}
+                value={sortBy}
+            />
+
             <Link to="add" className="text-blue-500 hover:underline">
                 Go to Add Product
             </Link>
@@ -48,7 +55,7 @@ const ViewProducts = () => {
             )}
 
              {hasNextPage && (
-                <button onClick={() => fetchProducts(nextCursor)}>
+                <button onClick={() => fetchProducts(nextCursor, searchQuery, filteredBy, sortBy)}>
                     {isLoading ? 'Loading...' : 'Load More'}
                 </button>
             )}

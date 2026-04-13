@@ -13,9 +13,9 @@ class AdminController {
 
     async getProduct(req, res, next) {
         try {
-            const { cursor, limit, search, category } = req.query
+            const { cursor, limit, search, category, sort } = req.query
             const parsedLimit = limit ? parseInt(limit, 10) : 10
-            const result = await AdminService.getProduct(req.user_id, { cursor, limit: parsedLimit, search, category })
+            const result = await AdminService.getProduct(req.user_id, { cursor, limit: parsedLimit, search, category, sort })
             res.status(201).json(result)
         } catch (error) {
             next(error)

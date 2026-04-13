@@ -7,7 +7,7 @@ export const useGetProduct = () => {
     const [hasNextPage, setHasNextPage] = useState<boolean>(true)
     const [error, setError] = useState<string | null>(null)
 
-    const fetchProducts = async (cursor?: string, searchQuery?: string, category?: string) => {
+    const fetchProducts = async (cursor?: string, searchQuery?: string, category?: string, sortBy?: string) => {
         setIsLoading(true)
         setError(null)
 
@@ -23,6 +23,10 @@ export const useGetProduct = () => {
 
         if (category && category.trim()) {
             url += `&category=${encodeURIComponent(category.trim())}`
+        }
+
+        if (sortBy && sortBy.trim()) {
+            url += `&sort=${encodeURIComponent(sortBy.trim())}`
         }
 
         try {
