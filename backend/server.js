@@ -6,6 +6,9 @@ import adminRoute from './routes/adminRoute.js'
 import connection from './config/connection.js'
 
 import { errorHandler } from './middleware/errorHandler.js'
+import { redisClient } from './middleware/productFetchLimiter.js'
+
+await redisClient.connect()
 
 const app = express()
 

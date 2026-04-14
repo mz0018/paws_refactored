@@ -1,8 +1,8 @@
 1. (DONE)Database Indexes** (#6) - Foundation for performance
 2. (DONE)**Select Only Needed Fields** (#4) - Specify fields in queries
 3. (DONE)**Pagination** (#2) - Add `page`/`limit`/`cursor` params
-4. **Filter, Sort, Search** (#3) - Add query params
-5. **Rate Limiting for GET** (#8) - Add `getProductRateLimiter`
+4. (DONE)**Filter, Sort, Search** (#3) - Add query params
+5. (DONE)**Rate Limiting for GET** (#8) - Add `getProductRateLimiter`
 6. **HTTP Caching Headers** (#5) - ETag/Last-Modified
 7. **Compression** (#7) - Add gzip middleware
 8. **N+1 Prevention** (#1) - Use `populate()` or aggregation for relations

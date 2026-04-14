@@ -5,6 +5,7 @@ import { validate } from '../middleware/validate.js'
 import { addProductSchema } from '../schemas/product.schema.js'
 import { authorizeViaCookie } from '../middleware/authorizeViaCookie.js'
 import { productUploadLimiter } from '../middleware/productUploadLimiter.js'
+import { productFetchLimiter } from '../middleware/productFetchLimiter.js'
 
 const router = express.Router()
 
@@ -20,6 +21,7 @@ router.post(
 router.get(
     '/get-product',
     authorizeViaCookie,
+    productFetchLimiter,
     AdminController.getProduct
 )
 
