@@ -80,6 +80,7 @@ class AdminService {
 
         return {
             products,
+            updatedAt: products[0]?.updatedAt,
             pagination: {
                 nextCursor,
                 hasNextPage,
@@ -98,7 +99,10 @@ class AdminService {
 
         const product = await Product.findById(id)
 
-        return product
+        return {
+            product,
+            updatedAt: product.updatedAt
+        }
     }
 
 }
