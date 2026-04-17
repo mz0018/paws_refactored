@@ -66,8 +66,11 @@ class AdminService {
 
         const products = await Product.find(
             query,
-            { productName: 1, productPrice: 1, images: 1, _id: 1 }
-        ).sort(getSortOptions(sort)).limit(limit + 1)
+            { productName: 1, productPrice: 1, images: 1, createdBy: 1 }
+        )
+        .populate('createdBy', 'userName')
+        .sort(getSortOptions(sort))
+        .limit(limit + 1)
 
         const hasNextPage = products.length > limit
         if (hasNextPage) {

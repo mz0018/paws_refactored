@@ -5,4 +5,4 @@
 5. (DONE)**Rate Limiting for GET** (#8) - Add `getProductRateLimiter`
 6. (DONE)**HTTP Caching Headers** (#5) - ETag/Last-Modified
 7. (DONE)**Compression** (#7) - Add gzip middleware
-8. **N+1 Prevention** (#1) - Use `populate()` or aggregation for relations
+8. (DONE)**N+1 Prevention** (#1) - Use `populate()` or aggregation for relations
