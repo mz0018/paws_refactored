@@ -7,6 +7,7 @@ import connection from './config/connection.js'
 
 import { errorHandler } from './middleware/errorHandler.js'
 import { redisClient } from './middleware/productFetchLimiter.js'
+import { gzipCompression } from './middleware/compression.js'
 
 await redisClient.connect()
 
@@ -16,6 +17,7 @@ app.set('trust proxy', true)
 
 app.use(express.json())
 app.use(cookieParser())
+app.use(gzipCompression)
 
 app.use(express.urlencoded({ extended: true }))
 
