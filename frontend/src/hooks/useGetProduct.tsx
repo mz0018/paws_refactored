@@ -38,7 +38,11 @@ export const useGetProduct = () => {
                 const data = await res.json()
                 
                 if (cursor) {
-                    setProducts(prev => [...prev, ...data.products])
+                    setProducts((prev) => {
+                        const existingIds = new Set(prev.map((p: any) => p._id))
+                        const newProducts = data.products.filter((p: any) => !existingIds.has(p._id))
+                        return [...prev, ...newProducts]
+                    })
                     setNextCursor(data.pagination.nextCursor || undefined)
                     setHasNextPage(data.pagination.hasNextPage)
                 } else {
@@ -57,5 +61,11 @@ export const useGetProduct = () => {
         }
     }
 
-    return { isLoading, products, error, fetchProducts, nextCursor, hasNextPage }
+    const clearProducts = () => {
+        setProducts([])
+        setNextCursor(undefined)
+        setHasNextPage(true)
+    }
+
+    return { isLoading, products, error, fetchProducts, nextCursor, hasNextPage, clearProducts }
 }

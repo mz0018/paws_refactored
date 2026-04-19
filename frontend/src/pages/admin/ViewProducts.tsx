@@ -13,9 +13,10 @@ const ViewProducts = () => {
     const [sortBy, setSortBy] = useState<string>('')
 
     const debouncedSearch = useDebounce(searchQuery, 300)
-    const { isLoading, products, error, fetchProducts, nextCursor, hasNextPage } = useGetProduct()
+    const { isLoading, products, error, fetchProducts, nextCursor, hasNextPage, clearProducts } = useGetProduct()
 
     useEffect(() => {
+        clearProducts()
         fetchProducts(undefined, debouncedSearch, filteredBy, sortBy)
     }, [debouncedSearch, filteredBy, sortBy])
 

@@ -4,7 +4,7 @@ export const redisClient = createClient({ url: process.env.REDIS_URL })
 redisClient.on('error', (err) => console.error('Redis Client Error:', err))
 
 const WINDOW_MS = 60 * 1000
-const MAX_REQUESTS = 5
+const MAX_REQUESTS = 60
 
 export const productFetchLimiter = async (req, res, next) => {
 

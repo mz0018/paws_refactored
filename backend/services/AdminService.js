@@ -69,7 +69,7 @@ class AdminService {
             { productName: 1, productPrice: 1, images: 1, createdBy: 1 }
         )
         .populate('createdBy', 'userName')
-        .sort(getSortOptions(sort))
+        .sort({ ...getSortOptions(sort), _id: 1 })
         .limit(limit + 1)
 
         const hasNextPage = products.length > limit
