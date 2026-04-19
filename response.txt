@@ -1,0 +1,21 @@
+{
+    "product": {
+        "_id": "69db6e8520de5f89e2659d36",
+        "productName": "Product 43",
+        "productCategory": "hygiene",
+        "productDescription": "This is a test product",
+        "productPrice": 212,
+        "stock": 18,
+        "createdBy": "69ce309ffcb153b4cb558bc3",
+        "images": [
+            {
+                "url": "https://picsum.photos/300/300?random=42",
+                "_id": "69db6e8520de5f89e2659d37"
+            }
+        ],
+        "__v": 0,
+        "createdAt": "2026-04-12T10:05:57.123Z",
+        "updatedAt": "2026-04-12T10:05:57.123Z"
+    },
+    "updatedAt": "2026-04-12T10:05:57.123Z"
+}
