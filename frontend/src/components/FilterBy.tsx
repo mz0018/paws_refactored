@@ -1,5 +1,5 @@
 import { PRODUCT_CATEGORIES } from '../mocks/categories'
-
+import { Select } from '../ui/form/Select'
 interface FilterByProps {
     onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void
     value: string
@@ -7,7 +7,7 @@ interface FilterByProps {
 
 export const FilterBy = ({ onChange, value }: FilterByProps) => {
     return (
-        <select
+        <Select
             value={value}
             onChange={onChange}
             className="p-2 border rounded-md"
@@ -19,6 +19,6 @@ export const FilterBy = ({ onChange, value }: FilterByProps) => {
                     {category}
                 </option>
             ))}
-        </select>
+        </Select>
     )
 }

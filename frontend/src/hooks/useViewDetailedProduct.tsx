@@ -35,7 +35,6 @@ export const useViewDetailedProduct = () => {
                 credentials: 'include'
             })
             const data = await res.json()
-            console.log(data)
             setProduct(data.product)
         } catch (err) {
             console.error('Something went wrong: ', err)

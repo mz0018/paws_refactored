@@ -6,6 +6,10 @@ import { SearchBar } from '../../components/SearchBar'
 import { FilterBy } from '../../components/FilterBy'
 import { SortBy } from '../../components/SortBy'
 import { useDebounce } from '../../hooks/useDebounce'
+import { ButtonLoadMore } from '../../ui/form/ButtonLoadMore'
+import { LinkUI } from '../../ui/form/LinkUI'
+
+import { ClipLoader } from 'react-spinners'
 
 const ViewProducts = () => {
     const [searchQuery, setSearchQuery] = useState<string>('')
@@ -20,35 +24,37 @@ const ViewProducts = () => {
         fetchProducts(undefined, debouncedSearch, filteredBy, sortBy)
     }, [debouncedSearch, filteredBy, sortBy])
 
-    if (isLoading) return <p>Loading...</p>
+    // if (isLoading) return <p>Loading...</p>
     if (error) return <p>{error}</p>
 
     return (
         <>
-            <h1>My Products</h1>
+            <div className="grid grid-cols-4 gap-4">
+                <SearchBar
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    value={searchQuery}
+                />
 
-            <SearchBar
-                onChange={(e) => setSearchQuery(e.target.value)}
-                value={searchQuery}
-            />
+                <FilterBy 
+                    onChange={(e) => setFilteredBy(e.target.value)}
+                    value={filteredBy} 
+                />
 
-            <FilterBy 
-                onChange={(e) => setFilteredBy(e.target.value)}
-                value={filteredBy} 
-            />
+                <SortBy 
+                    onChange={(e) => setSortBy(e.target.value)}
+                    value={sortBy}
+                />
 
-            <SortBy 
-                onChange={(e) => setSortBy(e.target.value)}
-                value={sortBy}
-            />
+                <LinkUI to="add" title="Create a new product">
+                    Go to Add Product
+                </LinkUI>
 
-            <Link to="add" className="text-blue-500 hover:underline">
-                Go to Add Product
-            </Link>
+            </div>
+
             {products.length === 0 ? (
                 <p>No products found.</p>
             ) : (
-                <div className="grid grid-cols-5 gap-5">
+                <div className="grid grid-cols-6 gap-5">
                     {products.map((product) => (
                         <ProductContainer key={product._id} product={product} />
                     ))}
@@ -56,9 +62,9 @@ const ViewProducts = () => {
             )}
 
              {hasNextPage && (
-                <button onClick={() => fetchProducts(nextCursor, searchQuery, filteredBy, sortBy)}>
-                    {isLoading ? 'Loading...' : 'Load More'}
-                </button>
+                <ButtonLoadMore onClick={() => fetchProducts(nextCursor, searchQuery, filteredBy, sortBy)}>
+                    {isLoading ? <ClipLoader size={14} color='blue' /> : 'Load More'}
+                </ButtonLoadMore>
             )}
         </>
     )
