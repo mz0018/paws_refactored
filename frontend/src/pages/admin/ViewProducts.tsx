@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom'
 import { useGetProduct } from '../../hooks/useGetProduct'
 import { useEffect, useState } from 'react'
 import { ProductContainer } from '../../ui/form/ProductContainer'
