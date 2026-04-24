@@ -9,6 +9,7 @@ import { ButtonLoadMore } from '../../ui/form/ButtonLoadMore'
 import { LinkUI } from '../../ui/form/LinkUI'
 
 import { ClipLoader } from 'react-spinners'
+import { Search } from 'lucide-react'
 
 const ViewProducts = () => {
     const [searchQuery, setSearchQuery] = useState<string>('')
@@ -23,15 +24,16 @@ const ViewProducts = () => {
         fetchProducts(undefined, debouncedSearch, filteredBy, sortBy)
     }, [debouncedSearch, filteredBy, sortBy])
 
-    // if (isLoading) return <p>Loading...</p>
     if (error) return <p>{error}</p>
 
     return (
         <>
             <div className="grid grid-cols-4 gap-4">
                 <SearchBar
-                    onChange={(e) => setSearchQuery(e.target.value)}
                     value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Search product by name"
+                    icon={<Search size={16} />}
                 />
 
                 <FilterBy 
@@ -53,7 +55,7 @@ const ViewProducts = () => {
             {products.length === 0 ? (
                 <p>No products found.</p>
             ) : (
-                <div className="grid grid-cols-6 gap-5">
+                <div className="grid grid-cols-4 gap-5">
                     {products.map((product) => (
                         <ProductContainer key={product._id} product={product} />
                     ))}

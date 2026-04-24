@@ -14,17 +14,20 @@ type ProductContainerProps = {
 
 export const ProductContainer = ({ product }: ProductContainerProps) => {
   return (
-    <Link
-      to={`/admin/products/${product._id}`}
-      className="p-3 rounded-md hover:shadow"
-    >
-      <Image
-        src={product.images[0]?.url}
-        alt={product.productName}
-        className="w-full h-32 object-cover"
-      />
-      <h3 className="mt-2 capitalize font-medium">{product.productName}</h3>
-      <p className="text-sm text-gray-500">${product.productPrice}</p>
-    </Link>
+    <div className="p-3">
+      <Link to={`/admin/products/${product._id}`}>
+        <Image
+          src={product.images[0]?.url}
+          alt={product.productName}
+          className="w-full h-74 object-cover"
+        >
+          View Details
+        </Image>
+      </Link>
+
+      <h3 className="mt-2 capitalize font-medium">
+        {product.productName}
+      </h3>
+    </div>
   )
 }

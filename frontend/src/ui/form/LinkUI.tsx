@@ -5,7 +5,7 @@ export const LinkUI = ({ className = '', ...props }: LinkProps) => {
     return (
         <Link
             {...props}
-            className={`inline-block p-4 rounded-sm border bg-blue-500 text-white hover:bg-blue-700 w-1/2 text-center ${className}`}
+            className={`inline-block text-underline text-blue-500 hover:text-blue-700 w-1/2 text-center ${className}`}
         />
     )
 }  

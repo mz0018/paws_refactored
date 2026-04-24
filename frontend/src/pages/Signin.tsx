@@ -6,9 +6,10 @@ import { Button } from '../ui/form/Buttons'
 import { ErrorText } from '../ui/form/ErrorText'
 import { Eye, EyeOff } from 'lucide-react'
 import { ClipLoader } from 'react-spinners'
+import { LogIn } from 'lucide-react'
 
 const Signin = () => {
-  const { handleSubmit, isLoading, setUserName, userName, setPassword, password, hasError } = useSignin()
+  const { handleSubmit, isLoading, setUserName, userName, setPassword, password, hasError, status } = useSignin()
   const [showPassword, setShowPassword] = useState<boolean>(false)
 
   return (
@@ -43,8 +44,15 @@ const Signin = () => {
 
           <ErrorText message={hasError.userName || hasError.password || hasError.general} />
 
-        <Button type='submit' disabled={isLoading}>
-          {isLoading ? <ClipLoader size={20} color='white' /> : "Sign In"}
+        <Button type="submit" disabled={isLoading || status.rateLimit}>
+            {isLoading ? (
+              <ClipLoader size={18} color="white" />
+            ) : (
+              <>
+                <LogIn size={18} />
+                Sign In
+              </>
+            )}
         </Button>
       </Form>
     </div>

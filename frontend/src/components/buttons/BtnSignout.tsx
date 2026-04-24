@@ -1,5 +1,7 @@
 import { useAuth } from '../../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
+import { Button } from '../../ui/form/Buttons'
+import { LogOut } from 'lucide-react'
 
 export const BtnSignout = () => {
     const { signOut } = useAuth()
@@ -11,8 +13,8 @@ export const BtnSignout = () => {
     }
 
     return (
-        <button className='border p-1' onClick={handleSignOut}>
-            {"Sign out"}
-        </button>
+        <Button className='w-full bg-red-500 hover:bg-red-700' onClick={handleSignOut}>
+            <LogOut size={18} />Sign out
+        </Button>
     )
 }

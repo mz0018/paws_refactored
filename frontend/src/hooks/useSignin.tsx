@@ -6,6 +6,9 @@ export const useSignin = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [userName, setUserName] = useState<string>("")
     const [password, setPassword] = useState<string>("")
+    const [status, setStatus] = useState<{
+        rateLimit?: boolean
+    }>({})
     const [hasError, setHasError] = useState<{
         userName?: string
         password?: string
@@ -51,6 +54,7 @@ export const useSignin = () => {
                     setHasError({ general: "Invalid credentials. Please try again." })
                 } else if (res.status === 429) {
                     setHasError({ general: "Too many requests. Please try again later." })
+                    setStatus({ rateLimit: true })
                 } else {
                     setHasError({ general: "An error occurred during sign-in. Please try again later." })
                 }
@@ -64,6 +68,6 @@ export const useSignin = () => {
         }
     }
 
-    return { handleSubmit, isLoading, setUserName, userName, setPassword, password, hasError }
+    return { handleSubmit, isLoading, setUserName, userName, setPassword, password, hasError, status }
 
 }
