@@ -1,11 +1,14 @@
 import { NavLink } from 'react-router-dom'
 import { BtnSignout } from '../components/buttons/BtnSignout'
 import { DropdownHelper } from '../helper/DropdownHelper'
+import { useState } from 'react'
+import { PanelLeft } from 'lucide-react'
 
 type NavItem = {
   name: string
   path?: string
   children?: NavItem[]
+  icon?: React.ReactNode
 }
 
 type SidebarUIProps = {
@@ -13,28 +16,42 @@ type SidebarUIProps = {
 }
 
 export const SidebarUI = ({ navLinks }: SidebarUIProps) => {
+  const [collapsed, setCollapsed] = useState(false)
+
   return (
-    <aside className="w-64 bg-gray-900 text-white flex flex-col">
+    <aside className={`${collapsed ? 'w-20' : 'w-84'} bg-[#28282B] text-white flex flex-col transition-all duration-300`}>
       
-      <div className="p-4 text-lg font-bold border-b border-gray-700">
-        Admin
+      <div className="p-4 flex justify-between items-center border-b border-gray-700">
+        <span className={`${collapsed ? 'hidden' : 'block'} font-bold`}>
+          Logo
+        </span>
+
+        <button onClick={() => setCollapsed(!collapsed)}>
+          <PanelLeft size={18}/>
+        </button>
       </div>
 
       <nav className="flex-1 p-2 space-y-1">
         {navLinks.map((item) =>
           item.children ? (
-            <DropdownHelper key={item.name} item={item} />
+            <DropdownHelper
+              key={item.name}
+              item={item}
+              collapsed={collapsed}
+            />
           ) : (
             <NavLink
               key={item.path}
               to={item.path || '#'}
               className={({ isActive }) =>
-                `block px-4 py-2 rounded ${
-                  isActive ? 'bg-blue-600' : 'hover:bg-gray-800'
+                `flex items-center gap-3 px-4 py-2 rounded ${
+                  isActive ? 'bg-white/10' : 'hover:bg-white/10'
                 }`
               }
             >
-              {item.name}
+              <span>{item.icon}</span>
+
+              {!collapsed && <span>{item.name}</span>}
             </NavLink>
           )
         )}

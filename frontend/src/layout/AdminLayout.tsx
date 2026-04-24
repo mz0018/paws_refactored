@@ -1,17 +1,20 @@
 import { Outlet } from 'react-router-dom'
 import { SidebarUI } from '../ui/SidebarUI'
+import { LayoutDashboard, Package, Settings } from 'lucide-react'
 
 const AdminLayout = () => {
+
   const navLinks = [
-    { name: 'Appointments', path: '/admin/dashboard' },
+    { name: 'Appointments', path: '/admin/dashboard', icon: <LayoutDashboard size={18} /> },
     {
       name: 'Products',
+      icon: <Package size={18} />,
       children: [
-        { name: 'Product Overview', path: '/admin/products' },
+        { name: 'Products Overview', path: '/admin/products' },
         { name: 'Add new product', path: '/admin/products/add' },
       ]
     },
-    { name: 'Settings', path: '/admin/settings' }
+    { name: 'Settings', path: '/admin/settings', icon: <Settings size={18} /> }
   ]
 
   return (
