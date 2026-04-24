@@ -6,7 +6,6 @@ import { FilterBy } from '../../components/FilterBy'
 import { SortBy } from '../../components/SortBy'
 import { useDebounce } from '../../hooks/useDebounce'
 import { ButtonLoadMore } from '../../ui/form/ButtonLoadMore'
-import { LinkUI } from '../../ui/form/LinkUI'
 
 import { ClipLoader } from 'react-spinners'
 import { Search } from 'lucide-react'
@@ -28,13 +27,8 @@ const ViewProducts = () => {
 
     return (
         <>
-            <div className="grid grid-cols-4 gap-4">
-                <SearchBar
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="Search product by name"
-                    icon={<Search size={16} />}
-                />
+            <div className="grid grid-cols-3 gap-4">
+                
 
                 <FilterBy 
                     onChange={(e) => setFilteredBy(e.target.value)}
@@ -46,9 +40,12 @@ const ViewProducts = () => {
                     value={sortBy}
                 />
 
-                <LinkUI to="add" title="Create a new product">
-                    Go to Add Product
-                </LinkUI>
+                <SearchBar
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Search product by name"
+                    icon={<Search size={16} />}
+                />
 
             </div>
 
