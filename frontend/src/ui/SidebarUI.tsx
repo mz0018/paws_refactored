@@ -31,8 +31,18 @@ export const SidebarUI = ({ navLinks }: SidebarUIProps) => {
   }, []);
 
   return (
-    <aside className={`${collapsed ? 'w-16' : 'w-80'} bg-[#28282B] text-white flex flex-col transition-all duration-300`}>
-      
+    <aside
+     className={`
+        fixed lg:static
+        h-full
+        bg-[#28282B] text-white
+        flex flex-col
+        z-50
+        transition-all duration-300
+        ${collapsed ? 'w-16' : 'w-80'}
+        translate-x-0
+      `} 
+    >
       <div className="p-4 flex justify-between items-center border-b border-gray-700">
         <span className={`${collapsed ? 'hidden' : 'block'} font-bold`}>
           Logo

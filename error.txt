@@ -1,0 +1,2 @@
+Type '{ navLinks: ({ name: string; path: string; icon: Element; children?: undefined; } | { name: string; icon: Element; children: { name: string; path: string; }[]; path?: undefined; })[]; className: string; }' is not assignable to type 'IntrinsicAttributes & SidebarUIProps'.
+  Property 'className' does not exist on type 'IntrinsicAttributes & SidebarUIProps'.
