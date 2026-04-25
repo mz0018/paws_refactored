@@ -1,5 +1,6 @@
 import { Outlet } from 'react-router-dom'
 import { SidebarUI } from '../ui/SidebarUI'
+import { MainLayoutUI } from '../ui/MainLayoutUI'
 import { LayoutDashboard, Package, Settings } from 'lucide-react'
 
 const AdminLayout = () => {
@@ -23,7 +24,9 @@ const AdminLayout = () => {
       <SidebarUI navLinks={navLinks} />
 
       <main className="flex-1 p-6 overflow-y-auto w-full">
-        <Outlet />
+        <MainLayoutUI>
+          <Outlet />
+        </MainLayoutUI>
       </main>
 
     </div>
