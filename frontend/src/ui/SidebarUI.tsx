@@ -26,7 +26,10 @@ export const SidebarUI = ({ navLinks }: SidebarUIProps) => {
           Logo
         </span>
 
-        <button onClick={() => setCollapsed(!collapsed)}>
+        <button 
+          onClick={() => setCollapsed(!collapsed)}
+          className="cursor-pointer flex items-center justify-center p-2 rounded hover:bg-white/10"
+        >
           <PanelLeft size={18}/>
         </button>
       </div>
@@ -58,7 +61,7 @@ export const SidebarUI = ({ navLinks }: SidebarUIProps) => {
       </nav>
 
       <div className="p-4 border-t border-gray-700">
-        <BtnSignout />
+        <BtnSignout collapsed={collapsed} />
       </div>
 
     </aside>

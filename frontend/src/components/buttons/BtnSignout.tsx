@@ -3,7 +3,11 @@ import { useNavigate } from 'react-router-dom'
 import { Button } from '../../ui/form/Buttons'
 import { LogOut } from 'lucide-react'
 
-export const BtnSignout = () => {
+type BtnSignoutProps = {
+    collapsed?: boolean
+}
+
+export const BtnSignout = ({ collapsed = false }: BtnSignoutProps) => {
     const { signOut } = useAuth()
     const navigate = useNavigate()
 
@@ -13,8 +17,14 @@ export const BtnSignout = () => {
     }
 
     return (
-        <Button className='w-full bg-red-500 hover:bg-red-700' onClick={handleSignOut}>
-            <LogOut size={18} />Sign out
+        <Button
+            className={`w-full bg-transparent hover:bg-white/10 ${
+                collapsed ? 'justify-center' : 'justify-start'
+            }`}
+            onClick={handleSignOut}
+        >
+            <LogOut size={18} />
+            {!collapsed && 'Log out'}
         </Button>
     )
 }
