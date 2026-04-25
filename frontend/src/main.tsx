@@ -7,6 +7,7 @@ import ProtectedRoutes from './utils/ProtectedRoutes.tsx'
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext.tsx'
+import { Loader } from './components/Loader'
 
 const Signin = lazy(() => import('./pages/Signin.tsx'))
 const AdminLayout = lazy(() => import('./layout/AdminLayout.tsx'))
@@ -38,7 +39,7 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <AuthProvider>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<Loader />}>
         <RouterProvider router={router} />
       </Suspense>
     </AuthProvider>
