@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom'
 import { BtnSignout } from '../components/buttons/BtnSignout'
 import { DropdownHelper } from '../helper/DropdownHelper'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { PanelLeft } from 'lucide-react'
 
 type NavItem = {
@@ -18,8 +18,20 @@ type SidebarUIProps = {
 export const SidebarUI = ({ navLinks }: SidebarUIProps) => {
   const [collapsed, setCollapsed] = useState(false)
 
+  useEffect(() => {
+  const checkIfShouldCollapse = () => {
+      setCollapsed(window.innerWidth < 768)
+    };
+    
+    checkIfShouldCollapse();
+    
+    window.addEventListener('resize', checkIfShouldCollapse);
+    
+    return () => window.removeEventListener('resize', checkIfShouldCollapse);
+  }, []);
+
   return (
-    <aside className={`${collapsed ? 'w-20' : 'w-84'} bg-[#28282B] text-white flex flex-col transition-all duration-300`}>
+    <aside className={`${collapsed ? 'w-16' : 'w-80'} bg-[#28282B] text-white flex flex-col transition-all duration-300`}>
       
       <div className="p-4 flex justify-between items-center border-b border-gray-700">
         <span className={`${collapsed ? 'hidden' : 'block'} font-bold`}>
@@ -41,6 +53,7 @@ export const SidebarUI = ({ navLinks }: SidebarUIProps) => {
               key={item.name}
               item={item}
               collapsed={collapsed}
+              setCollapsed={setCollapsed}
             />
           ) : (
             <NavLink
@@ -60,7 +73,7 @@ export const SidebarUI = ({ navLinks }: SidebarUIProps) => {
         )}
       </nav>
 
-      <div className="p-4 border-t border-gray-700">
+      <div className={`p-4 border-t border-gray-700 ${collapsed ? 'px-2' : ''}`}>
         <BtnSignout collapsed={collapsed} />
       </div>
 
