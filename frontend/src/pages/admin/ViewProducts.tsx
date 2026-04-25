@@ -27,8 +27,16 @@ const ViewProducts = () => {
 
     return (
         <>
-            <div className="grid grid-cols-3 gap-4">
-                
+            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    
+                <div className="col-span-2 md:col-span-2 lg:col-span-1">
+                    <SearchBar
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        placeholder="Search product by name"
+                        icon={<Search size={16} />}
+                    />
+                </div>
 
                 <FilterBy 
                     onChange={(e) => setFilteredBy(e.target.value)}
@@ -38,13 +46,6 @@ const ViewProducts = () => {
                 <SortBy 
                     onChange={(e) => setSortBy(e.target.value)}
                     value={sortBy}
-                />
-
-                <SearchBar
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="Search product by name"
-                    icon={<Search size={16} />}
                 />
 
             </div>
