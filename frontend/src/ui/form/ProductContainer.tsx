@@ -19,7 +19,7 @@ export const ProductContainer = ({ product }: ProductContainerProps) => {
         <Image
           src={product.images[0]?.url}
           alt={product.productName}
-          className="w-full h-74 object-cover"
+          className="w-full aspect-square object-cover"
         >
           View Details
         </Image>
