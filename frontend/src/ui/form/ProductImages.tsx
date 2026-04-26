@@ -6,7 +6,7 @@ export const ProductImages = ({ className = '', ...props }: ProductImagesProps) 
     return (
         <img
             {...props}
-            className={`rounded-sm object-cover w-92 ${className}`} 
+            className={`rounded-sm object-cover w-full aspect-square ${className}`} 
         />
     )
 }
