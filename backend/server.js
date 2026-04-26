@@ -29,9 +29,13 @@ app.use(express.urlencoded({ extended: true }))
 // })
 
 app.use(cors({
-    origin: ['http://187.127.113.42:5000/','http://localhost:5173'],
+    origin: [
+        'https://proaws.online',
+        'https://www.proaws.online',
+        'http://localhost:5173'
+    ],
     credentials: true
-}))
+}));
 
 app.use('/api/users', userRoute)
 app.use('/api/admin', adminRoute)
