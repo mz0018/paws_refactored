@@ -3,14 +3,19 @@ import { Input } from '../../ui/form/Input'
 import { Button } from '../../ui/form/Buttons'
 import { Select } from '../../ui/form/Select'
 import { ErrorText } from '../../ui/form/ErrorText'
+import { Textarea } from '../../ui/form/Textarea'
 import { ProductImages } from '../../ui/form/ProductImages'
 import { useAddProduct } from '../../hooks/useAddProduct'
 import { ClipLoader } from 'react-spinners'
 import { Upload, UploadCloud } from 'lucide-react'
+import { useRef } from 'react'
 
 import { PRODUCT_CATEGORIES } from '../../mocks/categories'
 
 const AddProducts = () => {
+
+    const fileRef = useRef<HTMLInputElement | null>(null)
+
     const {
         isLoading,
         hasError,
@@ -42,9 +47,8 @@ const AddProducts = () => {
 
                         <p className="text-gray-400 text-sm mb-4">or</p>
 
-                        {/* Hidden input */}
                         <Input
-                            id="fileUpload"
+                            ref={fileRef}
                             type="file"
                             accept="image/*"
                             onChange={handleFileChange}
@@ -53,13 +57,13 @@ const AddProducts = () => {
                             error={hasError.productImages}
                         />
 
-                        {/* Button */}
-                        <label htmlFor="fileUpload" className="flex justify-center">
-                            <Button type="button">
-                                <Upload className="mr-2" />
-                                Upload Images
-                            </Button>
-                        </label>
+                        <Button
+                            type="button"
+                            onClick={() => fileRef.current?.click()}
+                        >
+                            <Upload className="mr-2" />
+                            Upload Images
+                        </Button>
                     </div>
 
                     {/* Thumbnails */}
@@ -95,8 +99,7 @@ const AddProducts = () => {
                             error={hasError.productName}
                         />
 
-                        <Input
-                            type="text"
+                        <Textarea
                             name="productDescription"
                             placeholder="Description"
                             error={hasError.productDescription}

@@ -20,9 +20,20 @@ export const useAddProduct = () => {
     }>({})
 
     const MAX_SIZE = 2 * 1024 * 1024
+    const MAX_FILES = 5
 
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (!e.currentTarget.files) return
+
+        // ✅ ADDED: max file check (no logic changed below this)
+        const incomingCount = Array.from(e.currentTarget.files).length
+        if (files.length + incomingCount > MAX_FILES) {
+            setHasError(prev => ({
+                ...prev,
+                productImages: `You can only upload up to ${MAX_FILES} images`
+            }))
+            return
+        }
 
         const selected = Array.from(e.currentTarget.files).map(file => {
             const preview = URL.createObjectURL(file)
