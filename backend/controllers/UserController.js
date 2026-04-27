@@ -32,7 +32,7 @@ class UserController {
             res.cookie('authToken', token, {
                 httpOnly: true,
                 secure: true,
-                sameSite: 'Strict',
+                sameSite: 'Lax',
                 maxAge: 15 * 60 * 1000,
                 path: '/'
             })

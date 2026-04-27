@@ -21,11 +21,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const verifyAuth = async () => {
 
-    if (!document.cookie.includes('authToken=')) {
-      setLoading(false)
-      return
-    }
-
     try {
       const res = await fetch(`${import.meta.env.VITE_API_URL}/api/users/verify`, { credentials: 'include' })
 
