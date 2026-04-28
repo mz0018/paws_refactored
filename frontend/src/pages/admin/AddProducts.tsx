@@ -7,7 +7,7 @@ import { Textarea } from '../../ui/form/Textarea'
 import { ProductImages } from '../../ui/form/ProductImages'
 import { useAddProduct } from '../../hooks/useAddProduct'
 import { ClipLoader } from 'react-spinners'
-import { Upload, UploadCloud, Image } from 'lucide-react'
+import { Upload, UploadCloud, Image, Send, Save } from 'lucide-react'
 import { useRef } from 'react'
 
 import { PRODUCT_CATEGORIES } from '../../mocks/categories'
@@ -27,21 +27,27 @@ const AddProducts = () => {
 
     return (
         <>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
 
                 {/* LEFT SIDE */}
                 <div className="space-y-6">
-                    
+
                     {/* Upload Box */}
-                    <div className="border-3 border-gray-300 border-dashed rounded-lg min-h-[440px] flex flex-col justify-center items-center text-center p-6">
-    
+                    <div className="
+                        border-3 border-gray-300 border-dashed rounded-lg 
+                        min-h-[440px] flex flex-col justify-center items-center 
+                        text-center p-6 overflow-hidden
+                    ">
+
                         <UploadCloud className="mb-4 w-12 h-12 text-gray-400" />
 
-                        <p className="font-semibold text-gray-500 mb-3">
+                        <p className="font-semibold text-gray-500 mb-3 break-words max-w-full">
                             Drag & Drop Images Here
                         </p>
 
-                        <p className="text-gray-400 text-sm mb-4">or</p>
+                        <p className="text-gray-400 text-sm mb-4">
+                            or
+                        </p>
 
                         <Input
                             ref={fileRef}
@@ -64,29 +70,42 @@ const AddProducts = () => {
 
                     {/* Thumbnails */}
                     <div>
-                        <p className="text-sm text-gray-500 mb-2">Thumbnails:</p>
+                        <p className="font-semibold text-sm text-gray-500 mb-2">
+                            Thumbnails:
+                        </p>
 
                         <div className="grid grid-cols-5 gap-3">
                             {Array.from({ length: 5 }).map((_, index) => {
                                 const item = files[index]
 
                                 return (
-                                    <div key={index} className="relative">
+                                    <div key={index} className="relative overflow-hidden">
+
                                         {item ? (
                                             <>
-                                                <ProductImages src={item.preview} alt={item.file.name} />
+                                                <div className="w-full aspect-square overflow-hidden rounded-sm">
+                                                    <ProductImages
+                                                        src={item.preview}
+                                                        alt={item.file.name}
+                                                        className="w-full h-full object-cover"
+                                                    />
+                                                </div>
 
                                                 <button
                                                     type="button"
                                                     onClick={() => handleRemoveFile(item)}
-                                                    className="absolute top-1 right-1 bg-red-500 text-white text-xs px-2 py-1 rounded"
+                                                    className="absolute top-1 right-1 bg-red-500 text-white text-xs px-2 py-1 rounded z-10"
                                                 >
                                                     ✕
                                                 </button>
                                             </>
                                         ) : (
                                             <div
-                                                className="border border-gray-300 rounded-sm w-full aspect-square flex flex-col items-center justify-center text-gray-400"
+                                                className="
+                                                    border border-gray-300 rounded-sm w-full aspect-square 
+                                                    flex flex-col items-center justify-center text-gray-400
+                                                    overflow-hidden
+                                                "
                                             >
                                                 <Image className="w-6 h-6 mb-1" />
                                             </div>
@@ -115,6 +134,12 @@ const AddProducts = () => {
                             label="Description"
                             placeholder="e.g. Describe dosage, usage, and important medical information"
                             error={hasError.productDescription}
+                            className="
+                                min-h-[120px]
+                                max-h-[200px]
+                                overflow-y-auto
+                                resize-none
+                            "
                         />
 
                         <Input
@@ -123,10 +148,15 @@ const AddProducts = () => {
                             label="Price"
                             placeholder="₱0.00"
                             error={hasError.productPrice}
-                            className='w-1/2'
+                            className="max-w-xs w-full"
                         />
 
-                        <Select name="productCategory" className='w-1/2' label='Category' error={hasError.productCategory}>
+                        <Select
+                            name="productCategory"
+                            label="Category"
+                            error={hasError.productCategory}
+                            className="max-w-xs w-full"
+                        >
                             <option value="">Select Category</option>
                             {PRODUCT_CATEGORIES.map(category => (
                                 <option key={category} value={category}>
@@ -141,7 +171,7 @@ const AddProducts = () => {
                             label="Stock quantity"
                             placeholder="Stock Quantity"
                             error={hasError.productStock}
-                            className='w-1/2'
+                            className="max-w-xs w-full"
                         />
 
                         <ErrorText
@@ -158,21 +188,35 @@ const AddProducts = () => {
 
                         {/* Buttons */}
                         <div className="flex justify-end gap-3">
-                            <Button type="button" className="bg-gray-200 text-black">
+
+                            <Button
+                                type="button"
+                                className="bg-gray-200 text-black flex items-center gap-x-2"
+                            >
+                                <Save className="w-4 h-4" />
                                 Save
                             </Button>
 
-                            <Button type="submit" disabled={isLoading}>
+                            <Button
+                                type="submit"
+                                disabled={isLoading}
+                                className="flex items-center gap-x-2"
+                            >
                                 {isLoading ? (
                                     <ClipLoader size={20} color="white" />
                                 ) : (
-                                    'Publish'
+                                    <>
+                                        <Send className="w-4 h-4" />
+                                        <span>Publish</span>
+                                    </>
                                 )}
                             </Button>
+
                         </div>
 
                     </Form>
                 </div>
+
             </div>
         </>
     )
