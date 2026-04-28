@@ -18,6 +18,7 @@ const Signin = () => {
           <Input
             type='text'
             value={userName}
+            label='Username'
             placeholder='Enter your username'
             onChange={(e) => setUserName(e.target.value)}
             error={hasError.userName || hasError.general}
@@ -27,6 +28,7 @@ const Signin = () => {
             <Input
               type={showPassword ? 'text' : 'password'}
               value={password}
+              label='Password'
               onChange={(e) => setPassword(e.target.value)}
               placeholder='Enter your password'
               error={hasError.password || hasError.general}
