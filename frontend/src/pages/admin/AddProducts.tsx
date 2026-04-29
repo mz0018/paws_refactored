@@ -22,8 +22,14 @@ const AddProducts = () => {
         files,
         handleFileChange,
         handleRemoveFile,
-        handleSubmit
+        handleSubmit,
+        setProductName,
+        conflictName,
+        productName
     } = useAddProduct()
+
+    const isDisabled =
+    isLoading || (conflictName !== '' && productName.trim() === conflictName.trim())
 
     return (
         <>
@@ -127,6 +133,7 @@ const AddProducts = () => {
                             label="Product name"
                             placeholder="e.g. Ibuprofen 200mg Capsule"
                             error={hasError.productName}
+                            onChange={(e) => setProductName(e.target.value)}
                         />
 
                         <Textarea
@@ -199,7 +206,7 @@ const AddProducts = () => {
 
                             <Button
                                 type="submit"
-                                disabled={isLoading}
+                                disabled={isDisabled}
                                 className="flex items-center gap-x-2"
                             >
                                 {isLoading ? (

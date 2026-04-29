@@ -18,6 +18,9 @@ export const useAddProduct = () => {
         productImages?: string
         general?: string
     }>({})
+    const [conflictName, setConflictName] = useState<string>('')
+    const [productName, setProductName] = useState<string>('')
+
 
     const MAX_SIZE = 2 * 1024 * 1024
     const MAX_FILES = 5
@@ -25,7 +28,6 @@ export const useAddProduct = () => {
     const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (!e.currentTarget.files) return
 
-        // ✅ ADDED: max file check (no logic changed below this)
         const incomingCount = Array.from(e.currentTarget.files).length
         if (files.length + incomingCount > MAX_FILES) {
             setHasError(prev => ({
@@ -85,6 +87,8 @@ export const useAddProduct = () => {
         form.reset()
         setFiles([])
         setHasError({})
+        setConflictName('')
+        setProductName('')
     }
 
     useEffect(() => {
@@ -144,6 +148,7 @@ export const useAddProduct = () => {
             } else {
                 if (res.status === 409) {
                     setHasError({ general: 'A product with the same name already exists' })
+                    setConflictName(name)
                 } else if (res.status === 429) {
                     setHasError({ general: 'Too many requests. Please try again later.' })
                 } else if (res.status === 400) {
@@ -178,6 +183,9 @@ export const useAddProduct = () => {
         files,
         handleFileChange,
         handleRemoveFile,
-        handleSubmit
+        handleSubmit,
+        setProductName,
+        conflictName,
+        productName
     }
 }
