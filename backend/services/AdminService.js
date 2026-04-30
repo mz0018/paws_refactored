@@ -4,7 +4,7 @@ import Product from '../models/product.model.js'
 import ErrorController from '../controllers/ErrorController.js'
 import R2Service from '../services/R2Service.js'
 
-import { getSortOptions } from '../utils/sortOptions.js'
+import { getSortOptions, getSortDetails } from '../utils/sortOptions.js'
 class AdminService {
 
     //authorizeViaCookie handles the user_id checker!
@@ -53,7 +53,18 @@ class AdminService {
         const query = { createdBy: user_id }
 
         if (cursor) {
-            query._id = { $gt: new  mongoose.Types.ObjectId(cursor) }
+            try {
+                const decoded = JSON.parse(Buffer.from(cursor, 'base64').toString())
+                const { value, _id: lastId } = decoded
+                const { field, direction } = getSortDetails(sort)
+                
+                let queryValue = value
+                if (field === '_id') queryValue = new mongoose.Types.ObjectId(value)
+                
+                query.$or = direction === 1 
+                    ? [{ [field]: { $gt: queryValue } }, { [field]: queryValue, _id: { $gt: new mongoose.Types.ObjectId(lastId) } }]
+                    : [{ [field]: { $lt: queryValue } }, { [field]: queryValue, _id: { $gt: new mongoose.Types.ObjectId(lastId) } }]
+            } catch (e) { console.error('Invalid cursor', e) }
         }
 
         if (search && search.trim()) {
@@ -64,12 +75,16 @@ class AdminService {
             query.productCategory = category.trim()
         }
 
+        const sortOpts = getSortOptions(sort)
+        const sortQuery = { ...sortOpts }
+        if (!sortOpts._id) sortQuery._id = 1
+        
         const products = await Product.find(
             query,
             { productName: 1, productPrice: 1, images: 1, createdBy: 1 }
         )
         .populate('createdBy', 'userName')
-        .sort({ ...getSortOptions(sort), _id: 1 })
+        .sort(sortQuery)
         .limit(limit + 1)
 
         const hasNextPage = products.length > limit
@@ -77,9 +92,11 @@ class AdminService {
             products.pop()
         }
         
-        const nextCursor = products.length > 0 
-            ? products[products.length - 1]._id.toString() 
-            : null
+        const nextCursor = products.length > 0 ? (() => {
+            const last = products[products.length - 1]
+            const { field } = getSortDetails(sort)
+            return Buffer.from(JSON.stringify({ value: last[field], _id: last._id.toString() })).toString('base64')
+        })() : null
 
         return {
             products,

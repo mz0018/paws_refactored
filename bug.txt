@@ -1,0 +1,1 @@
+i think i found a bug in here the load more that doesnt work on speicifc sort by when default load more doesnt work, A to Z work, Z to A work, low to high doesnt work, high to low work
