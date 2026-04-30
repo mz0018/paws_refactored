@@ -14,7 +14,7 @@ export const useGetProduct = () => {
         let url = `${import.meta.env.VITE_API_URL}/api/admin/get-product?limit=10`
 
         if (cursor) {
-            url += `&cursor=${cursor}`
+            url += `&cursor=${encodeURIComponent(cursor)}`
         }
 
         if (searchQuery && searchQuery.trim()) {

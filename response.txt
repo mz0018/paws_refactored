@@ -1,0 +1,17 @@
+
+C:\Users\Admin\Desktop\paws_refactored\backend>node server.js
+[dotenv@17.3.1] injecting env (8) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+[dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  write to custom object with { processEnv: myObject }
+MongoDB 200
+Running on PORT 5000
+Decoded cursor: { value: '69f20165a6824ccf46008de2', _id: '69f20165a6824ccf46008de2' }
+Parsed _id from cursor: new ObjectId('69f20165a6824ccf46008de2')
+Query with cursor: {"createdBy":"69ea3a27600835e12749b961","$or":[{"_id":{"$lt":"69f20165a6824ccf46008de2"}},{"_id":{"$gt":"69f20165a6824ccf46008de2"}}]}
+Decoded cursor: { value: 'testingnga', _id: '69f2c4a2860a33e9c545b877' }
+Query with cursor: {"createdBy":"69ea3a27600835e12749b961","$or":[{"productName":{"$gt":"testingnga"}},{"productName":"testingnga","_id":{"$gt":"69f2c4a2860a33e9c545b877"}}]}
+Decoded cursor: { value: 'multi na ulti', _id: '69f3011e0dcb87cb8f8de7b8' }
+Query with cursor: {"createdBy":"69ea3a27600835e12749b961","$or":[{"productName":{"$lt":"multi na ulti"}},{"productName":"multi na ulti","_id":{"$gt":"69f3011e0dcb87cb8f8de7b8"}}]}
+Decoded cursor: { value: 99, _id: '69f2e2ce6a1033726e103d0f' }
+Query with cursor: {"createdBy":"69ea3a27600835e12749b961","$or":[{"productPrice":{"$gt":99}},{"productPrice":99,"_id":{"$gt":"69f2e2ce6a1033726e103d0f"}}]}
+Decoded cursor: { value: 99, _id: '69f2e2ce6a1033726e103d0f' }
+Query with cursor: {"createdBy":"69ea3a27600835e12749b961","$or":[{"productPrice":{"$lt":99}},{"productPrice":99,"_id":{"$gt":"69f2e2ce6a1033726e103d0f"}}]}

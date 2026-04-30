@@ -55,16 +55,24 @@ class AdminService {
         if (cursor) {
             try {
                 const decoded = JSON.parse(Buffer.from(cursor, 'base64').toString())
+                console.log('Decoded cursor:', decoded)
                 const { value, _id: lastId } = decoded
                 const { field, direction } = getSortDetails(sort)
                 
                 let queryValue = value
-                if (field === '_id') queryValue = new mongoose.Types.ObjectId(value)
-                
+                if (field === '_id') {
+                    query._id = direction === 1 
+                    ? { $gt: queryValue }
+                    : { $lt: queryValue };
+                } else {
                 query.$or = direction === 1 
                     ? [{ [field]: { $gt: queryValue } }, { [field]: queryValue, _id: { $gt: new mongoose.Types.ObjectId(lastId) } }]
-                    : [{ [field]: { $lt: queryValue } }, { [field]: queryValue, _id: { $gt: new mongoose.Types.ObjectId(lastId) } }]
-            } catch (e) { console.error('Invalid cursor', e) }
+                    : [{ [field]: { $lt: queryValue } }, { [field]: queryValue, _id: { $gt: new mongoose.Types.ObjectId(lastId) } }];
+                }
+
+            } catch (e) { 
+                console.error('Invalid cursor', e)
+            }
         }
 
         if (search && search.trim()) {
