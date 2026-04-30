@@ -151,6 +151,8 @@ export const useAddProduct = () => {
                     setConflictName(name)
                 } else if (res.status === 429) {
                     setHasError({ general: 'Too many requests. Please try again later.' })
+                } else if (res.status === 413) {
+                    setHasError({ productImages: 'File size too large. Please upload images under 2MB.' })
                 } else if (res.status === 400) {
                     const data = await res.json()
 

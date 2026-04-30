@@ -1,12 +1,12 @@
 import express from 'express'
 import AdminController from '../controllers/AdminController.js'
-import { upload } from '../middleware/upload.js'
 import { validate } from '../middleware/validate.js'
 import { cacheHeaders } from '../middleware/cacheHeaders.js'
 import { addProductSchema } from '../schemas/product.schema.js'
 import { authorizeViaCookie } from '../middleware/authorizeViaCookie.js'
 import { productUploadLimiter } from '../middleware/productUploadLimiter.js'
 import { productFetchLimiter } from '../middleware/productFetchLimiter.js'
+import { productFileSize } from '../middleware/productFileSize.js'
 
 const router = express.Router()
 
@@ -16,7 +16,7 @@ router.post(
     '/add-product',
     authorizeViaCookie,
     productUploadLimiter,
-    upload.fields([{ name: 'images', maxCount: 5 }]),
+    productFileSize,
     validate(addProductSchema),
     AdminController.addProduct
 )
