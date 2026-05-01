@@ -1,5 +1,5 @@
 import { useGetProduct } from '../../hooks/useGetProduct'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { ProductContainer } from '../../ui/form/ProductContainer'
 import { SearchBar } from '../../components/SearchBar'
 import { FilterBy } from '../../components/FilterBy'
@@ -16,14 +16,12 @@ const ViewProducts = () => {
     const [sortBy, setSortBy] = useState<string>('')
 
     const debouncedSearch = useDebounce(searchQuery, 300)
-    const { isLoading, products, error, fetchProducts, nextCursor, hasNextPage, clearProducts } = useGetProduct()
+    
+    const { data, fetchNextPage, hasNextPage, isLoading, isError, error, isFetchingNextPage } = useGetProduct(debouncedSearch, filteredBy, sortBy)
 
-    useEffect(() => {
-        clearProducts()
-        fetchProducts(undefined, debouncedSearch, filteredBy, sortBy)
-    }, [debouncedSearch, filteredBy, sortBy])
+    const products = data?.pages.flatMap(page => page.products) ?? []
 
-    if (error) return <p>{error}</p>
+    if (isError) return <p>{error?.message}</p>
 
     return (
         <>
@@ -50,7 +48,7 @@ const ViewProducts = () => {
 
             </div>
 
-            {products.length === 0 ? (
+            {products.length === 0 && !isLoading ? (
                 <p>No products found.</p>
             ) : (
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
@@ -61,8 +59,8 @@ const ViewProducts = () => {
             )}
 
              {hasNextPage && (
-                <ButtonLoadMore onClick={() => fetchProducts(nextCursor, searchQuery, filteredBy, sortBy)}>
-                    {isLoading ? <ClipLoader size={14} color='blue' /> : 'Load More'}
+                <ButtonLoadMore onClick={() => fetchNextPage()}>
+                    {isFetchingNextPage ? <ClipLoader size={14} color='blue' /> : 'Load More'}
                 </ButtonLoadMore>
             )}
         </>

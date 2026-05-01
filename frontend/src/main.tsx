@@ -8,6 +8,7 @@ import ProtectedRoutes from './utils/ProtectedRoutes.tsx'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext.tsx'
 import { Loader } from './components/Loader'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 const Signin = lazy(() => import('./pages/Signin.tsx'))
 const AdminLayout = lazy(() => import('./layout/AdminLayout.tsx'))
@@ -38,10 +39,12 @@ const router = createBrowserRouter([
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <AuthProvider>
-      <Suspense fallback={<Loader />}>
-        <RouterProvider router={router} />
-      </Suspense>
-    </AuthProvider>
+    <QueryClientProvider client={new QueryClient()}>
+      <AuthProvider>
+        <Suspense fallback={<Loader />}>
+          <RouterProvider router={router} />
+        </Suspense>
+      </AuthProvider>
+    </QueryClientProvider>
   </StrictMode>,
 )
