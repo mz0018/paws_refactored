@@ -1,4 +1,0 @@
-{,…}
-message
-: 
-"Cast to date failed for value \"Invalid Date\" (type Date) at path \"createdAt\" for model \"Product\""
