@@ -2,9 +2,14 @@ import { useState } from 'react'
 import { useViewDetailedProduct } from '../../hooks/useViewDetailedProduct'
 import { Image } from '../../ui/form/Image'
 
+import Lightbox from "yet-another-react-lightbox"
+import "yet-another-react-lightbox/styles.css"
+
 const ViewDetailedProduct = () => {
     const { product, loading } = useViewDetailedProduct()
+
     const [activeImage, setActiveImage] = useState(0)
+    const [imageOpen, setImageOpen] = useState(false)
 
     if (loading) return <p className="p-4">Loading...</p>
     if (!product) return <p className="p-4">Product not found</p>
@@ -17,13 +22,17 @@ const ViewDetailedProduct = () => {
             {/* LEFT SIDE */}
             <div className="space-y-6">
 
-                {/* Main Image Box (same feel as upload box) */}
-                <div className="
-                    border border-gray-300 rounded-sm
-                    h-[300px] md:h-[440px] lg:h-[500px]
-                    flex items-center justify-center 
-                    overflow-hidden bg-gray-50
-                ">
+                {/* MAIN IMAGE */}
+                <div
+                    className="
+                        border border-gray-300 rounded-sm
+                        h-[300px] md:h-[440px] lg:h-[500px]
+                        flex items-center justify-center 
+                        overflow-hidden bg-gray-50
+                        cursor-zoom-in
+                    "
+                    onClick={() => setImageOpen(true)}
+                >
                     <Image
                         src={images[activeImage]?.url}
                         alt="Main product"
@@ -31,7 +40,15 @@ const ViewDetailedProduct = () => {
                     />
                 </div>
 
-                {/* Thumbnails */}
+                {/* LIGHTBOX */}
+                <Lightbox
+                    open={imageOpen}
+                    close={() => setImageOpen(false)}
+                    index={activeImage}
+                    slides={images.map(img => ({ src: img.url }))}
+                />
+
+                {/* THUMBNAILS */}
                 <div>
                     <p className="font-semibold text-sm text-gray-500 mb-2">
                         Images:
@@ -44,7 +61,7 @@ const ViewDetailedProduct = () => {
                                 onClick={() => setActiveImage(index)}
                                 className={`
                                     relative overflow-hidden rounded-sm aspect-square
-                                    ${activeImage === index ? 'ring-2 ring-green-500' : ''}
+                                    ${activeImage === index ? 'ring-2 ring-blue-500' : ''}
                                 `}
                             >
                                 <Image
