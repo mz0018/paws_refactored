@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useViewDetailedProduct } from '../../hooks/useViewDetailedProduct'
 import { Image } from '../../ui/form/Image'
+import { Button } from '../../ui/form/Buttons'
 
 import Lightbox from "yet-another-react-lightbox"
 import "yet-another-react-lightbox/styles.css"
@@ -17,12 +18,11 @@ const ViewDetailedProduct = () => {
     const images = product.images || []
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-stretch">
 
             {/* LEFT SIDE */}
             <div className="space-y-6">
 
-                {/* MAIN IMAGE */}
                 <div
                     className="
                         border border-gray-300 rounded-sm
@@ -40,7 +40,6 @@ const ViewDetailedProduct = () => {
                     />
                 </div>
 
-                {/* LIGHTBOX */}
                 <Lightbox
                     open={imageOpen}
                     close={() => setImageOpen(false)}
@@ -48,7 +47,6 @@ const ViewDetailedProduct = () => {
                     slides={images.map(img => ({ src: img.url }))}
                 />
 
-                {/* THUMBNAILS */}
                 <div>
                     <p className="font-semibold text-sm text-gray-500 mb-2">
                         Images:
@@ -76,34 +74,60 @@ const ViewDetailedProduct = () => {
             </div>
 
             {/* RIGHT SIDE */}
-            <div className="md:border-l md:border-gray-300 md:pl-6 space-y-4">
+            <div className="md:pl-6 flex flex-col h-full">
 
-                <h1 className="text-2xl font-bold">
-                    {product.productName}
-                </h1>
+                <div className="space-y-4 flex-1">
 
-                <p className="text-xl text-green-600 font-semibold">
-                    ₱{product.productPrice}
-                </p>
+                    <div className="border-b border-gray-300 pb-4 space-y-2">
+                        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold capitalize">
+                            {product.productName}
+                        </h1>
 
-                <p className="text-sm text-gray-500">
-                    Category: {product.productCategory}
-                </p>
+                        <p className="text-sm sm:text-base text-gray-700 leading-relaxed">
+                            {product.productDescription}
+                        </p>
+                    </div>
 
-                <p className="text-gray-700">
-                    {product.productDescription}
-                </p>
+                    <p className="text-xl sm:text-2xl md:text-3xl text-green-600 font-semibold">
+                        ₱{product.productPrice}
+                    </p>
 
-                <div className="flex items-center gap-4">
-                    <span className="font-medium">Stock:</span>
-                    <span className="px-2 py-1 bg-gray-200 rounded">
-                        {product.stock}
-                    </span>
+                    <p className="text-xs sm:text-sm text-gray-500">
+                        Category: {product.productCategory}
+                    </p>
+
+                    <div className="flex items-center gap-2 sm:gap-4 text-sm sm:text-base">
+                        <span className="font-medium">Stock:</span>
+                        <span className="px-2 py-1 bg-gray-200 rounded text-xs sm:text-sm">
+                            {product.stock}
+                        </span>
+                    </div>
+
+                    <p className="text-[10px] sm:text-xs text-gray-400">
+                        Created at: {new Date(product.createdAt).toLocaleString()}
+                    </p>
                 </div>
 
-                <p className="text-xs text-gray-400">
-                    Created at: {new Date(product.createdAt).toLocaleString()}
-                </p>
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 pt-6 mt-auto">
+
+                    <Button
+                        type="button"
+                        onClick={() => alert('Delete product functionality coming soon!')}
+                        className="w-full py-3 sm:py-4 md:py-5 px-4"
+                    >
+                        Delete Product
+                    </Button>
+
+                    <Button
+                        type="button"
+                        onClick={() => alert('Edit product functionality coming soon!')}
+                        className="w-full py-3 sm:py-4 md:py-5 px-4"
+                    >
+                        Edit Product
+                    </Button>
+
+                </div>
+
             </div>
 
         </div>
