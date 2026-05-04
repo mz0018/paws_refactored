@@ -24,13 +24,14 @@ export const ProductUpdateModal = ({
 }: ProductUpdateModalProps) => {
 
   const [openImage, setOpenImage] = useState(false)
+  const [activeImage, setActiveImage] = useState(0)
 
   return (
     <Modal
       isOpen={isOpen}
       onClose={onClose}
       closeOnBackdrop={false}
-      className="w-full sm:max-w-md"
+      className="w-full sm:max-w-lg"
     >
       <h2 className="text-lg font-bold mb-4">Edit Product</h2>
 
@@ -41,11 +42,11 @@ export const ProductUpdateModal = ({
           {product?.images?.[0]?.url ? (
             <>
               <div
-                className="cursor-pointer"
+                className="cursor-pointer mb-2"
                 onClick={() => setOpenImage(true)}
               >
                 <Image
-                  src={product.images[0].url}
+                  src={product.images[activeImage].url}
                   alt="Product Image"
                 />
               </div>
@@ -57,6 +58,24 @@ export const ProductUpdateModal = ({
                   src: img.url
                 }))}
               />
+
+              <div className="grid grid-cols-5 gap-2">
+                {product.images.slice(0, 5).map((img: any, index: number) => (
+                  <button
+                    key={index}
+                    onClick={() => setActiveImage(index)}
+                    className={`aspect-square overflow-hidden rounded-sm ${
+                      activeImage === index ? 'ring-2 ring-blue-500' : ''
+                    }`}
+                  >
+                    <Image
+                      src={img.url}
+                      alt={`Thumbnail ${index + 1}`}
+                      className="w-full h-full aspect-square object-cover"
+                    />
+                  </button>
+                ))}
+              </div>
             </>
           ) : (
             <p className="text-gray-500">No image available</p>
