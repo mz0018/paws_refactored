@@ -6,7 +6,7 @@ export const Button = ({ className = '', children, ...props }: ButtonProps) => {
   return (
     <button
       {...props}
-      className={`cursor-pointer p-4 rounded-sm bg-blue-500 text-white tracking-wider flex items-center justify-center gap-2 ${className}`}
+      className={`cursor-pointer p-4 rounded-sm bg-blue-500 tracking-wider flex items-center justify-center gap-2 ${className}`}
     >
       {children}
     </button>

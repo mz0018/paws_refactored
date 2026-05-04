@@ -5,12 +5,14 @@ import { Button } from '../../ui/form/Buttons'
 
 import Lightbox from "yet-another-react-lightbox"
 import "yet-another-react-lightbox/styles.css"
+import { ProductUpdateModal } from '../../components/modals/ProductUpdateModal'
 
 const ViewDetailedProduct = () => {
     const { product, loading } = useViewDetailedProduct()
 
     const [activeImage, setActiveImage] = useState(0)
     const [imageOpen, setImageOpen] = useState(false)
+    const [isEditOpen, setIsEditOpen] = useState(false)
 
     if (loading) return <p className="p-4">Loading...</p>
     if (!product) return <p className="p-4">Product not found</p>
@@ -120,7 +122,7 @@ const ViewDetailedProduct = () => {
 
                     <Button
                         type="button"
-                        onClick={() => alert('Edit product functionality coming soon!')}
+                        onClick={() => setIsEditOpen(true)}
                         className="w-full py-3 sm:py-4 md:py-5 px-4"
                     >
                         Edit Product
@@ -129,6 +131,11 @@ const ViewDetailedProduct = () => {
                 </div>
 
             </div>
+
+            <ProductUpdateModal
+                isOpen={isEditOpen}
+                onClose={() => setIsEditOpen(false)}
+            />
 
         </div>
     )
