@@ -1,11 +1,11 @@
 import { useState } from 'react'
-import { useViewDetailedProduct } from '../../hooks/useViewDetailedProduct'
 import { Image } from '../../ui/form/Image'
 import { Button } from '../../ui/form/Buttons'
+import { useViewDetailedProduct } from '../../hooks/useViewDetailedProduct'
+import { ProductUpdateModal } from '../../components/modals/ProductUpdateModal'
 
 import Lightbox from "yet-another-react-lightbox"
 import "yet-another-react-lightbox/styles.css"
-import { ProductUpdateModal } from '../../components/modals/ProductUpdateModal'
 
 const ViewDetailedProduct = () => {
     const { product, loading } = useViewDetailedProduct()
@@ -135,6 +135,7 @@ const ViewDetailedProduct = () => {
             <ProductUpdateModal
                 isOpen={isEditOpen}
                 onClose={() => setIsEditOpen(false)}
+                product={product}
             />
 
         </div>
