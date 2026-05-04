@@ -1,10 +1,15 @@
+import { useState } from 'react'
 import { Modal } from '../../ui/form/Modal'
-import { Button } from '../../ui/form/Buttons'
 import { Input } from '../../ui/form/Input'
+import { Image } from '../../ui/form/Image'
 import { Select } from '../../ui/form/Select'
+import { Button } from '../../ui/form/Buttons'
 import { Textarea } from '../../ui/form/Textarea'
 
 import { PRODUCT_CATEGORIES } from '../../mocks/categories'
+
+import Lightbox from "yet-another-react-lightbox"
+import "yet-another-react-lightbox/styles.css"
 
 type ProductUpdateModalProps = {
   isOpen: boolean
@@ -17,6 +22,9 @@ export const ProductUpdateModal = ({
   onClose,
   product,
 }: ProductUpdateModalProps) => {
+
+  const [openImage, setOpenImage] = useState(false)
+
   return (
     <Modal
       isOpen={isOpen}
@@ -27,6 +35,34 @@ export const ProductUpdateModal = ({
       <h2 className="text-lg font-bold mb-4">Edit Product</h2>
 
       <div className="space-y-3">
+
+        <div>
+          <label className="block text-sm font-medium mb-1">Product Image(s)</label>
+          {product?.images?.[0]?.url ? (
+            <>
+              <div
+                className="cursor-pointer"
+                onClick={() => setOpenImage(true)}
+              >
+                <Image
+                  src={product.images[0].url}
+                  alt="Product Image"
+                />
+              </div>
+
+              <Lightbox
+                open={openImage}
+                close={() => setOpenImage(false)}
+                slides={(product?.images || []).map((img: any) => ({
+                  src: img.url
+                }))}
+              />
+            </>
+          ) : (
+            <p className="text-gray-500">No image available</p>
+          )}
+        </div>
+
         <Input
           defaultValue={product?.productName}
           className="w-full border p-2 rounded"
