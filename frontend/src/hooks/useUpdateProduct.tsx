@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { productInputValidator } from '../utils/productInputValidator'
 
 type Product = {
   _id: string
@@ -15,12 +16,37 @@ type UseUpdateProductProps = {
 }
 
 export const useUpdateProduct = ({ product }: UseUpdateProductProps) => {
-
+    
+    const [changesMade, setChangesMade] = useState<boolean>(false)
+    const [isLoading, setIsLoading] = useState<boolean>(false)
     const [productCopy, setProductCopy] = useState<Product>(product)
+    const [hasError, setHasError] = useState<{
+        productName?: string
+        productCategory?: string
+        productDescription?: string
+        productPrice?: string
+        productStock?: string
+        productImages?: string
+        general?: string
+    }>({})
 
     useEffect(() => {
         setProductCopy(product)
+        setHasError({})
+        setChangesMade(false)
     }, [product])
+
+    useEffect(() => {
+        const hasChanges =
+            productCopy.productName !== product.productName ||
+            productCopy.productCategory !== product.productCategory ||
+            productCopy.productDescription !== product.productDescription ||
+            productCopy.productPrice !== product.productPrice ||
+            productCopy.stock !== product.stock ||
+            JSON.stringify(productCopy.images) !== JSON.stringify(product.images)
+
+        setChangesMade(hasChanges)
+    }, [productCopy, product])
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target
@@ -35,36 +61,63 @@ export const useUpdateProduct = ({ product }: UseUpdateProductProps) => {
 
     const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
         e.preventDefault()
+        setIsLoading(true)
 
-        const isThereChanges: any = {}
-        
-        if (productCopy.productName !== product.productName) {
-            isThereChanges.productName = productCopy.productName
+        const productImageLength = productCopy.images ? productCopy.images.length : 0
+
+        const formData = new FormData()
+
+        formData.append('productName', productCopy.productName)
+        formData.append('productCategory', productCopy.productCategory)
+        formData.append('productDescription', productCopy.productDescription)
+        formData.append('productPrice', String(productCopy.productPrice))
+        formData.append('stock', String(productCopy.stock))
+
+        const newErrors = productInputValidator(formData, productImageLength)
+
+        if (Object.keys(newErrors).length > 0) {
+            setHasError(newErrors)
+            setIsLoading(false)
+            return
         }
 
-        if (productCopy.productCategory !== product.productCategory) {
-            isThereChanges.productCategory = productCopy.productCategory
-        }
+        try {
+            const isThereChanges: Partial<Product> = {}
 
-        if (productCopy.productDescription !== product.productDescription) {
-            isThereChanges.productDescription = productCopy.productDescription
-        }
+            if (productCopy.productName !== product.productName) {
+                isThereChanges.productName = productCopy.productName
+            }
 
-        if (productCopy.productPrice !== product.productPrice) {
-            isThereChanges.productPrice = productCopy.productPrice
-        }
+            if (productCopy.productCategory !== product.productCategory) {
+                isThereChanges.productCategory = productCopy.productCategory
+            }
 
-        if (productCopy.stock !== product.stock) {
-            isThereChanges.stock = productCopy.stock
-        }
+            if (productCopy.productDescription !== product.productDescription) {
+                isThereChanges.productDescription = productCopy.productDescription
+            }
 
-        if (JSON.stringify(productCopy.images) !== JSON.stringify(product.images)) {
-            isThereChanges.images = productCopy.images
-        }
+            if (productCopy.productPrice !== product.productPrice) {
+                isThereChanges.productPrice = productCopy.productPrice
+            }
 
-        console.log(isThereChanges)
+            if (productCopy.stock !== product.stock) {
+                isThereChanges.stock = productCopy.stock
+            }
+
+            if (JSON.stringify(productCopy.images) !== JSON.stringify(product.images)) {
+                isThereChanges.images = productCopy.images
+            }
+
+            console.log('Changes to update:', isThereChanges)
+            setHasError({})
+
+        } catch (error) {
+            console.error('Error updating product:', error)
+        } finally {
+            setIsLoading(false)
+        }
     }
 
-    return { handleSubmit, handleChange }
+    return { changesMade, hasError, isLoading, handleSubmit, handleChange }
     
 }

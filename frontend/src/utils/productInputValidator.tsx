@@ -11,7 +11,7 @@ export type ProductFormErrors = {
 export const productInputValidator = ( formData: FormData, filesLength: number): ProductFormErrors => {
     
     const errors: ProductFormErrors = {}
-
+    
     const name = formData.get('productName') as string
     const category = formData.get('productCategory') as string
     const description = formData.get('productDescription') as string

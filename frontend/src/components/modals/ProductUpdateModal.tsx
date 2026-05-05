@@ -19,7 +19,9 @@ type ProductUpdateModalProps = {
 export const ProductUpdateModal = ({ isOpen, onClose, product }: ProductUpdateModalProps) => {
 
   // const { isLoading, hasError, files, handleFileChange, handleRemoveFile, handleSubmit } = useUpdateProduct({ product})
-  const { handleSubmit, handleChange } = useUpdateProduct({ product })
+  const { changesMade, hasError, isLoading, handleSubmit, handleChange } = useUpdateProduct({ product })
+
+  console.log(changesMade)
 
   return (
     <Modal
@@ -43,7 +45,7 @@ export const ProductUpdateModal = ({ isOpen, onClose, product }: ProductUpdateMo
             label="Product name"
             defaultValue={product?.productName}
             onChange={handleChange}
-            // error={hasError.productName}
+            error={hasError.productName}
             className="w-full border p-2 rounded"
           />
 
@@ -53,7 +55,7 @@ export const ProductUpdateModal = ({ isOpen, onClose, product }: ProductUpdateMo
             label="Price"
             defaultValue={product?.productPrice}
             onChange={handleChange}
-            // error={hasError.productPrice}
+            error={hasError.productPrice}
             className="w-full border p-2 rounded"
           />
 
@@ -62,7 +64,7 @@ export const ProductUpdateModal = ({ isOpen, onClose, product }: ProductUpdateMo
             label="Category"
             defaultValue={product?.productCategory}
             onChange={handleChange}
-            // error={hasError.productCategory}
+            error={hasError.productCategory}
             className="w-full"
           >
             <option value="" disabled>
@@ -82,7 +84,7 @@ export const ProductUpdateModal = ({ isOpen, onClose, product }: ProductUpdateMo
             label="Stock"
             defaultValue={product?.stock}
             onChange={handleChange}
-            // error={hasError.productStock}
+            error={hasError.productStock}
             className="w-full border p-2 rounded"
           />
 
@@ -91,11 +93,11 @@ export const ProductUpdateModal = ({ isOpen, onClose, product }: ProductUpdateMo
             label="Description"
             defaultValue={product?.productDescription}
             onChange={handleChange}
-            // error={hasError.productDescription}
-            className="w-full border p-2 rounded"
+            error={hasError.productDescription}
+            className="w-full border p-2 rounded mb-2"
           />
 
-          {/* <ErrorText message={ hasError.productName || hasError.productCategory || hasError.productDescription || hasError.productPrice || hasError.productStock || hasError.productImages || hasError.general }/> */}
+          <ErrorText message={ hasError.productName || hasError.productCategory || hasError.productDescription || hasError.productPrice || hasError.productStock || hasError.productImages || hasError.general }/>
 
           <div className="flex justify-end gap-2 mt-4">
             <Button
@@ -108,11 +110,15 @@ export const ProductUpdateModal = ({ isOpen, onClose, product }: ProductUpdateMo
             <Button
               type="submit"
               className="text-white w-full"
-              // disabled={isLoading}
+              disabled={isLoading || !changesMade}
             >
-              {/* {isLoading ? 'Updating...' : 'Update'} */}
-              Save changes
+              {isLoading
+                ? 'Updating...'
+                : !changesMade
+                ? 'No changes to update'
+                : 'Update'}
             </Button>
+            
           </div>
 
         </form>
