@@ -25,7 +25,7 @@ export const useUpdateProduct = ({ product }: UseUpdateProductProps) => {
         productCategory?: string
         productDescription?: string
         productPrice?: string
-        productStock?: string
+        stock?: string
         productImages?: string
         general?: string
     }>({})
@@ -56,6 +56,11 @@ export const useUpdateProduct = ({ product }: UseUpdateProductProps) => {
         setProductCopy((prev) => ({
             ...prev,
             [name]: numberFields.includes(name) ? Number(value) : value
+        }))
+
+        setHasError((prev) => ({
+            ...prev,
+            [name]: undefined
         }))
     }
 

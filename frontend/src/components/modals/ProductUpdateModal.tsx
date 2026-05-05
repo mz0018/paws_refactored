@@ -21,8 +21,6 @@ export const ProductUpdateModal = ({ isOpen, onClose, product }: ProductUpdateMo
   // const { isLoading, hasError, files, handleFileChange, handleRemoveFile, handleSubmit } = useUpdateProduct({ product})
   const { changesMade, hasError, isLoading, handleSubmit, handleChange } = useUpdateProduct({ product })
 
-  console.log(changesMade)
-
   return (
     <Modal
       isOpen={isOpen}
@@ -84,7 +82,7 @@ export const ProductUpdateModal = ({ isOpen, onClose, product }: ProductUpdateMo
             label="Stock"
             defaultValue={product?.stock}
             onChange={handleChange}
-            error={hasError.productStock}
+            error={hasError.stock}
             className="w-full border p-2 rounded"
           />
 
@@ -97,7 +95,7 @@ export const ProductUpdateModal = ({ isOpen, onClose, product }: ProductUpdateMo
             className="w-full border p-2 rounded mb-2"
           />
 
-          <ErrorText message={ hasError.productName || hasError.productCategory || hasError.productDescription || hasError.productPrice || hasError.productStock || hasError.productImages || hasError.general }/>
+          <ErrorText message={ hasError.productName || hasError.productCategory || hasError.productDescription || hasError.productPrice || hasError.stock || hasError.productImages || hasError.general }/>
 
           <div className="flex justify-end gap-2 mt-4">
             <Button
@@ -109,7 +107,11 @@ export const ProductUpdateModal = ({ isOpen, onClose, product }: ProductUpdateMo
 
             <Button
               type="submit"
-              className="text-white w-full"
+              className={`w-full text-white ${
+                isLoading || !changesMade
+                  ? 'bg-gray-400 cursor-not-allowed'
+                  : 'bg-blue-600 hover:bg-blue-700'
+              }`}
               disabled={isLoading || !changesMade}
             >
               {isLoading
