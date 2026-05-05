@@ -113,7 +113,6 @@ export const useUpdateProduct = ({ product }: UseUpdateProductProps) => {
                 isThereChanges.images = productCopy.images
             }
 
-            console.log('Changes to update:', isThereChanges)
             setHasError({})
 
         } catch (error) {

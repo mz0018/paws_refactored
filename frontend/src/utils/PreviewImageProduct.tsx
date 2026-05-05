@@ -59,7 +59,10 @@ export const PreviewImageProduct = ({ images }: Props) => {
                   return img ? (
                     <button
                       key={index}
-                      onClick={() => setActiveImage(index)}
+                      onClick={() => {
+                        setActiveImage(index)
+                        console.log(img)
+                      }}
                       className={`aspect-square overflow-hidden rounded-sm ${
                         activeImage === index ? 'ring-2 ring-blue-500' : ''
                       }`}
