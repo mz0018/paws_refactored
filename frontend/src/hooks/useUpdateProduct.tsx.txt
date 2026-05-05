@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { productInputValidator } from '../utils/productInputValidator'
 import { useProductFiles } from './useProductFiles'
 
-export const useAddProduct = () => {
+export const useUpdateProduct = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [hasError, setHasError] = useState<{
         productName?: string
@@ -13,26 +13,15 @@ export const useAddProduct = () => {
         productImages?: string
         general?: string
     }>({})
-    const [conflictName, setConflictName] = useState<string>('')
-    const [productName, setProductName] = useState<string>('')
 
     const { files, handleFileChange, handleRemoveFile, resetFiles } = useProductFiles()
 
-    const resetForm = (form: HTMLFormElement) => {
-        form.reset()
-        resetFiles()
-        setHasError({})
-        setConflictName('')
-        setProductName('')
-    } 
-
-    const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>, productId: string) => {
         e.preventDefault()
         setIsLoading(true)
 
         const form = e.currentTarget
         const formData = new FormData(form)
-        const name = formData.get('productName') as string
 
         const newErrors = productInputValidator(formData, files.length)
 
@@ -45,18 +34,17 @@ export const useAddProduct = () => {
         try {
             files.forEach(({ file }) => formData.append('images', file))
 
-            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/add-product`, {
-                method: 'POST',
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/update-product/${productId}`, {
+                method: 'PUT',
                 body: formData,
                 credentials: 'include'
             })
 
             if (res.ok) {
-                resetForm(form)
+                setHasError({})
             } else {
                 if (res.status === 409) {
                     setHasError({ general: 'A product with the same name already exists' })
-                    setConflictName(name)
                 } else if (res.status === 429) {
                     setHasError({ general: 'Too many requests. Please try again later.' })
                 } else if (res.status === 413) {
@@ -81,11 +69,11 @@ export const useAddProduct = () => {
             }
         } catch (error) {
             setHasError({ general: 'Something went wrong. Please try again later.' })
-            console.error('Add product failed:', error)
+            console.error('Update product failed:', error)
         } finally {
             setIsLoading(false)
         }
     }
 
-    return { isLoading, hasError, files, handleFileChange, handleRemoveFile, handleSubmit, setProductName, conflictName, productName }
+    return { isLoading, hasError, files, handleFileChange, handleRemoveFile, handleSubmit, resetFiles }
 }

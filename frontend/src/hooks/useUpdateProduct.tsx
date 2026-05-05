@@ -1,43 +1,70 @@
-// import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
-// type UpdateProductPayload = Partial<{
-//     productName?: string
-//     productDescription?: string
-//     productPrice?: number
-//     productCategory?: string
-//     stock?: number
-// }>
+type Product = {
+  _id: string
+  productName: string
+  productCategory: string
+  productDescription: string
+  productPrice: number
+  stock: number
+  images: string[]
+}
 
-// export const useUpdateProduct = () => {
-//   const [loading, setLoading] = useState(false)
-//   const [error, setError] = useState<string | null>(null)
+type UseUpdateProductProps = {
+  product: Product
+}
 
-//   const updateProduct = async (id: string, data: UpdateProductPayload) => {
-//     setLoading(true)
-//     setError(null)
+export const useUpdateProduct = ({ product }: UseUpdateProductProps) => {
 
-//     try {
-//       const res = await fetch(
-//         `${import.meta.env.VITE_API_URL}/api/admin/update-product/${id}`,
-//         {
-//           method: "PATCH",
-//           headers: {
-//             "Content-Type": "application/json"
-//           },
-//           body: JSON.stringify(data),
-//           credentials: "include"
-//         }
-//       )
+    const [productCopy, setProductCopy] = useState<Product>(product)
 
-//       if (!res.ok) throw new Error("Failed to update product")
+    useEffect(() => {
+        setProductCopy(product)
+    }, [product])
 
-//       return await res.json()
-//     } catch (err: any) {
-//       setError(err.message)
-//     } finally {
-//       setLoading(false)
-//     }
-//   }
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+        const { name, value } = e.target
 
-//   return { updateProduct, loading, error }
-// }
+        const numberFields = ['productPrice', 'stock']
+
+        setProductCopy((prev) => ({
+            ...prev,
+            [name]: numberFields.includes(name) ? Number(value) : value
+        }))
+    }
+
+    const handleSubmit = async (e: React.SyntheticEvent<HTMLFormElement>) => {
+        e.preventDefault()
+
+        const isThereChanges: any = {}
+        
+        if (productCopy.productName !== product.productName) {
+            isThereChanges.productName = productCopy.productName
+        }
+
+        if (productCopy.productCategory !== product.productCategory) {
+            isThereChanges.productCategory = productCopy.productCategory
+        }
+
+        if (productCopy.productDescription !== product.productDescription) {
+            isThereChanges.productDescription = productCopy.productDescription
+        }
+
+        if (productCopy.productPrice !== product.productPrice) {
+            isThereChanges.productPrice = productCopy.productPrice
+        }
+
+        if (productCopy.stock !== product.stock) {
+            isThereChanges.stock = productCopy.stock
+        }
+
+        if (JSON.stringify(productCopy.images) !== JSON.stringify(product.images)) {
+            isThereChanges.images = productCopy.images
+        }
+
+        console.log(isThereChanges)
+    }
+
+    return { handleSubmit, handleChange }
+    
+}

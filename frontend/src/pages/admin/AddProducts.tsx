@@ -38,7 +38,6 @@ const AddProducts = () => {
                 {/* LEFT SIDE */}
                 <div className="space-y-6">
 
-                    {/* Upload Box */}
                     <div className="
                         border-3 border-gray-300 border-dashed rounded-lg 
                         min-h-[440px] flex flex-col justify-center items-center 
@@ -193,7 +192,6 @@ const AddProducts = () => {
                             }
                         />
 
-                        {/* Buttons */}
                         <div className="flex justify-end gap-3">
 
                             <Button

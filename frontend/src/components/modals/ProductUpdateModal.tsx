@@ -1,15 +1,14 @@
-import { useState } from 'react'
 import { Modal } from '../../ui/form/Modal'
 import { Input } from '../../ui/form/Input'
-import { Image } from '../../ui/form/Image'
 import { Select } from '../../ui/form/Select'
 import { Button } from '../../ui/form/Buttons'
 import { Textarea } from '../../ui/form/Textarea'
+import { ErrorText } from '../../ui/form/ErrorText'
+import { PreviewImageProduct } from '../../utils/PreviewImageProduct'
+
+import { useUpdateProduct } from '../../hooks/useUpdateProduct'
 
 import { PRODUCT_CATEGORIES } from '../../mocks/categories'
-
-import Lightbox from "yet-another-react-lightbox"
-import "yet-another-react-lightbox/styles.css"
 
 type ProductUpdateModalProps = {
   isOpen: boolean
@@ -17,14 +16,10 @@ type ProductUpdateModalProps = {
   product: any
 }
 
-export const ProductUpdateModal = ({
-  isOpen,
-  onClose,
-  product,
-}: ProductUpdateModalProps) => {
+export const ProductUpdateModal = ({ isOpen, onClose, product }: ProductUpdateModalProps) => {
 
-  const [openImage, setOpenImage] = useState(false)
-  const [activeImage, setActiveImage] = useState(0)
+  // const { isLoading, hasError, files, handleFileChange, handleRemoveFile, handleSubmit } = useUpdateProduct({ product})
+  const { handleSubmit, handleChange } = useUpdateProduct({ product })
 
   return (
     <Modal
@@ -39,101 +34,88 @@ export const ProductUpdateModal = ({
 
         <div>
           <label className="block text-sm font-medium mb-1">Product Image(s)</label>
-          {product?.images?.[0]?.url ? (
-            <>
-              <div
-                className="cursor-pointer mb-2"
-                onClick={() => setOpenImage(true)}
-              >
-                <Image
-                  src={product.images[activeImage].url}
-                  alt="Product Image"
-                />
-              </div>
-
-              <Lightbox
-                open={openImage}
-                close={() => setOpenImage(false)}
-                slides={(product?.images || []).map((img: any) => ({
-                  src: img.url
-                }))}
-              />
-
-              <div className="grid grid-cols-5 gap-2">
-                {product.images.slice(0, 5).map((img: any, index: number) => (
-                  <button
-                    key={index}
-                    onClick={() => setActiveImage(index)}
-                    className={`aspect-square overflow-hidden rounded-sm ${
-                      activeImage === index ? 'ring-2 ring-blue-500' : ''
-                    }`}
-                  >
-                    <Image
-                      src={img.url}
-                      alt={`Thumbnail ${index + 1}`}
-                      className="w-full h-full aspect-square object-cover"
-                    />
-                  </button>
-                ))}
-              </div>
-            </>
-          ) : (
-            <p className="text-gray-500">No image available</p>
-          )}
+          <PreviewImageProduct images={product?.images} />
         </div>
 
-        <Input
-          defaultValue={product?.productName}
-          className="w-full border p-2 rounded"
-        />
+        <form onSubmit={handleSubmit}>
+          <Input
+            name="productName"
+            label="Product name"
+            defaultValue={product?.productName}
+            onChange={handleChange}
+            // error={hasError.productName}
+            className="w-full border p-2 rounded"
+          />
 
-        <Input
-          defaultValue={product?.productPrice}
-          className="w-full border p-2 rounded"
-        />
+          <Input
+            name="productPrice"
+            type="number"
+            label="Price"
+            defaultValue={product?.productPrice}
+            onChange={handleChange}
+            // error={hasError.productPrice}
+            className="w-full border p-2 rounded"
+          />
 
-        <Select
-          defaultValue={product?.productCategory}
-          className="w-full"
-        >
-          <option value="" disabled>
-            Select category
-          </option>
-
-          {PRODUCT_CATEGORIES.map((category) => (
-            <option key={category} value={category}>
-              {category}
+          <Select
+            name="productCategory"
+            label="Category"
+            defaultValue={product?.productCategory}
+            onChange={handleChange}
+            // error={hasError.productCategory}
+            className="w-full"
+          >
+            <option value="" disabled>
+              Select category
             </option>
-          ))}
-        </Select>
 
-        <Input
-          type="number"
-          defaultValue={product?.stock}
-          className="w-full border p-2 rounded"
-        />
+            {PRODUCT_CATEGORIES.map((category) => (
+              <option key={category} value={category}>
+                {category}
+              </option>
+            ))}
+          </Select>
 
-        <Textarea
-          defaultValue={product?.productDescription}
-          className="w-full border p-2 rounded"
-        />
-      </div>
+          <Input
+            name="stock"
+            type="number"
+            label="Stock"
+            defaultValue={product?.stock}
+            onChange={handleChange}
+            // error={hasError.productStock}
+            className="w-full border p-2 rounded"
+          />
 
-      <div className="flex justify-end gap-2 mt-4">
-        <Button
-          onClick={onClose}
-          className="text-gray-500 bg-white border border-gray-300 w-full"
-        >
-          Cancel
-        </Button>
+          <Textarea
+            name="productDescription"
+            label="Description"
+            defaultValue={product?.productDescription}
+            onChange={handleChange}
+            // error={hasError.productDescription}
+            className="w-full border p-2 rounded"
+          />
 
-        <Button
-          type="button"
-          className="text-white w-full"
-          onClick={() => alert('Save changes coming soon!')}
-        >
-          Save Changes
-        </Button>
+          {/* <ErrorText message={ hasError.productName || hasError.productCategory || hasError.productDescription || hasError.productPrice || hasError.productStock || hasError.productImages || hasError.general }/> */}
+
+          <div className="flex justify-end gap-2 mt-4">
+            <Button
+              onClick={onClose}
+              className="text-gray-500 bg-white border border-gray-300 w-full"
+            >
+              Cancel
+            </Button>
+
+            <Button
+              type="submit"
+              className="text-white w-full"
+              // disabled={isLoading}
+            >
+              {/* {isLoading ? 'Updating...' : 'Update'} */}
+              Save changes
+            </Button>
+          </div>
+
+        </form>
       </div>
     </Modal>
   )
