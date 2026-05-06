@@ -19,7 +19,7 @@ type ProductUpdateModalProps = {
 export const ProductUpdateModal = ({ isOpen, onClose, product }: ProductUpdateModalProps) => {
 
   // const { isLoading, hasError, files, handleFileChange, handleRemoveFile, handleSubmit } = useUpdateProduct({ product})
-  const { changesMade, hasError, isLoading, handleSubmit, handleChange } = useUpdateProduct({ product })
+  const { changesMade, hasError, isLoading, handleRemoveImage, handleAddImage, handleSubmit, handleChange, productCopy } = useUpdateProduct({ product })
 
   return (
     <Modal
@@ -34,14 +34,14 @@ export const ProductUpdateModal = ({ isOpen, onClose, product }: ProductUpdateMo
 
         <div>
           <label className="block text-sm font-medium mb-1">Product Image(s)</label>
-          <PreviewImageProduct images={product?.images} />
+          <PreviewImageProduct images={productCopy?.images} onRemove={handleRemoveImage} onAdd={handleAddImage} />
         </div>
 
         <form onSubmit={handleSubmit}>
           <Input
             name="productName"
             label="Product name"
-            defaultValue={product?.productName}
+            defaultValue={productCopy?.productName}
             onChange={handleChange}
             error={hasError.productName}
             className="w-full border p-2 rounded"
@@ -51,7 +51,7 @@ export const ProductUpdateModal = ({ isOpen, onClose, product }: ProductUpdateMo
             name="productPrice"
             type="number"
             label="Price"
-            defaultValue={product?.productPrice}
+            defaultValue={productCopy?.productPrice}
             onChange={handleChange}
             error={hasError.productPrice}
             className="w-full border p-2 rounded"
@@ -60,7 +60,7 @@ export const ProductUpdateModal = ({ isOpen, onClose, product }: ProductUpdateMo
           <Select
             name="productCategory"
             label="Category"
-            defaultValue={product?.productCategory}
+            defaultValue={productCopy?.productCategory}
             onChange={handleChange}
             error={hasError.productCategory}
             className="w-full"
@@ -80,7 +80,7 @@ export const ProductUpdateModal = ({ isOpen, onClose, product }: ProductUpdateMo
             name="stock"
             type="number"
             label="Stock"
-            defaultValue={product?.stock}
+            defaultValue={productCopy?.stock}
             onChange={handleChange}
             error={hasError.stock}
             className="w-full border p-2 rounded"
@@ -89,7 +89,7 @@ export const ProductUpdateModal = ({ isOpen, onClose, product }: ProductUpdateMo
           <Textarea
             name="productDescription"
             label="Description"
-            defaultValue={product?.productDescription}
+            defaultValue={productCopy?.productDescription}
             onChange={handleChange}
             error={hasError.productDescription}
             className="w-full border p-2 rounded mb-2"

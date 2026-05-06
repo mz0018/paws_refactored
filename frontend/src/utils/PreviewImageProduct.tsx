@@ -8,9 +8,11 @@ import { Image as ImageIcon } from 'lucide-react'
 
 type Props = {
     images?: any[]
+    onRemove?: (index: number) => void
+    onAdd?: (newImageUrl: string) => void
 }
 
-export const PreviewImageProduct = ({ images }: Props) => {
+export const PreviewImageProduct = ({ images, onRemove, onAdd }: Props) => {
 
     if (!images?.length) {
         return (
@@ -57,28 +59,39 @@ export const PreviewImageProduct = ({ images }: Props) => {
                   const img = images[index]
 
                   return img ? (
-                    <button
-                      key={index}
-                      onClick={() => {
-                        setActiveImage(index)
-                        console.log(img)
-                      }}
-                      className={`aspect-square overflow-hidden rounded-sm ${
-                        activeImage === index ? 'ring-2 ring-blue-500' : ''
-                      }`}
-                    >
-                      <Image
-                        src={img.url}
-                        alt={`Thumbnail ${index + 1}`}
-                        className="w-full h-full aspect-square object-cover"
-                      />
-                    </button>
+                    <div key={index} className="flex flex-col items-center">
+                      <button
+                        onClick={() => setActiveImage(index)}
+                        className={`aspect-square overflow-hidden rounded-sm w-full ${
+                          activeImage === index ? 'ring-2 ring-blue-500' : ''
+                        }`}
+                      >
+                        <Image
+                          src={img.url}
+                          alt={`Thumbnail ${index + 1}`}
+                          className="w-full h-full object-cover"
+                        />
+                      </button>
+
+                      <button
+                        onClick={() => onRemove?.(index)}
+                        className="mt-1 text-xs text-red-500 hover:underline"
+                      >
+                        Remove
+                      </button>
+                    </div>
                   ) : (
-                    <div
-                      key={index}
-                      className="border border-gray-300 rounded-sm w-full aspect-square flex flex-col items-center justify-center text-gray-400"
-                    >
-                      <ImageIcon className="w-5 h-5" />
+                    <div key={index} className="flex flex-col items-center">
+                      <div className="border border-gray-300 rounded-sm w-full aspect-square flex flex-col items-center justify-center text-gray-400">
+                        <ImageIcon className="w-5 h-5" />
+                      </div>
+
+                      <button
+                        onClick={() => onAdd?.()}
+                        className="mt-1 text-xs text-blue-500 hover:underline"
+                      >
+                        Add
+                      </button>
                     </div>
                   )
                 })}

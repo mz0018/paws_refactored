@@ -48,6 +48,31 @@ export const useUpdateProduct = ({ product }: UseUpdateProductProps) => {
         setChangesMade(hasChanges)
     }, [productCopy, product])
 
+    const handleRemoveImage = (index: number) => {
+
+        setProductCopy((prev) => ({
+            ...prev,
+            images: prev.images.filter((_, i) => i !== index)
+        }))
+
+        setHasError((prev) => ({
+            ...prev,
+            productImages: undefined
+        }))
+    }
+
+    const handleAddImage = (newImageUrl: string) => {
+        setProductCopy((prev) => ({
+            ...prev,
+            images: [...prev.images, newImageUrl]
+        }))
+
+        setHasError((prev) => ({
+            ...prev,
+            productImages: undefined
+        }))
+    }
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target
 
@@ -57,6 +82,8 @@ export const useUpdateProduct = ({ product }: UseUpdateProductProps) => {
             ...prev,
             [name]: numberFields.includes(name) ? Number(value) : value
         }))
+
+        // console.log('Updated product copy:', { ...productCopy, [name]: value })
 
         setHasError((prev) => ({
             ...prev,
@@ -113,6 +140,12 @@ export const useUpdateProduct = ({ product }: UseUpdateProductProps) => {
                 isThereChanges.images = productCopy.images
             }
 
+            const removedImages = product.images.filter(img => !productCopy.images.includes(img))
+
+            console.log('All changes:', {
+                fields: isThereChanges,
+                removedImages: removedImages.length ? removedImages : undefined
+            })
             setHasError({})
 
         } catch (error) {
@@ -122,6 +155,6 @@ export const useUpdateProduct = ({ product }: UseUpdateProductProps) => {
         }
     }
 
-    return { changesMade, hasError, isLoading, handleSubmit, handleChange }
+    return { changesMade, hasError, isLoading, handleRemoveImage, handleAddImage, handleSubmit, handleChange, productCopy }
     
 }
