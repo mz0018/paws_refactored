@@ -87,7 +87,7 @@ export const PreviewImageProduct = ({ images, onRemove, onAdd }: Props) => {
                       </div>
 
                       <button
-                        onClick={() => onAdd?.()}
+                        onClick={() => onAdd?.('Images')}
                         className="mt-1 text-xs text-blue-500 hover:underline"
                       >
                         Add

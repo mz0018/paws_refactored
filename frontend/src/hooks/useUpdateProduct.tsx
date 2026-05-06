@@ -8,7 +8,7 @@ type Product = {
   productDescription: string
   productPrice: number
   stock: number
-  images: string[]
+  images: { url: string }[]
 }
 
 type UseUpdateProductProps = {
@@ -53,18 +53,6 @@ export const useUpdateProduct = ({ product }: UseUpdateProductProps) => {
         setProductCopy((prev) => ({
             ...prev,
             images: prev.images.filter((_, i) => i !== index)
-        }))
-
-        setHasError((prev) => ({
-            ...prev,
-            productImages: undefined
-        }))
-    }
-
-    const handleAddImage = (newImageUrl: string) => {
-        setProductCopy((prev) => ({
-            ...prev,
-            images: [...prev.images, newImageUrl]
         }))
 
         setHasError((prev) => ({
@@ -140,7 +128,7 @@ export const useUpdateProduct = ({ product }: UseUpdateProductProps) => {
                 isThereChanges.images = productCopy.images
             }
 
-            const removedImages = product.images.filter(img => !productCopy.images.includes(img))
+            const removedImages = product.images.filter(img => !productCopy.images.some(p => p.url === img.url))
 
             console.log('All changes:', {
                 fields: isThereChanges,
@@ -155,6 +143,6 @@ export const useUpdateProduct = ({ product }: UseUpdateProductProps) => {
         }
     }
 
-    return { changesMade, hasError, isLoading, handleRemoveImage, handleAddImage, handleSubmit, handleChange, productCopy }
+    return { changesMade, hasError, isLoading, handleRemoveImage, handleSubmit, handleChange, productCopy }
     
 }
