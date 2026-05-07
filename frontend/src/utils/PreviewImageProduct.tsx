@@ -21,24 +21,9 @@ export const PreviewImageProduct = ({ images, onRemove, onAdd }: Props) => {
     const [openImage, setOpenImage] = useState(false)
     const [activeImage, setActiveImage] = useState(0)
 
-    if (!images?.length) {
-        return (
-            <div className="grid grid-cols-5 gap-2">
-                {Array.from({ length: 5 }).map((_, index) => (
-                    <div
-                        key={index}
-                        className="border border-gray-300 rounded-sm w-full aspect-square flex flex-col items-center justify-center text-gray-400"
-                    >
-                        <ImageIcon className="w-5 h-5" />
-                    </div>
-                ))}
-            </div>
-        )
-    }
-
     return (
         <>
-            {images?.[0]?.url ? (
+            {images?.length ? (
                 <>
                     <div
                         className="cursor-pointer mb-2"
@@ -107,11 +92,20 @@ export const PreviewImageProduct = ({ images, onRemove, onAdd }: Props) => {
             ) : (
                 <div className="grid grid-cols-5 gap-2">
                     {Array.from({ length: 5 }).map((_, index) => (
-                        <div
-                            key={index}
-                            className="border border-gray-300 rounded-sm w-full aspect-square flex flex-col items-center justify-center text-gray-400"
-                        >
-                            <ImageIcon className="w-5 h-5" />
+                        <div key={index} className="flex flex-col items-center">
+                            <div className="border border-gray-300 rounded-sm w-full aspect-square flex flex-col items-center justify-center text-gray-400">
+                                <ImageIcon className="w-5 h-5" />
+                            </div>
+
+                            <button
+                                onClick={() => {
+                                    setTargetIndex(index)
+                                    fileRef.current?.click()
+                                }}
+                                className="mt-1 text-xs text-blue-500 hover:underline"
+                            >
+                                Add
+                            </button>
                         </div>
                     ))}
                 </div>
