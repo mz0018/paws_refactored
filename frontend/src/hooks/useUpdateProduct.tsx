@@ -141,14 +141,29 @@ export const useUpdateProduct = ({ product }: UseUpdateProductProps) => {
                 isThereChanges.images = productCopy.images
             }
 
-            const removedImages = product.images.filter(img => !productCopy.images.some(p => p.url === img.url))
-            const addedImages = productCopy.images.filter(img => img.file)
+            const removedImages = product.images.filter(
+                img => !productCopy.images.some(p => p.url === img.url)
+            )
 
-            console.log('All changes:', {
-                fields: isThereChanges,
-                addedImages: addedImages.length ? addedImages : undefined,
-                removedImages: removedImages.length ? removedImages : undefined
-            })
+            const addedImages = productCopy.images.filter(
+                img => img.file
+            )
+
+            const changes = {
+                ...(Object.keys(isThereChanges).length > 0 && {
+                    updated: isThereChanges
+                }),
+
+                ...(addedImages.length > 0 && {
+                    added: addedImages
+                }),
+
+                ...(removedImages.length > 0 && {
+                    removed: removedImages
+                })
+            }
+
+            console.log(changes)
 
             setHasError({})
 
