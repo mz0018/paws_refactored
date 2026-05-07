@@ -8,7 +8,10 @@ type Product = {
   productDescription: string
   productPrice: number
   stock: number
-  images: { url: string }[]
+  images: { 
+    url: string
+    file?: File
+  }[]
 }
 
 type UseUpdateProductProps = {
@@ -61,10 +64,14 @@ export const useUpdateProduct = ({ product }: UseUpdateProductProps) => {
         }))
     }
 
-    const handleAddImage = (index: number) => {
+    const handleAddImage = (file: File, imageUrl: string) => {
 
-        console.log('Add image at index:', index)
+        setProductCopy((prev) => ({
+            ...prev,
+            images: [...prev.images, { url: imageUrl, file }]
+        }))
 
+        // console.log('New image added:', { file, imageUrl })
     }
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -135,9 +142,11 @@ export const useUpdateProduct = ({ product }: UseUpdateProductProps) => {
             }
 
             const removedImages = product.images.filter(img => !productCopy.images.some(p => p.url === img.url))
+            const addedImages = productCopy.images.filter(img => img.file)
 
             console.log('All changes:', {
                 fields: isThereChanges,
+                addedImages: addedImages.length ? addedImages : undefined,
                 removedImages: removedImages.length ? removedImages : undefined
             })
 

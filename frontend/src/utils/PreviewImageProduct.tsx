@@ -11,7 +11,7 @@ import { Image as ImageIcon } from 'lucide-react'
 type Props = {
     images?: any[]
     onRemove?: (index: number) => void
-    onAdd?: (index: number) => void
+    onAdd?: (file: File, imageUrl: string) => void
 }
 
 export const PreviewImageProduct = ({ images, onRemove, onAdd }: Props) => {
@@ -98,11 +98,10 @@ export const PreviewImageProduct = ({ images, onRemove, onAdd }: Props) => {
                           onChange={(e) => {
                             const file = e.target.files?.[0]
 
-                            if (file) {
-                              const url = URL.createObjectURL(file)
+                            if (!file) return
 
-                              console.log(url)
-                            }
+                            const imageUrl = URL.createObjectURL(file)
+                            onAdd?.(file, imageUrl)
                           }}
                         />
 
