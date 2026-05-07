@@ -66,12 +66,49 @@ export const useUpdateProduct = ({ product }: UseUpdateProductProps) => {
 
     const handleAddImage = (file: File, imageUrl: string) => {
 
+        const allowedTypes = ['image/jpeg','image/jpg','image/png','image/webp']
+
+        const maxSize = 2 * 1024 * 1024
+
+        if (!allowedTypes.includes(file.type)) {
+
+            setHasError((prev) => ({
+                ...prev,
+                productImages: 'Only JPG, JPEG, PNG, and WEBP files are allowed.'
+            }))
+
+            return
+        }
+
+        if (file.size > maxSize) {
+
+            setHasError((prev) => ({
+                ...prev,
+                productImages: 'Image size must not exceed 2MB.'
+            }))
+
+            return
+        }
+
+        if (productCopy.images.length >= 5) {
+
+            setHasError((prev) => ({
+                ...prev,
+                productImages: 'Maximum of 5 images only.'
+            }))
+
+            return
+        }
+
         setProductCopy((prev) => ({
             ...prev,
             images: [...prev.images, { url: imageUrl, file }]
         }))
 
-        // console.log('New image added:', { file, imageUrl })
+        setHasError((prev) => ({
+            ...prev,
+            productImages: undefined
+        }))
     }
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
