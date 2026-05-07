@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { Image } from '../ui/form/Image'
+import { Input } from '../ui/form/Input'
+import { useRef } from 'react'
 
 import Lightbox from "yet-another-react-lightbox"
 import "yet-another-react-lightbox/styles.css"
@@ -9,7 +11,7 @@ import { Image as ImageIcon } from 'lucide-react'
 type Props = {
     images?: any[]
     onRemove?: (index: number) => void
-    onAdd?: (newImageUrl: string) => void
+    onAdd?: (index: number) => void
 }
 
 export const PreviewImageProduct = ({ images, onRemove, onAdd }: Props) => {
@@ -29,6 +31,7 @@ export const PreviewImageProduct = ({ images, onRemove, onAdd }: Props) => {
         )
     }
 
+    const fileRef = useRef<HTMLInputElement | null>(null)
     const [openImage, setOpenImage] = useState(false)
     const [activeImage, setActiveImage] = useState(0)
 
@@ -86,12 +89,30 @@ export const PreviewImageProduct = ({ images, onRemove, onAdd }: Props) => {
                         <ImageIcon className="w-5 h-5" />
                       </div>
 
-                      <button
-                        onClick={() => onAdd?.('Images')}
-                        className="mt-1 text-xs text-blue-500 hover:underline"
-                      >
-                        Add
-                      </button>
+                      <>
+                        <Input
+                          ref={fileRef}
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          onChange={(e) => {
+                            const file = e.target.files?.[0]
+
+                            if (file) {
+                              const url = URL.createObjectURL(file)
+
+                              console.log(url)
+                            }
+                          }}
+                        />
+
+                        <button
+                          onClick={() => fileRef.current?.click()}
+                          className="mt-1 text-xs text-blue-500 hover:underline"
+                        >
+                          Add
+                        </button>
+                      </>
                     </div>
                   )
                 })}

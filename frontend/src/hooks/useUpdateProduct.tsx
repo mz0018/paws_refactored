@@ -61,6 +61,12 @@ export const useUpdateProduct = ({ product }: UseUpdateProductProps) => {
         }))
     }
 
+    const handleAddImage = (index: number) => {
+
+        console.log('Add image at index:', index)
+
+    }
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
         const { name, value } = e.target
 
@@ -134,6 +140,7 @@ export const useUpdateProduct = ({ product }: UseUpdateProductProps) => {
                 fields: isThereChanges,
                 removedImages: removedImages.length ? removedImages : undefined
             })
+
             setHasError({})
 
         } catch (error) {
@@ -143,6 +150,6 @@ export const useUpdateProduct = ({ product }: UseUpdateProductProps) => {
         }
     }
 
-    return { changesMade, hasError, isLoading, handleRemoveImage, handleSubmit, handleChange, productCopy }
+    return { changesMade, hasError, isLoading, handleRemoveImage, handleAddImage, handleSubmit, handleChange, productCopy }
     
 }

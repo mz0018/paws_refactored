@@ -18,7 +18,7 @@ type ProductUpdateModalProps = {
 
 export const ProductUpdateModal = ({ isOpen, onClose, product }: ProductUpdateModalProps) => {
 
-  const { changesMade, hasError, isLoading, handleRemoveImage, handleSubmit, handleChange, productCopy } = useUpdateProduct({ product })
+  const { changesMade, hasError, isLoading, handleRemoveImage, handleAddImage, handleSubmit, handleChange, productCopy } = useUpdateProduct({ product })
 
   return (
     <Modal
@@ -33,7 +33,7 @@ export const ProductUpdateModal = ({ isOpen, onClose, product }: ProductUpdateMo
 
         <div>
           <label className="block text-sm font-medium mb-1">Product Image(s)</label>
-          <PreviewImageProduct images={productCopy?.images} onRemove={handleRemoveImage} />
+          <PreviewImageProduct images={productCopy?.images} onRemove={handleRemoveImage} onAdd={handleAddImage} />
         </div>
 
         <form onSubmit={handleSubmit}>
