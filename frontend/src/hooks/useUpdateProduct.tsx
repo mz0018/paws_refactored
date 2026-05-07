@@ -137,9 +137,9 @@ export const useUpdateProduct = ({ product }: UseUpdateProductProps) => {
                 isThereChanges.stock = productCopy.stock
             }
 
-            if (JSON.stringify(productCopy.images) !== JSON.stringify(product.images)) {
-                isThereChanges.images = productCopy.images
-            }
+            // if (JSON.stringify(productCopy.images) !== JSON.stringify(product.images)) {
+            //     isThereChanges.images = productCopy.images
+            // }
 
             const removedImages = product.images.filter(
                 img => !productCopy.images.some(p => p.url === img.url)
