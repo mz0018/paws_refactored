@@ -36,4 +36,10 @@ router.get(
     AdminController.getProductById
 )
 
+router.patch(
+    '/update-product/:id',
+    authorizeViaCookie,
+    AdminController.updateProduct
+)
+
 export default router

@@ -201,6 +201,24 @@ export const useUpdateProduct = ({ product }: UseUpdateProductProps) => {
             }
 
             console.log(changes)
+            // console.log(user?.id) Don't include the user id not best practice
+            console.log(product._id)
+
+            const res = await fetch(
+                `${import.meta.env.VITE_API_URL}/api/admin/update-product/${product._id}`,
+                {
+                    method: 'PATCH',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(changes)
+                }
+            )
+
+            if (res.ok) {
+                console.log('Sent successfully! 201')
+            }
 
             setHasError({})
 

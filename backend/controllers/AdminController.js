@@ -31,6 +31,24 @@ class AdminController {
         }
     }
 
+    async updateProduct(req, res, next) {
+        try {
+
+            console.log('Params:', req.params)
+
+            console.log('Body:', req.body)
+
+            console.log('User ID:', req.user_id)
+
+            res.status(200).json({
+                message: 'Received successfully'
+            })
+
+        } catch (error) {
+            next(error)
+        }
+    }
+
 }
 
 export default new AdminController()
