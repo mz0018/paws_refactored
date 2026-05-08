@@ -18,7 +18,7 @@ type ProductUpdateModalProps = {
 
 export const ProductUpdateModal = ({ isOpen, onClose, product }: ProductUpdateModalProps) => {
 
-  const { changesMade, hasError, isLoading, handleRemoveImage, handleAddImage, handleSubmit, handleChange, productCopy } = useUpdateProduct({ product })
+  const { changesMade, hasError, isLoading, handleRemoveImage, handleAddImage, handleSubmit, handleChange, productCopy, isRateLimited } = useUpdateProduct({ product })
 
   return (
     <Modal
@@ -111,7 +111,7 @@ export const ProductUpdateModal = ({ isOpen, onClose, product }: ProductUpdateMo
                   ? 'bg-gray-400 cursor-not-allowed'
                   : 'bg-blue-600 hover:bg-blue-700'
               }`}
-              disabled={isLoading || !changesMade}
+              disabled={isLoading || !changesMade || isRateLimited}
             >
               {isLoading
                 ? 'Updating...'

@@ -17,7 +17,6 @@ type Props = {
 export const PreviewImageProduct = ({ images, onRemove, onAdd }: Props) => {
 
     const fileRef = useRef<HTMLInputElement | null>(null)
-    // const [targetIndex, setTargetIndex] = useState<number | null>(null)
     const [targetIndex, setTargetIndex] = useState(0)
     const [openImage, setOpenImage] = useState(false)
     const [activeImage, setActiveImage] = useState(0)

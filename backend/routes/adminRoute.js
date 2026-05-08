@@ -40,6 +40,7 @@ router.patch(
     '/update-product/:id',
     authorizeViaCookie,
     productFileSize,
+    productFetchLimiter,
     AdminController.updateProduct
 )
 

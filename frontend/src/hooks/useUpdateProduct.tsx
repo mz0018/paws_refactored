@@ -23,6 +23,7 @@ export const useUpdateProduct = ({ product }: UseUpdateProductProps) => {
     const [changesMade, setChangesMade] = useState<boolean>(false)
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [productCopy, setProductCopy] = useState<Product>(product)
+    const [isRateLimited, setIsRateLimited] = useState<boolean>(false)
     const [hasError, setHasError] = useState<{
         productName?: string
         productCategory?: string
@@ -99,11 +100,6 @@ export const useUpdateProduct = ({ product }: UseUpdateProductProps) => {
 
             return
         }
-
-        // setProductCopy((prev) => ({
-        //     ...prev,
-        //     images: [...prev.images, { url: imageUrl, file }]
-        // }))
 
         setProductCopy((prev) => {
             const newImages = [...prev.images]
@@ -221,18 +217,23 @@ export const useUpdateProduct = ({ product }: UseUpdateProductProps) => {
             )
 
             if (res.ok) {
-                console.log('Sent successfully! 201')
+                setHasError({})
+                console.log('Product updated successfully')
+            } else {
+                if (res.status === 429) {
+                    setIsRateLimited(true)
+                    setHasError({ general: 'Too many requests. Please try again later.' })
+                }
             }
 
-            setHasError({})
-
         } catch (error) {
-            console.error('Error updating product:', error)
+            setHasError({ general: 'Something went wrong. Please try again later.' })
+            console.error('Update product failed:', error)
         } finally {
             setIsLoading(false)
         }
     }
 
-    return { changesMade, hasError, isLoading, handleRemoveImage, handleAddImage, handleSubmit, handleChange, productCopy }
+    return { changesMade, hasError, isLoading, handleRemoveImage, handleAddImage, handleSubmit, handleChange, productCopy, isRateLimited }
     
 }
