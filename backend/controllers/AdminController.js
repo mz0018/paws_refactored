@@ -33,18 +33,10 @@ class AdminController {
 
     async updateProduct(req, res, next) {
         try {
-
-            console.log('Params:', req.params)
-
-            console.log('Body:', req.body)
-
-            console.log('User ID:', req.user_id)
-
-            res.status(200).json({
-                message: 'Received successfully'
-            })
-
+            const result = await AdminService.updateProductById(req)
+            res.status(200).json(result)
         } catch (error) {
+            console.error('Error:', error)
             next(error)
         }
     }

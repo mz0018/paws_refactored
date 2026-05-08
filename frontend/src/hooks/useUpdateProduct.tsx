@@ -174,10 +174,6 @@ export const useUpdateProduct = ({ product }: UseUpdateProductProps) => {
                 isThereChanges.stock = productCopy.stock
             }
 
-            // if (JSON.stringify(productCopy.images) !== JSON.stringify(product.images)) {
-            //     isThereChanges.images = productCopy.images
-            // }
-
             const removedImages = product.images.filter(
                 img => !productCopy.images.some(p => p.url === img.url)
             )
@@ -186,33 +182,35 @@ export const useUpdateProduct = ({ product }: UseUpdateProductProps) => {
                 img => img.file
             )
 
-            const changes = {
-                ...(Object.keys(isThereChanges).length > 0 && {
-                    updated: isThereChanges
-                }),
+            const formData = new FormData()
 
-                ...(addedImages.length > 0 && {
-                    added: addedImages
-                }),
-
-                ...(removedImages.length > 0 && {
-                    removed: removedImages
-                })
+            if (Object.keys(isThereChanges).length > 0) {
+                formData.append(
+                    'updated',
+                    JSON.stringify(isThereChanges)
+                )
             }
 
-            console.log(changes)
-            // console.log(user?.id) Don't include the user id not best practice
-            console.log(product._id)
+            if (removedImages.length > 0) {
+                formData.append(
+                    'removed',
+                    JSON.stringify(removedImages)
+                )
+            }
+
+            addedImages.forEach((img) => {
+                if (img.file) {
+                    formData.append('images', img.file)
+                }
+            })
+
 
             const res = await fetch(
                 `${import.meta.env.VITE_API_URL}/api/admin/update-product/${product._id}`,
                 {
                     method: 'PATCH',
                     credentials: 'include',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify(changes)
+                    body: formData
                 }
             )
 

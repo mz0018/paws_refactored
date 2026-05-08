@@ -39,6 +39,7 @@ router.get(
 router.patch(
     '/update-product/:id',
     authorizeViaCookie,
+    productFileSize,
     AdminController.updateProduct
 )
 

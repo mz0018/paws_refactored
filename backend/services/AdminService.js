@@ -133,6 +133,26 @@ class AdminService {
         }
     }
 
+    async updateProductById(req) {
+
+        const userId = req.user_id
+        const productId = req.params.id
+
+        const fieldChanges = req.body.updated ? JSON.parse(req.body.updated) : {}
+        const removedImg = req.body.removed ? JSON.parse(req.body.removed) : []
+        const addedImg = req.files || []
+
+        const product = await Product.findById(productId)
+
+        console.log('user id: ', userId)
+        console.log('product id: ', productId)
+        console.log('Field changes: ', fieldChanges)
+        console.log('Removed img: ', removedImg)
+        console.log('Added img: ', addedImg)
+
+        return { message: 'Product updated successfully' }
+    }
+
 }
 
 export default new AdminService()
