@@ -64,7 +64,7 @@ export const useUpdateProduct = ({ product }: UseUpdateProductProps) => {
         }))
     }
 
-    const handleAddImage = (file: File, imageUrl: string) => {
+    const handleAddImage = (file: File, imageUrl: string, index: number) => {
 
         const allowedTypes = ['image/jpeg','image/jpg','image/png','image/webp']
 
@@ -100,10 +100,16 @@ export const useUpdateProduct = ({ product }: UseUpdateProductProps) => {
             return
         }
 
-        setProductCopy((prev) => ({
-            ...prev,
-            images: [...prev.images, { url: imageUrl, file }]
-        }))
+        // setProductCopy((prev) => ({
+        //     ...prev,
+        //     images: [...prev.images, { url: imageUrl, file }]
+        // }))
+
+        setProductCopy((prev) => {
+            const newImages = [...prev.images]
+            newImages.splice(index, 0, { url: imageUrl, file })
+            return { ...prev, images: newImages }
+        })
 
         setHasError((prev) => ({
             ...prev,

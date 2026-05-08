@@ -11,13 +11,14 @@ import { Image as ImageIcon } from 'lucide-react'
 type Props = {
     images?: any[]
     onRemove?: (index: number) => void
-    onAdd?: (file: File, imageUrl: string) => void
+    onAdd?: (file: File, imageUrl: string, index: number) => void
 }
 
 export const PreviewImageProduct = ({ images, onRemove, onAdd }: Props) => {
 
     const fileRef = useRef<HTMLInputElement | null>(null)
-    const [targetIndex, setTargetIndex] = useState<number | null>(null)
+    // const [targetIndex, setTargetIndex] = useState<number | null>(null)
+    const [targetIndex, setTargetIndex] = useState(0)
     const [openImage, setOpenImage] = useState(false)
     const [activeImage, setActiveImage] = useState(0)
 
@@ -121,11 +122,11 @@ export const PreviewImageProduct = ({ images, onRemove, onAdd }: Props) => {
 
                     files.forEach((f) => {
                         const imageUrl = URL.createObjectURL(f)
-                        onAdd?.(f, imageUrl)
+                        onAdd?.(f, imageUrl, targetIndex)
                     })
 
                     e.target.value = ''
-                    setTargetIndex(null)
+                    setTargetIndex(0)
                 }}
             />
         </>
