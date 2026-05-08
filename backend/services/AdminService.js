@@ -138,19 +138,49 @@ class AdminService {
         const userId = req.user_id
         const productId = req.params.id
 
-        const fieldChanges = req.body.updated ? JSON.parse(req.body.updated) : {}
-        const removedImg = req.body.removed ? JSON.parse(req.body.removed) : []
-        const addedImg = req.files || []
+        if (!userId) {
+            throw new ErrorController('Unauthorized access', 401)
+        }
 
         const product = await Product.findById(productId)
 
-        console.log('user id: ', userId)
-        console.log('product id: ', productId)
-        console.log('Field changes: ', fieldChanges)
-        console.log('Removed img: ', removedImg)
-        console.log('Added img: ', addedImg)
+        if (!product) {
+            throw new ErrorController('Product not found', 404)
+        }
 
-        return { message: 'Product updated successfully' }
+        if (!product.createdBy.equals(userId)) {
+            throw new ErrorController('Forbidden: You do not own this product', 403)
+        }
+
+        const fieldChanges = req.body.updated
+            ? JSON.parse(req.body.updated)
+            : {}
+
+        const removedImg = req.body.removed
+            ? JSON.parse(req.body.removed)
+            : []
+
+        const addedImg = req.files?.images || []
+
+        product.set(fieldChanges)
+
+        if (removedImg.length > 0) {
+            const removeUrls = removedImg.map(img => img.url)
+            product.images = product.images.filter(
+                img => !removeUrls.includes(img.url)
+            )
+        }
+
+        const newImages = []
+        for (const img of addedImg) {
+            const imageUrl = await R2Service.uploadImage(img)
+            newImages.push({ url: imageUrl })
+        }
+        product.images.push(...newImages)
+
+        await product.save()
+
+        return { message: 'Product updated successfully', product }
     }
 
 }
