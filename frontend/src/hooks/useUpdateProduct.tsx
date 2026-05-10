@@ -219,10 +219,28 @@ export const useUpdateProduct = ({ product }: UseUpdateProductProps) => {
             if (res.ok) {
                 setHasError({})
                 console.log('Product updated successfully')
+
             } else {
+                const data = await res.json()
+
                 if (res.status === 429) {
                     setIsRateLimited(true)
-                    setHasError({ general: 'Too many requests. Please try again later.' })
+
+                    setHasError({
+                        general: 'Too many requests. Please try again later.'
+                    })
+
+                } else if (res.status === 400) {
+
+                    const formattedErrors: Record<string, string> = {}
+
+                    const errors = JSON.parse(data.message)
+
+                    errors.forEach((err: { field: string; message: string }) => {
+                        formattedErrors[err.field] = err.message
+                    })
+
+                    setHasError(formattedErrors)
                 }
             }
 

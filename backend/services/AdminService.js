@@ -5,6 +5,7 @@ import ErrorController from '../controllers/ErrorController.js'
 import R2Service from '../services/R2Service.js'
 
 import { getSortOptions, getSortDetails } from '../utils/sortOptions.js'
+import { updateProductSchema } from '../schemas/product.schema.js'
 class AdminService {
 
     //authorizeViaCookie handles the user_id checker!
@@ -155,6 +156,16 @@ class AdminService {
         const fieldChanges = req.body.updated
             ? JSON.parse(req.body.updated)
             : {}
+
+        const validation = updateProductSchema.safeParse(fieldChanges)
+        
+        if (!validation.success) {
+            const errors = validation.error.issues.map(issue => ({
+                field: issue.path[0],
+                message: issue.message
+            }))
+            throw new ErrorController(JSON.stringify(errors), 400)
+        }
 
         const removedImg = req.body.removed
             ? JSON.parse(req.body.removed)

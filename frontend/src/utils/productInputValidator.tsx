@@ -3,7 +3,7 @@ export type ProductFormErrors = {
     productCategory?: string
     productDescription?: string
     productPrice?: string
-    productStock?: string
+    stock?: string
     productImages?: string
     general?: string
 }
@@ -35,7 +35,7 @@ export const productInputValidator = ( formData: FormData, filesLength: number):
     }
 
     if (!stock || isNaN(Number(stock)) || Number(stock) < 0) {
-        errors.productStock = 'Valid stock is required'
+        errors.stock = 'Valid stock is required'
     }
 
     if (filesLength === 0) {

@@ -29,3 +29,4 @@ export const addProductSchema = z.object({
         .default(0),
 })
 
+export const updateProductSchema = addProductSchema.partial()
