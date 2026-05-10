@@ -9,7 +9,7 @@ export const useAddProduct = () => {
         productCategory?: string
         productDescription?: string
         productPrice?: string
-        productStock?: string
+        stock?: string
         productImages?: string
         general?: string
     }>({})

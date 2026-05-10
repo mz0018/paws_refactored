@@ -176,7 +176,7 @@ const AddProducts = () => {
                             name="stock"
                             label="Stock quantity"
                             placeholder="Stock Quantity"
-                            error={hasError.productStock}
+                            error={hasError.stock}
                             className="max-w-xs w-full"
                         />
 
@@ -186,7 +186,7 @@ const AddProducts = () => {
                                 hasError.productCategory ||
                                 hasError.productDescription ||
                                 hasError.productPrice ||
-                                hasError.productStock ||
+                                hasError.stock ||
                                 hasError.productImages ||
                                 hasError.general
                             }
