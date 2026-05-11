@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { productInputValidator } from '../utils/productInputValidator'
 import { useProductFiles } from './useProductFiles'
 
