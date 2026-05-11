@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { Form } from '../../ui/form/Form'
 import { Input } from '../../ui/form/Input'
 import { Button } from '../../ui/form/Buttons'
@@ -30,6 +31,15 @@ const AddProducts = () => {
 
     const isDisabled =
     isLoading || (conflictName !== '' && productName.trim() === conflictName.trim())
+
+    useEffect(() => {
+        if (hasError) {
+          document.getElementById('form-add-error')?.scrollIntoView({
+            behavior: 'smooth',
+            block: 'center'
+        })
+        }
+      }, [hasError])
 
     return (
         <>
@@ -181,6 +191,7 @@ const AddProducts = () => {
                         />
 
                         <ErrorText
+                            id='form-add-error'
                             message={
                                 hasError.productName ||
                                 hasError.productCategory ||

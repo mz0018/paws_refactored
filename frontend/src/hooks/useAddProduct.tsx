@@ -1,22 +1,13 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { productInputValidator } from '../utils/productInputValidator'
 import { useProductFiles } from './useProductFiles'
 
 export const useAddProduct = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false)
-    const [hasError, setHasError] = useState<{
-        productName?: string
-        productCategory?: string
-        productDescription?: string
-        productPrice?: string
-        stock?: string
-        productImages?: string
-        general?: string
-    }>({})
     const [conflictName, setConflictName] = useState<string>('')
     const [productName, setProductName] = useState<string>('')
 
-    const { files, handleFileChange, handleRemoveFile, resetFiles } = useProductFiles()
+    const { files, handleFileChange, handleRemoveFile, resetFiles, hasError, setHasError } = useProductFiles()
 
     const resetForm = (form: HTMLFormElement) => {
         form.reset()

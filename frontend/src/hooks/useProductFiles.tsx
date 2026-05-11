@@ -9,6 +9,11 @@ export const useProductFiles = () => {
     const [files, setFiles] = useState<FileWithPreview[]>([])
     const previewsRef = useRef<string[]>([])
     const [hasError, setHasError] = useState<{
+        productName?: string
+        productCategory?: string
+        productDescription?: string
+        productPrice?: string
+        stock?: string
         productImages?: string
         general?: string
     }>({})
@@ -34,17 +39,18 @@ export const useProductFiles = () => {
             return { file, preview }
         })
 
+        const allowedTypes = ['image/jpeg','image/jpg','image/png','image/webp']
         for (const { file } of selected) {
-            if (!file.type.startsWith('image/')) {
-                setHasError(prev => ({ ...prev, productImages: 'Only image files are allowed' }))
+            if (!allowedTypes.includes(file.type)) {
+                setHasError(prev => ({ ...prev, productImages: 'Only JPG, JPEG, PNG, and WEBP files are allowed.' }))
                 return
             }
-
             if (file.size > MAX_SIZE) {
                 setHasError(prev => ({ ...prev, productImages: 'Each image must be under 2MB' }))
                 return
             }
         }
+        setHasError(prev => ({ ...prev, productImages: undefined }))
 
         setFiles(prev => {
             const newFiles = selected.filter(

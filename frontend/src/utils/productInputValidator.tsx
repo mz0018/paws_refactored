@@ -34,8 +34,7 @@ export const productInputValidator = (
     if (!description?.trim()) {
         errors.productDescription = 'Product description is required'
     } else if (description.trim().length > 255) {
-        errors.productDescription =
-            'Product description must not exceed 255 characters'
+        errors.productDescription = 'Product description must not exceed 255 characters'
     }
 
     if (!price || isNaN(Number(price)) || Number(price) <= 0) {

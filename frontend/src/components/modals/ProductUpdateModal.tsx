@@ -24,7 +24,7 @@ export const ProductUpdateModal = ({ isOpen, onClose, product }: ProductUpdateMo
 
   useEffect(() => {
     if (hasError) {
-      document.getElementById('form-error')?.scrollIntoView({
+      document.getElementById('form-update-error')?.scrollIntoView({
         behavior: 'smooth',
         block: 'center'
     })
@@ -102,7 +102,7 @@ export const ProductUpdateModal = ({ isOpen, onClose, product }: ProductUpdateMo
             className="w-full border p-2 rounded mb-2"
           />
 
-          <ErrorText id='form-error' message={ hasError.productName || hasError.productCategory || hasError.productDescription || hasError.productPrice || hasError.stock || hasError.productImages || hasError.general }/>
+          <ErrorText id='form-update-error' message={ hasError.productName || hasError.productCategory || hasError.productDescription || hasError.productPrice || hasError.stock || hasError.productImages || hasError.general }/>
 
           <div className="flex flex-col-reverse sm:flex-row justify-end gap-2 mt-4">
             <Button
