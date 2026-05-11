@@ -206,7 +206,6 @@ export const useUpdateProduct = ({ product }: UseUpdateProductProps) => {
                 }
             })
 
-
             const res = await fetch(
                 `${import.meta.env.VITE_API_URL}/api/admin/update-product/${product._id}`,
                 {
