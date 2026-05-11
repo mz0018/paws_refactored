@@ -19,7 +19,7 @@ const AdminLayout = () => {
   ]
 
   return (
-    <div className="h-screen bg-gray-100 lg:flex">
+    <div className="h-screen bg-gray-100 flex overflow-hidden">
 
       <SidebarUI navLinks={navLinks} />
 
