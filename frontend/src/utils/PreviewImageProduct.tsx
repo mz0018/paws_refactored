@@ -6,7 +6,7 @@ import { useRef } from 'react'
 import Lightbox from "yet-another-react-lightbox"
 import "yet-another-react-lightbox/styles.css"
 
-import { Image as ImageIcon } from 'lucide-react'
+import { Plus, X } from 'lucide-react'
 
 type Props = {
     images?: any[]
@@ -48,42 +48,40 @@ export const PreviewImageProduct = ({ images, onRemove, onAdd }: Props) => {
                             const img = images[index]
 
                             return img ? (
-                                <div key={index} className="flex flex-col items-center">
+                                <div key={index} className="relative">
                                     <button
-                                        onClick={() => setActiveImage(index)}
-                                        className={`aspect-square overflow-hidden rounded-sm w-full ${
-                                            activeImage === index ? 'ring-2 ring-blue-500' : ''
-                                        }`}
+                                    onClick={() => setActiveImage(index)}
+                                    className={`w-full aspect-square overflow-hidden rounded-sm relative ${
+                                        activeImage === index ? 'ring-2 ring-blue-500' : ''
+                                    }`}
                                     >
-                                        <Image
-                                            src={img.url}
-                                            alt={`Thumbnail ${index + 1}`}
-                                            className="w-full h-full object-cover"
-                                        />
-                                    </button>
+                                    <img
+                                        src={img.url}
+                                        alt={`Thumbnail ${index + 1}`}
+                                        className="w-full h-full object-cover"
+                                    />
 
-                                    <button
-                                        onClick={() => onRemove?.(index)}
-                                        className="mt-1 text-xs text-red-500 hover:underline"
+                                    <span
+                                        onClick={(e) => {
+                                        e.stopPropagation()
+                                        onRemove?.(index)
+                                        }}
+                                        className="absolute top-1 right-1 bg-black/60 text-white text-[10px] px-1 rounded cursor-pointer"
                                     >
-                                        Remove
+                                        <X className="w-5 h-5" />
+                                    </span>
                                     </button>
                                 </div>
                             ) : (
-                                <div key={index} className="flex flex-col items-center">
-                                    <div className="border border-gray-300 rounded-sm w-full aspect-square flex flex-col items-center justify-center text-gray-400">
-                                        <ImageIcon className="w-5 h-5" />
-                                    </div>
-
-                                    <button
-                                        onClick={() => {
-                                            setTargetIndex(index)
-                                            fileRef.current?.click()
-                                        }}
-                                        className="mt-1 text-xs text-blue-500 hover:underline"
+                                <div
+                                    key={index}
+                                    onClick={() => {
+                                        setTargetIndex(index)
+                                        fileRef.current?.click()
+                                    }}
+                                    className="border border-gray-300 rounded-sm w-full aspect-square flex items-center justify-center text-gray-400 cursor-pointer hover:bg-gray-50"
                                     >
-                                        Add
-                                    </button>
+                                    <Plus className="w-5 h-5" />
                                 </div>
                             )
                         })}
@@ -92,20 +90,15 @@ export const PreviewImageProduct = ({ images, onRemove, onAdd }: Props) => {
             ) : (
                 <div className="grid grid-cols-5 gap-2">
                     {Array.from({ length: 5 }).map((_, index) => (
-                        <div key={index} className="flex flex-col items-center">
-                            <div className="border border-gray-300 rounded-sm w-full aspect-square flex flex-col items-center justify-center text-gray-400">
-                                <ImageIcon className="w-5 h-5" />
-                            </div>
-
-                            <button
-                                onClick={() => {
-                                    setTargetIndex(index)
-                                    fileRef.current?.click()
-                                }}
-                                className="mt-1 text-xs text-blue-500 hover:underline"
+                        <div
+                            key={index}
+                            onClick={() => {
+                                setTargetIndex(index)
+                                fileRef.current?.click()
+                            }}
+                            className="border border-gray-300 rounded-sm w-full aspect-square flex items-center justify-center text-gray-400 cursor-pointer hover:bg-gray-50"
                             >
-                                Add
-                            </button>
+                            <Plus className="w-5 h-5" />
                         </div>
                     ))}
                 </div>

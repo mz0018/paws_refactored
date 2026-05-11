@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { Modal } from '../../ui/form/Modal'
 import { Input } from '../../ui/form/Input'
 import { Select } from '../../ui/form/Select'
@@ -7,8 +8,9 @@ import { ErrorText } from '../../ui/form/ErrorText'
 import { PreviewImageProduct } from '../../utils/PreviewImageProduct'
 
 import { useUpdateProduct } from '../../hooks/useUpdateProduct'
-
 import { PRODUCT_CATEGORIES } from '../../mocks/categories'
+
+import { Save } from 'lucide-react'
 
 type ProductUpdateModalProps = {
   isOpen: boolean
@@ -20,6 +22,15 @@ export const ProductUpdateModal = ({ isOpen, onClose, product }: ProductUpdateMo
 
   const { changesMade, hasError, isLoading, handleRemoveImage, handleAddImage, handleSubmit, handleChange, productCopy, isRateLimited } = useUpdateProduct({ product })
 
+  useEffect(() => {
+    if (hasError) {
+      document.getElementById('form-error')?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'center'
+    })
+    }
+  }, [hasError])
+
   return (
     <Modal
       isOpen={isOpen}
@@ -27,12 +38,9 @@ export const ProductUpdateModal = ({ isOpen, onClose, product }: ProductUpdateMo
       closeOnBackdrop={false}
       className="w-full sm:max-w-lg"
     >
-      <h2 className="text-lg font-bold mb-4">Edit Product</h2>
-
       <div className="space-y-3">
 
         <div>
-          <label className="block text-sm font-medium mb-1">Product Image(s)</label>
           <PreviewImageProduct images={productCopy?.images} onRemove={handleRemoveImage} onAdd={handleAddImage} />
         </div>
 
@@ -94,12 +102,12 @@ export const ProductUpdateModal = ({ isOpen, onClose, product }: ProductUpdateMo
             className="w-full border p-2 rounded mb-2"
           />
 
-          <ErrorText message={ hasError.productName || hasError.productCategory || hasError.productDescription || hasError.productPrice || hasError.stock || hasError.productImages || hasError.general }/>
+          <ErrorText id='form-error' message={ hasError.productName || hasError.productCategory || hasError.productDescription || hasError.productPrice || hasError.stock || hasError.productImages || hasError.general }/>
 
-          <div className="flex justify-end gap-2 mt-4">
+          <div className="flex flex-col-reverse sm:flex-row justify-end gap-2 mt-4">
             <Button
               onClick={onClose}
-              className="text-gray-500 bg-white border border-gray-300 w-full"
+              className="text-gray-500 bg-white border font-semibold border-gray-300 w-full"
             >
               Cancel
             </Button>
@@ -117,7 +125,10 @@ export const ProductUpdateModal = ({ isOpen, onClose, product }: ProductUpdateMo
                 ? 'Updating...'
                 : !changesMade
                 ? 'No changes to update'
-                : 'Update'}
+                : <>
+                <Save className="w-5 h-5" />
+                <span>Save changes</span>
+                </>}
             </Button>
             
           </div>
