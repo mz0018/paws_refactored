@@ -25,6 +25,7 @@ export const useUpdateProduct = ({ product, onClose }: UseUpdateProductProps) =>
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [productCopy, setProductCopy] = useState<Product>(product)
     const [isRateLimited, setIsRateLimited] = useState<boolean>(false)
+    const [isProductUpdated, setIsProductUpdated] = useState<boolean>(false)
     const [hasError, setHasError] = useState<{
         productName?: string
         productCategory?: string
@@ -218,6 +219,7 @@ export const useUpdateProduct = ({ product, onClose }: UseUpdateProductProps) =>
 
             if (res.ok) {
                 setHasError({})
+                setIsProductUpdated(true)
                 onClose()
             } else {
                 const data = await res.json()
@@ -251,6 +253,6 @@ export const useUpdateProduct = ({ product, onClose }: UseUpdateProductProps) =>
         }
     }
 
-    return { changesMade, hasError, isLoading, handleRemoveImage, handleAddImage, handleSubmit, handleChange, productCopy, isRateLimited }
+    return { changesMade, hasError, isLoading, handleRemoveImage, handleAddImage, handleSubmit, handleChange, productCopy, isRateLimited, isProductUpdated }
     
 }

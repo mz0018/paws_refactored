@@ -8,7 +8,7 @@ import Lightbox from "yet-another-react-lightbox"
 import "yet-another-react-lightbox/styles.css"
 
 const ViewDetailedProduct = () => {
-    const { product, loading } = useViewDetailedProduct()
+    const { product, loading, fetchProduct } = useViewDetailedProduct()
 
     const [activeImage, setActiveImage] = useState(0)
     const [imageOpen, setImageOpen] = useState(false)
@@ -136,6 +136,7 @@ const ViewDetailedProduct = () => {
                 isOpen={isEditOpen}
                 onClose={() => setIsEditOpen(false)}
                 product={product}
+                onUpdateSuccess={fetchProduct}
             />
 
         </div>

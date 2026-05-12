@@ -16,11 +16,12 @@ type ProductUpdateModalProps = {
   isOpen: boolean
   onClose: () => void
   product: any
+  onUpdateSuccess: () => void
 }
 
-export const ProductUpdateModal = ({ isOpen, onClose, product }: ProductUpdateModalProps) => {
+export const ProductUpdateModal = ({ isOpen, onClose, product, onUpdateSuccess }: ProductUpdateModalProps) => {
 
-  const { changesMade, hasError, isLoading, handleRemoveImage, handleAddImage, handleSubmit, handleChange, productCopy, isRateLimited } = useUpdateProduct({ product, onClose })
+  const { changesMade, hasError, isLoading, handleRemoveImage, handleAddImage, handleSubmit, handleChange, productCopy, isRateLimited, isProductUpdated } = useUpdateProduct({ product, onClose })
 
   useEffect(() => {
     if (hasError) {
@@ -30,6 +31,12 @@ export const ProductUpdateModal = ({ isOpen, onClose, product }: ProductUpdateMo
     })
     }
   }, [hasError])
+
+  useEffect(() => {
+    if (isProductUpdated) {
+      onUpdateSuccess?.()
+    }
+  }, [isProductUpdated, onUpdateSuccess])
 
   return (
     <Modal

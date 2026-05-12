@@ -43,5 +43,5 @@ export const useViewDetailedProduct = () => {
         }
     }
 
-    return { id, product, loading }
+    return { id, product, loading, fetchProduct }
 }
