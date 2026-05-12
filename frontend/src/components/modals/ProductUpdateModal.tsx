@@ -20,7 +20,7 @@ type ProductUpdateModalProps = {
 
 export const ProductUpdateModal = ({ isOpen, onClose, product }: ProductUpdateModalProps) => {
 
-  const { changesMade, hasError, isLoading, handleRemoveImage, handleAddImage, handleSubmit, handleChange, productCopy, isRateLimited } = useUpdateProduct({ product })
+  const { changesMade, hasError, isLoading, handleRemoveImage, handleAddImage, handleSubmit, handleChange, productCopy, isRateLimited } = useUpdateProduct({ product, onClose })
 
   useEffect(() => {
     if (hasError) {

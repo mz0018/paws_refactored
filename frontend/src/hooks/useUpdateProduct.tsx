@@ -16,9 +16,10 @@ type Product = {
 
 type UseUpdateProductProps = {
   product: Product
+  onClose: () => void
 }
 
-export const useUpdateProduct = ({ product }: UseUpdateProductProps) => {
+export const useUpdateProduct = ({ product, onClose }: UseUpdateProductProps) => {
     
     const [changesMade, setChangesMade] = useState<boolean>(false)
     const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -217,8 +218,7 @@ export const useUpdateProduct = ({ product }: UseUpdateProductProps) => {
 
             if (res.ok) {
                 setHasError({})
-                console.log('Product updated successfully')
-
+                onClose()
             } else {
                 const data = await res.json()
 
