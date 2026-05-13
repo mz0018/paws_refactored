@@ -13,15 +13,17 @@ type NavItem = {
 
 type SidebarUIProps = {
   navLinks: NavItem[]
+  isClientMode?: boolean
 }
 
-export const SidebarUI = ({ navLinks }: SidebarUIProps) => {
+export const SidebarUI = ({ navLinks, isClientMode = true }: SidebarUIProps) => {
   const [collapsed, setCollapsed] = useState(false)
 
   useEffect(() => {
-  const checkIfShouldCollapse = () => {
+    if (!isClientMode) return
+    const checkIfShouldCollapse = () => {
       setCollapsed(window.innerWidth < 768)
-    };
+    }
     
     checkIfShouldCollapse();
     
@@ -48,12 +50,14 @@ export const SidebarUI = ({ navLinks }: SidebarUIProps) => {
           Logo
         </span>
 
-        <button 
-          onClick={() => setCollapsed(!collapsed)}
-          className="cursor-pointer flex items-center justify-center p-2 rounded hover:bg-white/10"
-        >
-          <PanelLeft size={18}/>
-        </button>
+        {isClientMode && (
+          <button 
+            onClick={() => setCollapsed(!collapsed)}
+            className="cursor-pointer flex items-center justify-center p-2 rounded hover:bg-white/10"
+          >
+            <PanelLeft size={18}/>
+          </button>
+        )}
       </div>
 
       <nav className="flex-1 p-2 space-y-1">
@@ -83,9 +87,11 @@ export const SidebarUI = ({ navLinks }: SidebarUIProps) => {
         )}
       </nav>
 
-      <div className={`p-4 border-t border-gray-700 ${collapsed ? 'px-2' : ''}`}>
-        <BtnSignout collapsed={collapsed} />
-      </div>
+      {isClientMode && (
+        <div className={`p-4 border-t border-gray-700 ${collapsed ? 'px-2' : ''}`}>
+          <BtnSignout collapsed={collapsed} />
+        </div>
+      )}
 
     </aside>
   )

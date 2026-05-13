@@ -10,6 +10,9 @@ import { AuthProvider } from './context/AuthContext.tsx'
 import { Loader } from './components/Loader'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
+const ProductOverview = lazy(() => import('./pages/ProductOverview.tsx'))
+const Appointment = lazy(() => import('./pages/Appointment.tsx'))
+
 const Signin = lazy(() => import('./pages/Signin.tsx'))
 const AdminLayout = lazy(() => import('./layout/AdminLayout.tsx'))
 const Dashboard = lazy(() => import('./pages/admin/Dashboard.tsx'))
@@ -21,6 +24,8 @@ const Settings = lazy(() => import('./pages/admin/Settings.tsx'))
 const router = createBrowserRouter([
   { path: "/", element: <App /> },
   { path: "/signin", element: <Signin /> },
+  { path: "/product-overview", element: <ProductOverview /> },
+  { path: "/appointment", element: <Appointment /> },
   {
     element: <ProtectedRoutes />,
     children: [

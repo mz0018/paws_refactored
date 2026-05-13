@@ -1,9 +1,10 @@
+import ClientLayout from './layout/ClientLayout'
+
 const App = () => {
 
   return (
     <>
-    Hello this is App.tsx Still under construction
-    NAVBAR, MAIN, FOOTER components will be added here
+      <ClientLayout />
     </>
   )
 }
