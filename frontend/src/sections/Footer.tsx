@@ -5,7 +5,7 @@ const helpLinks = ["FAQ", "Help Center", "Support"];
 
 export const Footer = () => {
   return (
-    <footer className="bg-footer-bg text-white px-10 py-12">
+    <footer id="contact-id" className="bg-footer-bg text-white px-10 py-12">
       <div className="max-w-7xl mx-auto">
 
         <div className="grid md:grid-cols-2 gap-10">

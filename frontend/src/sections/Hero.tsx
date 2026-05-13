@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 
 export const Hero = () => {
     return (
-        <section className="py-20 px-6">
+        <section id="hero-id" className="py-20 px-6">
             <div className="max-w-5xl mx-auto text-center">
                 <h1 className="text-5xl font-bold text-gray-900 mb-6">
                     Pro Animal Welfare System

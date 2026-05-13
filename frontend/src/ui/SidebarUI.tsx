@@ -14,9 +14,10 @@ type NavItem = {
 type SidebarUIProps = {
   navLinks: NavItem[]
   isClientMode?: boolean
+  onLinkClick?: () => void
 }
 
-export const SidebarUI = ({ navLinks, isClientMode = true }: SidebarUIProps) => {
+export const SidebarUI = ({ navLinks, isClientMode = true, onLinkClick }: SidebarUIProps) => {
   const [collapsed, setCollapsed] = useState(false)
 
   useEffect(() => {
@@ -69,18 +70,28 @@ export const SidebarUI = ({ navLinks, isClientMode = true }: SidebarUIProps) => 
               collapsed={collapsed}
               setCollapsed={setCollapsed}
             />
+          ) : item.path?.includes('#') ? (
+            <a
+              key={item.path}
+              href={item.path}
+              onClick={() => onLinkClick?.()}
+              className="flex items-center gap-3 px-4 py-2 rounded hover:bg-white/10"
+            >
+              <span>{item.icon}</span>
+              {!collapsed && <span>{item.name}</span>}
+            </a>
           ) : (
             <NavLink
               key={item.path}
               to={item.path || '#'}
+              onClick={() => onLinkClick?.()}
               className={({ isActive }) =>
                 `flex items-center gap-3 px-4 py-2 rounded ${
-                  isActive ? 'bg-white/10' : 'hover:bg-white/10'
+                  isClientMode && isActive ? 'bg-white/10' : 'hover:bg-white/10'
                 }`
               }
             >
               <span>{item.icon}</span>
-
               {!collapsed && <span>{item.name}</span>}
             </NavLink>
           )

@@ -29,7 +29,7 @@ export const About = () => {
   ];
 
   return (
-    <section className="py-20 px-6">
+    <section id="about-id" className="py-20 px-6">
       <div className="max-w-6xl mx-auto text-center">
         
         <p className="uppercase tracking-[0.4em] text-sm text-red-400 mb-4">

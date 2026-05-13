@@ -1,6 +1,5 @@
 import { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { Menu, X, House, Info, Mail, Shield } from 'lucide-react'
+import { Menu, X, House, Info, Shield } from 'lucide-react'
 import { SidebarUI } from '../ui/SidebarUI'
 
 export const Header = () => {
@@ -9,21 +8,21 @@ export const Header = () => {
   const navLinks = [
     {
       name: 'Home',
-      path: '/',
+      path: '/#hero-id',
       icon: <House size={18} />,
     },
     {
       name: 'About',
-      path: '/about',
+      path: '/#about-id',
       icon: <Info size={18} />,
     },
     {
       name: 'Contact',
-      path: '/contact',
-      icon: <Mail size={18} />,
+      path: '/#contact-id',
+      icon: <Info size={18} />,
     },
     {
-      name: 'Admin',
+      name: 'Get Started',
       path: '/signin',
       icon: <Shield size={18} />,
     },
@@ -33,18 +32,14 @@ export const Header = () => {
     <>
       <header className="bg-header-bg text-white px-6 py-4">
         <nav className="flex items-center justify-between">
-          {/* Logo */}
           <h1 className="text-xl font-bold">My App</h1>
 
           <ul className="hidden md:flex gap-6">
             {navLinks.map((link) => (
               <li key={link.name}>
-                <Link
-                  to={link.path || '#'}
-                  className="hover:text-gray-300 transition-colors"
-                >
+                <a href={link.path} className="hover:text-gray-300">
                   {link.name}
-                </Link>
+                </a>
               </li>
             ))}
           </ul>
@@ -74,7 +69,7 @@ export const Header = () => {
               <X size={24} />
             </button>
 
-            <SidebarUI navLinks={navLinks} isClientMode={false} />
+            <SidebarUI navLinks={navLinks} isClientMode={false} onLinkClick={() => setIsOpen(false)} />
           </div>
         </div>
       )}

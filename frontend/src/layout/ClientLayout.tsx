@@ -4,6 +4,7 @@ import { About } from '../sections/About'
 import { Footer } from '../sections/Footer'
 
 const ClientLayout = () => {
+
   return (
     <div className="min-h-screen flex flex-col bg-surface">
       <Header />
