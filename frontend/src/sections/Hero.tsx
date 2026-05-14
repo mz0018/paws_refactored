@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom'
-import { Button } from '../ui/form/Buttons';
 
 export const Hero = () => {
 
@@ -36,7 +35,7 @@ export const Hero = () => {
                             <Link
                                 key={li.name}
                                 to={li.path}
-                                className="rounded-full bg-black px-7 py-3 text-sm font-medium text-white transition hover:opacity-90"
+                                className="cursor-pointer p-4 rounded-sm bg-blue-500 tracking-wider flex items-center justify-center gap-2"
                             >
                                 {li.name}
                             </Link>
