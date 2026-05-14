@@ -1,6 +1,12 @@
 import { Input } from "../ui/form/Input";
 
-const companyLinks = ["Appointment", "Products"];
+// const companyLinks = ["Appointment", "Products"];
+
+const companyLinks = [
+  { name: "Appointment", path: "/appointment" },
+  { name: "Products", path: "/product-overview" },
+]
+
 const helpLinks = [
   { name: "Home", path: "/#hero-id" },
   { name: "About", path: "/#about-id" }
@@ -61,7 +67,9 @@ export const Footer = () => {
 
             <ul className="space-y-3 text-gray-200">
               {companyLinks.map((link) => (
-                <li key={link}>{link}</li>
+                <li key={link.name}>
+                  <a href={link.path}>{link.name}</a>
+                </li>
               ))}
             </ul>
           </div>

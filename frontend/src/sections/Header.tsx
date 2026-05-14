@@ -30,7 +30,7 @@ export const Header = () => {
 
   return (
     <>
-      <header className="bg-header-bg text-white px-6 md:px-10 lg:px-16 py-2 md:py-4 lg:py-6 shadow-sm">
+      <header className="bg-header-bg text-white px-6 md:px-10 lg:px-16 shadow-sm">
         <nav className="max-w-7xl mx-auto flex items-center justify-between">
           <img
               src="/img/logo.png"
