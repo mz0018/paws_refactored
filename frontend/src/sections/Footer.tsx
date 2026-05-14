@@ -1,7 +1,10 @@
 import { Input } from "../ui/form/Input";
 
-const companyLinks = ["Features", "About Us", "Contact", "Products"];
-const helpLinks = ["FAQ", "Help Center", "Support"];
+const companyLinks = ["Appointment", "Products"];
+const helpLinks = [
+  { name: "Home", path: "/#hero-id" },
+  { name: "About", path: "/#about-id" }
+];
 
 export const Footer = () => {
   return (
@@ -53,7 +56,7 @@ export const Footer = () => {
 
           <div>
             <h4 className="text-sm text-gray-400 font-semibold uppercase mb-5">
-              Company
+              Features
             </h4>
 
             <ul className="space-y-3 text-gray-200">
@@ -70,7 +73,9 @@ export const Footer = () => {
 
             <ul className="space-y-3 text-gray-200">
               {helpLinks.map((link) => (
-                <li key={link}>{link}</li>
+                <li key={link.name}>
+                  <a href={link.path}>{link.name}</a>
+                </li>
               ))}
             </ul>
           </div>
