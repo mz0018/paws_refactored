@@ -30,12 +30,12 @@ export const Header = () => {
 
   return (
     <>
-      <header className="bg-header-bg text-white px-6 md:px-10 lg:px-16 shadow-sm">
+      <header className="px-6 md:px-10 lg:px-16">
         <nav className="max-w-7xl mx-auto flex items-center justify-between">
           <img
               src="/img/logo.png"
               alt="Logo"
-              className="h-18 w-auto filter invert"
+              className="h-24 w-auto"
             />
 
           <ul className="hidden md:flex items-center gap-8 lg:gap-10">
@@ -45,8 +45,8 @@ export const Header = () => {
                   href={link.path}
                   className={`text-[15px] font-medium transition-all duration-200 ${
                     link.name === 'Get Started'
-                      ? 'bg-[#FFB162] text-white px-4 py-2 rounded-lg hover:bg-[#cc8b40]'
-                      : 'hover:text-gray-300'
+                      ? 'bg-btn-black-bg hover:bg-btn-black-hover-header-bg text-white px-4 py-2 rounded-sm'
+                      : 'border-b-2 border-transparent hover:border-black'
                   }`}
                 >
                   {link.name}

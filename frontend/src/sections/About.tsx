@@ -4,7 +4,7 @@ export const About = () => {
   const features = [
     {
       id: "01",
-      title: "You Can Trust",
+      title: "Online Appointment",
       description:
         "With years of experience, our dedicated animal welfare team ensures rescued animals receive proper care, love, and protection.",
       color: "bg-[#FFB162]",
@@ -12,7 +12,7 @@ export const About = () => {
     },
     {
       id: "02",
-      title: "Tailored for Every Animal",
+      title: "View veterinary products",
       description:
         "We believe every animal deserves personalized attention, medical support, and a safe environment suited to their needs.",
       color: "bg-[#A35139]",
@@ -32,7 +32,7 @@ export const About = () => {
     <section id="about-id" className="py-20 px-6">
       <div className="max-w-6xl mx-auto text-center">
         
-        <p className="uppercase tracking-[0.4em] text-sm text-red-400 mb-4">
+        <p className="uppercase tracking-[0.4em] text-sm text-gray-500 mb-4">
           Why Choose Us
         </p>
 

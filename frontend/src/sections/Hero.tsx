@@ -35,7 +35,7 @@ export const Hero = () => {
                             <Link
                                 key={li.name}
                                 to={li.path}
-                                className="cursor-pointer p-4 rounded-sm bg-blue-500 tracking-wider flex items-center justify-center gap-2"
+                                className="bg-btn-black-bg hover:bg-btn-black-hover-header-bg text-white cursor-pointer p-4 rounded-sm tracking-wider flex items-center justify-center gap-2"
                             >
                                 {li.name}
                             </Link>
