@@ -1,6 +1,9 @@
 import { Link } from 'react-router-dom'
+import { useInView } from '../hooks/useInView';
 
 export const Hero = () => {
+
+    const ref = useInView()
 
     const stats = [
         { name: "Animals Rescued", value: "540+"},
@@ -15,6 +18,7 @@ export const Hero = () => {
 
     return (
         <section
+            ref={ref}
             id="hero-id"
             className="w-full px-6 py-10 lg:px-12 lg:py-16"
         >

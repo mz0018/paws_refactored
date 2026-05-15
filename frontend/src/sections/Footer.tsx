@@ -1,6 +1,5 @@
-import { Input } from "../ui/form/Input";
-
-// const companyLinks = ["Appointment", "Products"];
+import { Input } from '../ui/form/Input'
+import { useInView } from '../hooks/useInView'
 
 const companyLinks = [
   { name: "Appointment", path: "/appointment" },
@@ -13,8 +12,11 @@ const helpLinks = [
 ];
 
 export const Footer = () => {
+
+  const ref = useInView()
+
   return (
-    <footer id="contact-id" className="bg-footer-bg text-white px-10 py-12">
+    <footer ref={ref} id="contact-id" className="bg-footer-bg text-white px-10 py-12">
       <div className="max-w-7xl mx-auto">
 
         <div className="grid md:grid-cols-2 gap-10">

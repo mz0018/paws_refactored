@@ -1,6 +1,8 @@
-import { Star, PawPrint, HeartHandshake } from "lucide-react";
+import { Star, PawPrint, HeartHandshake } from 'lucide-react'
+import { useInView } from '../hooks/useInView';
 
 export const About = () => {
+  const ref = useInView()
   const features = [
     {
       id: "01",
@@ -29,7 +31,7 @@ export const About = () => {
   ];
 
   return (
-    <section id="about-id" className="py-20 px-6 bg-[#faf7f2]">
+    <section ref={ref} id="about-id" className="py-20 px-6 bg-[#faf7f2]">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
           <p className="uppercase tracking-[0.3em] text-sm text-[#A35139] mb-3">
