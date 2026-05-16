@@ -1,5 +1,5 @@
 import { Suspense, lazy, useState, useEffect } from 'react'
-import { Menu, X, House, Info, Shield } from 'lucide-react'
+import { Menu, X, House, Info, Shield, MousePointer2 } from 'lucide-react'
 
 const SidebarUI = lazy(() => import('../ui/SidebarUI'))
 
@@ -49,12 +49,12 @@ export const Header = () => {
             />
           </div>
 
-          <ul className="hidden md:flex items-center gap-8 lg:gap-10">
+          <ul className="hidden md:flex items-center gap-10 lg:gap-12">
             {navLinks.map((link) => (
               <li key={link.name}>
                 <a
                   href={link.path}
-                  className="text-[15px] font-medium border-b-2 border-transparent hover:border-black transition-all duration-200"
+                  className="text-[15px] font-medium border-b-2 border-transparent hover:border-black transition-all duration-200 focus: outline-none"
                 >
                   {link.name}
                 </a>
@@ -65,8 +65,9 @@ export const Header = () => {
           <div className="hidden md:block">
             <a
               href="/signin"
-              className="bg-btn-black-bg hover:bg-btn-black-hover-header-bg text-white px-4 py-2 rounded-sm text-[15px] font-medium transition-all duration-200"
+              className="flex items-center justify-center gap-2 min-w-[140px] bg-btn-black-bg hover:bg-btn-black-hover-header-bg text-white px-4 py-2 rounded-sm text-[15px] font-medium transition-all duration-200"
             >
+              <MousePointer2 className="rotate-90 w-4 h-4" />
               Get Started
             </a>
           </div>

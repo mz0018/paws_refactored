@@ -1,5 +1,6 @@
 import { useInView } from '../hooks/useInView';
 import { Button } from '../ui/form/Buttons';
+import { CalendarRange } from 'lucide-react'
 
 const Appointments = () => {
   const { ref, inView } = useInView();
@@ -27,10 +28,11 @@ const Appointments = () => {
             </p>
 
             <Button
-              onClick={() => (window.location.href = '/appointment')}
-              className="px-7 py-4 rounded-xl bg-black text-white hover:bg-gray-800 transition duration-300"
+              onClick={() => (window.location.href = "/appointment")}
+              className="flex items-center justify-center gap-2 px-7 py-4 rounded-xl bg-btn-black-bg text-white hover:bg-btn-black-hover-header-bg transition duration-300"
             >
-              Start an Appointment
+              <CalendarRange className="w-5 h-5" />
+              <span>Start an Appointment</span>
             </Button>
           </div>
 
@@ -44,7 +46,7 @@ const Appointments = () => {
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">
                     Quick Scheduling
                   </h3>
 
@@ -61,7 +63,7 @@ const Appointments = () => {
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">
                     Flexible Time Slots
                   </h3>
 
@@ -78,7 +80,7 @@ const Appointments = () => {
                 </div>
 
                 <div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                  <h3 className="text-xl font-bold text-gray-900 mb-2">
                     Smooth Experience
                   </h3>
 

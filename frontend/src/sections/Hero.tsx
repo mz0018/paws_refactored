@@ -8,11 +8,6 @@ export const Hero = () => {
         { name: "Adoption Success", value: "95%"},
     ]
 
-    // const links = [
-    //     { name: "Appointment", path: "/appointment" },
-    //     { name: "Products", path: "/product-overview" },
-    // ]
-
     return (
         <section
             id="hero-id"
@@ -21,7 +16,7 @@ export const Hero = () => {
             <div className="mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-2">
                 
                 <div className="max-w-xl">
-                    <h1 className="text-5xl font-semibold leading-[1.05] tracking-tight text-gray-900 sm:text-6xl lg:text-7xl">
+                    <h1 className="text-5xl font-bold leading-[1.05] tracking-tight text-gray-900 sm:text-6xl lg:text-7xl">
                         Pro Animal Welfare System
                     </h1>
 
@@ -29,18 +24,6 @@ export const Hero = () => {
                         Create responsive and beautiful user interfaces using
                         React, TypeScript, and Tailwind CSS.
                     </p>
-
-                    {/* <div className="mt-10 flex flex-wrap items-center gap-4">
-                        {links.map(li => (
-                            <Link
-                                key={li.name}
-                                to={li.path}
-                                className="bg-btn-black-bg hover:bg-btn-black-hover-header-bg text-white cursor-pointer p-4 rounded-sm tracking-wider flex items-center justify-center gap-2"
-                            >
-                                {li.name}
-                            </Link>
-                        ))}
-                    </div> */}
 
                     <div className="mt-16 flex flex-wrap gap-10 sm:gap-16">
 

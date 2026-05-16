@@ -1,5 +1,6 @@
-import { useInView } from '../hooks/useInView';
-import { Button } from '../ui/form/Buttons';
+import { useInView } from '../hooks/useInView'
+import { Button } from '../ui/form/Buttons'
+import { ShoppingBasket } from 'lucide-react'
 
 const Products = () => {
   const { ref, inView } = useInView();
@@ -27,14 +28,14 @@ const Products = () => {
             </p>
 
             <Button
-              onClick={() => (window.location.href = '/product-overview')}
-              className="px-7 py-4 rounded-xl bg-blue-600 text-white hover:bg-blue-700 transition duration-300"
+              onClick={() => (window.location.href = "/product-overview")}
+              className="flex items-center justify-center gap-2 px-7 py-4 rounded-xl bg-btn-black-bg text-white hover:bg-btn-black-hover-header-bg transition duration-300"
             >
-              Visit Vet Products
+              <ShoppingBasket className="w-5 h-5" />
+              <span>Visit Vet Products</span>
             </Button>
           </div>
 
-          {/* Right Visual Block */}
           <div className="relative">
             <div className="bg-white rounded-3xl shadow-xl p-10 border border-gray-100">
               

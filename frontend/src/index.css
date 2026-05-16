@@ -34,3 +34,12 @@
   --color-success: #16a34a;            
   --color-sidebar-hover: rgba(255, 255, 255, 0.1); */
 }
+
+.bg-surface-gradient {
+  background: linear-gradient(
+    to bottom left,
+    #EEE9DF 40%,
+    #C9C1B1 55%,
+    #eaeaea5d 100%
+  );
+}
