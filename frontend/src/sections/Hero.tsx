@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom'
 
 export const Hero = () => {
 
@@ -8,10 +8,10 @@ export const Hero = () => {
         { name: "Adoption Success", value: "95%"},
     ]
 
-    const links = [
-        { name: "Appointment", path: "/appointment" },
-        { name: "Products", path: "/product-overview" },
-    ]
+    // const links = [
+    //     { name: "Appointment", path: "/appointment" },
+    //     { name: "Products", path: "/product-overview" },
+    // ]
 
     return (
         <section
@@ -30,7 +30,7 @@ export const Hero = () => {
                         React, TypeScript, and Tailwind CSS.
                     </p>
 
-                    <div className="mt-10 flex flex-wrap items-center gap-4">
+                    {/* <div className="mt-10 flex flex-wrap items-center gap-4">
                         {links.map(li => (
                             <Link
                                 key={li.name}
@@ -40,7 +40,7 @@ export const Hero = () => {
                                 {li.name}
                             </Link>
                         ))}
-                    </div>
+                    </div> */}
 
                     <div className="mt-16 flex flex-wrap gap-10 sm:gap-16">
 

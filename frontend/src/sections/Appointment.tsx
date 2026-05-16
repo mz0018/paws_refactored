@@ -1,15 +1,100 @@
-import { useInView } from '../hooks/useInView'
-const Appointments = () => {
-    const { ref, inView } = useInView()
-    return (
-        <article ref={ref} id="appointment-id" className='min-h-screen'>
-            {inView && (
-                <>
-                Appointments introduction
-                </>
-            )}
-        </article>
-    )
-}
+import { useInView } from '../hooks/useInView';
+import { Button } from '../ui/form/Buttons';
 
-export default Appointments
+const Appointments = () => {
+  const { ref, inView } = useInView();
+
+  return (
+    <article
+      ref={ref}
+      id="appointment-id"
+      className="min-h-screen flex items-center px-6 py-20"
+    >
+      {inView && (
+        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 items-center">
+          
+          {/* Left Content */}
+          <div>
+
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight mb-6">
+              Book Appointments <br /> In Minutes
+            </h2>
+
+            <p className="text-lg text-gray-600 leading-relaxed mb-8">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              Reprehenderit, perspiciatis. Velit consequatur molestiae
+              laboriosam autem pariatur nemo doloremque.
+            </p>
+
+            <Button
+              onClick={() => (window.location.href = '/appointment')}
+              className="px-7 py-4 rounded-xl bg-black text-white hover:bg-gray-800 transition duration-300"
+            >
+              Start an Appointment
+            </Button>
+          </div>
+
+          {/* Right Feature Card */}
+          <div className="bg-white rounded-3xl p-8 shadow-xl border border-gray-100">
+            <div className="space-y-6">
+              
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 rounded-xl bg-black text-white flex items-center justify-center font-bold">
+                  01
+                </div>
+
+                <div>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                    Quick Scheduling
+                  </h3>
+
+                  <p className="text-gray-600">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Doloremque, illum.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 rounded-xl bg-black text-white flex items-center justify-center font-bold">
+                  02
+                </div>
+
+                <div>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                    Flexible Time Slots
+                  </h3>
+
+                  <p className="text-gray-600">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Officiis, asperiores.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 rounded-xl bg-black text-white flex items-center justify-center font-bold">
+                  03
+                </div>
+
+                <div>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                    Smooth Experience
+                  </h3>
+
+                  <p className="text-gray-600">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Necessitatibus, rerum.
+                  </p>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      )}
+    </article>
+  );
+};
+
+export default Appointments;
