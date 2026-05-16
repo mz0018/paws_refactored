@@ -20,16 +20,16 @@ const ClientLayout = () => {
         <About />
         <section ref={appointmentsRef} className="min-h-screen">
           {showAppointments && (
-            <Suspense fallback={null}>
-              <Appointments />
-            </Suspense>
+              <Suspense>
+                <Appointments />
+              </Suspense>
           )}
         </section>
         <section ref={productsRef} className="min-h-screen">
           {showProducts && (
-            <Suspense fallback={null}>
-              <Products />
-            </Suspense>
+              <Suspense>
+                <Products />
+              </Suspense>
           )}
         </section>
         <Footer />
