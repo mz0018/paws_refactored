@@ -15,7 +15,7 @@ const ClientLayout = () => {
   return (
     <div className="min-h-screen flex flex-col bg-surface">
       <Header />
-      <main className="flex-1">
+      <main className="flex-1 pt-28">
         <Hero />
         <About />
         <section ref={appointmentsRef} className="min-h-screen">

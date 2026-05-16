@@ -1,10 +1,11 @@
-import { Suspense, lazy, useState } from 'react'
+import { Suspense, lazy, useState, useEffect } from 'react'
 import { Menu, X, House, Info, Shield } from 'lucide-react'
 
 const SidebarUI = lazy(() => import('../ui/SidebarUI'))
 
 export const Header = () => {
-  const [isOpen, setIsOpen] = useState(false)
+  const [isOpen, setIsOpen] = useState<boolean>(false)
+  const [scrolled, setScrolled] = useState<boolean>(false)
 
   const navLinks = [
     {
@@ -24,9 +25,21 @@ export const Header = () => {
     },
   ]
 
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 0)
+
+    window.addEventListener('scroll', onScroll)
+
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
   return (
     <>
-      <header className="px-6 md:px-10 lg:px-16">
+    <header
+      className={`bg-surface/80 fixed top-0 left-0 z-50 w-full px-6 md:px-10 lg:px-16 backdrop-blur-md transition-shadow duration-300 ${
+        scrolled ? 'shadow-md' : 'shadow-none'
+      }`}
+    >
         <nav className="w-full flex items-center justify-between">
           <div className="flex-shrink-0">
             <img
