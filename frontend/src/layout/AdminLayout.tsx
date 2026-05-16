@@ -1,7 +1,9 @@
+import { Suspense, lazy } from 'react'
 import { Outlet } from 'react-router-dom'
-import { SidebarUI } from '../ui/SidebarUI'
 import { MainLayoutUI } from '../ui/MainLayoutUI'
 import { LayoutDashboard, Package, Settings } from 'lucide-react'
+
+const SidebarUI = lazy(() => import('../ui/SidebarUI'))
 
 const AdminLayout = () => {
 
@@ -21,7 +23,9 @@ const AdminLayout = () => {
   return (
     <div className="h-screen bg-gray-100 flex overflow-hidden">
 
-      <SidebarUI navLinks={navLinks} />
+      <Suspense fallback={null}>
+        <SidebarUI navLinks={navLinks} />
+      </Suspense>
 
       <main className="flex-1 p-6 overflow-y-auto w-full">
         <MainLayoutUI>

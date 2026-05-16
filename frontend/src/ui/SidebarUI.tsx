@@ -17,7 +17,7 @@ type SidebarUIProps = {
   onLinkClick?: () => void
 }
 
-export const SidebarUI = ({ navLinks, isClientMode = true, onLinkClick }: SidebarUIProps) => {
+const SidebarUI = ({ navLinks, isClientMode = true, onLinkClick }: SidebarUIProps) => {
   const [collapsed, setCollapsed] = useState(false)
 
   useEffect(() => {
@@ -107,3 +107,5 @@ export const SidebarUI = ({ navLinks, isClientMode = true, onLinkClick }: Sideba
     </aside>
   )
 }
+
+export default SidebarUI

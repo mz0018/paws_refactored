@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { Suspense, lazy, useState } from 'react'
 import { Menu, X, House, Info, Shield } from 'lucide-react'
-import { SidebarUI } from '../ui/SidebarUI'
+
+const SidebarUI = lazy(() => import('../ui/SidebarUI'))
 
 export const Header = () => {
   const [isOpen, setIsOpen] = useState(false)
@@ -82,18 +83,20 @@ export const Header = () => {
               <X size={26} />
             </button>
 
-            <SidebarUI
-              navLinks={[
-                ...navLinks,
-                {
-                  name: 'Get Started',
-                  path: '/signin',
-                  icon: <Shield size={18} />,
-                },
-              ]}
-              isClientMode={false}
-              onLinkClick={() => setIsOpen(false)}
-            />
+            <Suspense fallback={null}>
+              <SidebarUI
+                navLinks={[
+                  ...navLinks,
+                  {
+                    name: 'Get Started',
+                    path: '/signin',
+                    icon: <Shield size={18} />,
+                  },
+                ]}
+                isClientMode={false}
+                onLinkClick={() => setIsOpen(false)}
+              />
+            </Suspense>
           </div>
         </div>
       )}

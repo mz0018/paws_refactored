@@ -11,13 +11,13 @@ const helpLinks = [
   { name: "About", path: "/#about-id" }
 ];
 
-const Footer = () => {
+export const Footer = () => {
 
-  const { ref, inView } = useInView()
+  const { ref } = useInView()
 
   return (
     <footer ref={ref} id="contact-id" className="bg-footer-bg text-white px-10 py-12">
-      {inView && (
+      
         <div className="max-w-7xl mx-auto">
 
           <div className="grid md:grid-cols-2 gap-10">
@@ -115,9 +115,7 @@ const Footer = () => {
           </div>
 
         </div>
-      )}
+      
     </footer>
   );
 };
-
-export default Footer
