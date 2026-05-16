@@ -2,7 +2,13 @@ import { Star, PawPrint, HeartHandshake } from 'lucide-react'
 import { useInView } from '../hooks/useInView';
 
 export const About = () => {
-  const ref = useInView()
+
+  const featureRefs = [
+    useInView(),
+    useInView(),
+    useInView(),
+  ]
+
   const features = [
     {
       id: "01",
@@ -31,8 +37,9 @@ export const About = () => {
   ];
 
   return (
-    <section ref={ref} id="about-id" className="py-20 px-6 bg-[#faf7f2]">
+    <section id="about-id" className="py-20 px-6 bg-[#faf7f2]">
       <div className="max-w-6xl mx-auto">
+
         <div className="text-center mb-16">
           <p className="uppercase tracking-[0.3em] text-sm text-[#A35139] mb-3">
             Why Choose Us
@@ -43,11 +50,14 @@ export const About = () => {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {features.map(({ id, title, description, color, icon: Icon }) => (
-            <div
+        <div className="grid grid-cols-1 gap-20">
+
+          {features.map(({ id, title, description, color, icon: Icon }, index) => (
+            <article
+              ref={featureRefs[index]}
               key={id}
-              className="relative bg-white rounded-2xl p-8 shadow-sm hover:shadow-lg transition"
+              id={`feature-${id}`}
+              className="relative bg-red-500 rounded-2xl p-8 h-80 shadow-sm hover:shadow-lg transition"
             >
               <span className="absolute top-5 right-5 text-4xl font-bold text-gray-100">
                 {id}
@@ -66,8 +76,9 @@ export const About = () => {
               <p className="text-gray-600 leading-relaxed text-sm">
                 {description}
               </p>
-            </div>
+            </article>
           ))}
+
         </div>
       </div>
     </section>
