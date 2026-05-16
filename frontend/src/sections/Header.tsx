@@ -11,16 +11,6 @@ export const Header = () => {
       path: '/#hero-id',
       icon: <House size={18} />,
     },
-    // {
-    //   name: 'Appointment',
-    //   path: '/#appointment-id',
-    //   icon: <Info size={18} />,
-    // },
-    // {
-    //   name: 'Products',
-    //   path: '/#product-id',
-    //   icon: <Info size={18} />,
-    // },
     {
       name: 'About',
       path: '/#about-id',

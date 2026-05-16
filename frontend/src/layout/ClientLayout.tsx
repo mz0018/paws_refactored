@@ -3,11 +3,13 @@ import { Header } from '../sections/Header'
 import { Hero } from '../sections/Hero'
 import { useInView } from '../hooks/useInView'
 
+const About = lazy(() => import('../sections/About'))
 const Appointments = lazy(() =>import('../sections/Appointment'))
 const Products = lazy(() =>import('../sections/Products'))
 const Footer = lazy(() => import('../sections/Footer'))
 
 const ClientLayout = () => {
+  const { ref: aboutRef, inView: showAbout } = useInView()
   const { ref: appointmentsRef, inView: showAppointments } = useInView()
   const { ref: productsRef, inView: showProducts } = useInView()
   const { ref: footerRef, inView: showFooter } = useInView()
@@ -17,6 +19,13 @@ const ClientLayout = () => {
       <Header />
       <main className="flex-1">
         <Hero />
+        <section ref={aboutRef} className="min-h-screen">
+          {showAbout && (
+            <Suspense fallback={null}>
+              <About />
+            </Suspense>
+          )}
+        </section>
         <section ref={appointmentsRef} className="min-h-screen">
           {showAppointments && (
             <Suspense fallback={null}>
