@@ -3,9 +3,9 @@ import { Header } from '../sections/Header'
 import { Hero } from '../sections/Hero'
 import { useInView } from '../hooks/useInView'
 
-const Appointments = lazy(() =>import('../sections/Appointment').then(m => ({ default: m.Appointments })))
-const Products = lazy(() =>import('../sections/Products').then(m => ({ default: m.Products })))
-const Footer = lazy(() => import('../sections/Footer').then(m => ({ default: m.Footer })))
+const Appointments = lazy(() =>import('../sections/Appointment'))
+const Products = lazy(() =>import('../sections/Products'))
+const Footer = lazy(() => import('../sections/Footer'))
 
 const ClientLayout = () => {
   const { ref: appointmentsRef, inView: showAppointments } = useInView()
@@ -19,21 +19,21 @@ const ClientLayout = () => {
         <Hero />
         <section ref={appointmentsRef} className="min-h-screen">
           {showAppointments && (
-            <Suspense fallback={<div className="p-4">Loading appointments...</div>}>
+            <Suspense fallback={null}>
               <Appointments />
             </Suspense>
           )}
         </section>
         <section ref={productsRef} className="min-h-screen">
           {showProducts && (
-            <Suspense fallback={<div className="p-4">Loading products...</div>}>
+            <Suspense fallback={null}>
               <Products />
             </Suspense>
           )}
         </section>
         <section ref={footerRef} className="min-h-screen">
           {showFooter && (
-            <Suspense fallback={<div className="p-4">Loading products...</div>}>
+            <Suspense fallback={null}>
               <Footer />
             </Suspense>
           )}

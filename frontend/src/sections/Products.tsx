@@ -1,5 +1,5 @@
 import { useInView } from '../hooks/useInView'
-export const Products = () => {
+const Products = () => {
     const { ref, inView } = useInView()
     return (
         <article ref={ref} id="product-id" className='min-h-screen'>
@@ -12,3 +12,5 @@ export const Products = () => {
         </article>
     )
 }
+
+export default Products

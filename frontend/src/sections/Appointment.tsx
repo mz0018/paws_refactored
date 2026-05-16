@@ -1,5 +1,5 @@
 import { useInView } from '../hooks/useInView'
-export const Appointments = () => {
+const Appointments = () => {
     const { ref, inView } = useInView()
     return (
         <article ref={ref} id="appointment-id" className='min-h-screen'>
@@ -12,3 +12,4 @@ export const Appointments = () => {
     )
 }
 
+export default Appointments

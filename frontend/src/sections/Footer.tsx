@@ -11,7 +11,7 @@ const helpLinks = [
   { name: "About", path: "/#about-id" }
 ];
 
-export const Footer = () => {
+const Footer = () => {
 
   const { ref, inView } = useInView()
 
@@ -119,3 +119,5 @@ export const Footer = () => {
     </footer>
   );
 };
+
+export default Footer
