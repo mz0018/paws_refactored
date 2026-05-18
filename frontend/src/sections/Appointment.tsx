@@ -27,7 +27,7 @@ const Appointments = () => {
           `}
         >
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 leading-tight mb-6">
-            Book Appointments <br /> In Minutes
+            Book Appointments <br /> <span className="text-btn-black-bg">In Minutes</span>
           </h2>
 
           <p className="text-lg text-gray-600 leading-relaxed mb-8">

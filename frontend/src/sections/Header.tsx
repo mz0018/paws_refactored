@@ -36,16 +36,16 @@ export const Header = () => {
   return (
     <>
     <header
-      className={`bg-surface/80 fixed top-0 left-0 z-50 w-full px-6 md:px-10 lg:px-16 backdrop-blur-md transition-shadow duration-300 ${
+      className={`bg-surface/40 fixed top-0 left-0 z-50 w-full px-6 md:px-10 lg:px-16 backdrop-blur-md transition-shadow duration-300 ${
         scrolled ? 'shadow-md' : 'shadow-none'
       }`}
     >
         <nav className="w-full flex items-center justify-between">
           <div className="flex-shrink-0">
             <img
-              src="/img/logo.png"
+              src="/img/paws.png"
               alt="Logo"
-              className="h-24 w-auto"
+              className="h-24 p-3 w-auto"
             />
           </div>
 

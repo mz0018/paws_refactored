@@ -17,7 +17,7 @@ export const Hero = () => {
                 
                 <div className="max-w-xl">
                     <h1 className="text-5xl font-bold leading-[1.05] tracking-tight text-gray-900 sm:text-6xl lg:text-7xl">
-                        Pro Animal Welfare System
+                    Pro Animal <span className="text-btn-black-bg">Welfare System</span>
                     </h1>
 
                     <p className="mt-8 max-w-md text-base leading-7 text-gray-500 sm:text-lg">

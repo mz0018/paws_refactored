@@ -13,7 +13,7 @@ const ClientLayout = () => {
   const { ref: productsRef, inView: showProducts } = useInView()
 
   return (
-    <div className="min-h-screen flex flex-col bg-surface-gradient">
+    <div className="min-h-screen flex flex-col">
       <Header />
       <main className="flex-1 pt-28">
         <Hero />
