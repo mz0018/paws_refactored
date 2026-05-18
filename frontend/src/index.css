@@ -7,7 +7,7 @@
   --color-brand-primary-ring: #3b82f6; */
   /* Surfaces */
   --color-surface: #EEE9DF;
-  /* --color-surface-muted: #f9fafb;  */
+  --color-surface-muted: #66bdcd;
   --color-btn-black-bg: #83b843; 
   --color-btn-black-hover-header-bg: #72a03a;    
   /* --color-section-bg: #f3f4f6;          
@@ -15,10 +15,10 @@
   --color-footer-bg: #1B2632;
   /* --color-overlay: rgba(0, 0, 0, 0.5); */
   /* Text */
-  /* --color-text-heading: #111827;        
-  --color-text-body: #4b5563;          
-  --color-text-muted: #6b7280;          
-  --color-text-secondary: #9ca3af;     
+  /* --color-text-heading: #111827;     */   
+  --color-text-body: #2C3B4D;          
+  --color-text-hover: #83b843;          
+  /*--color-text-secondary: #9ca3af;     
   --color-text-placeholder: #9ca3af;
   --color-text-on-dark: #ffffff;
   --color-text-on-sidebar: #ffffff; */
@@ -35,11 +35,3 @@
   --color-sidebar-hover: rgba(255, 255, 255, 0.1); */
 }
 
-.bg-surface-gradient {
-  background: linear-gradient(
-    to bottom left,
-    #EEE9DF 40%,
-    #C9C1B1 55%,
-    #eaeaea5d 100%
-  );
-}

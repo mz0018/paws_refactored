@@ -1,9 +1,16 @@
 import { useInView } from '../hooks/useInView'
 import { Button } from '../ui/form/Buttons'
-import { ShoppingBasket } from 'lucide-react'
+import { ShoppingBasket, Cross, Activity, Salad, HandFist } from 'lucide-react'
 
 const Products = () => {
   const { ref, inView } = useInView();
+
+  const offers = [
+    { name: "Care", icon: <Cross className="w-10 h-10" /> },
+    { name: "Health", icon: <Activity className="w-10 h-10" /> },
+    { name: "Nutrition", icon: <Salad className="w-10 h-10" /> },
+    { name: "Support", icon: <HandFist className="w-10 h-10" /> },
+  ]
 
   return (
     <article
@@ -30,10 +37,9 @@ const Products = () => {
             Veterinary Products <br /> <span className="text-btn-black-bg">You Can Trust</span>
           </h2>
 
-          <p className="text-lg text-gray-600 leading-relaxed mb-8">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere
-            saepe, repellendus aperiam adipisci at blanditiis corrupti
-            necessitatibus in doloremque.
+          <p className="text-lg text-text-body leading-relaxed mb-8">
+            Shop trusted veterinary products for animal care, health, and nutrition.
+            Visit our online overview to explore more.
           </p>
 
           <Button
@@ -61,25 +67,15 @@ const Products = () => {
           <div className="bg-white rounded-3xl shadow-xl p-10 border border-gray-100">
 
             <div className="grid grid-cols-2 gap-6">
-              <div className="h-32 rounded-2xl bg-blue-100 flex items-center justify-center text-blue-700 font-semibold">
-                Care
-              </div>
-
-              <div className="h-32 rounded-2xl bg-blue-200 flex items-center justify-center text-blue-800 font-semibold">
-                Health
-              </div>
-
-              <div className="h-32 rounded-2xl bg-blue-300 flex items-center justify-center text-blue-900 font-semibold">
-                Nutrition
-              </div>
-
-              <div className="h-32 rounded-2xl bg-blue-400 flex items-center justify-center text-white font-semibold">
-                Support
-              </div>
+              {offers.map(o => (
+                <div className={`h-32 rounded-2xl bg-surface-muted/10 flex items-center justify-center text-text-hover font-semibold`}>
+                  {o.icon}
+                </div>
+              ))}
             </div>
 
-            <p className="text-sm text-gray-500 mt-6 text-center">
-              Lorem ipsum placeholder product categories overview
+            <p className="text-sm text-text-body mt-6 text-center">
+              Trusted products for better animal wellness.
             </p>
           </div>
         </div>

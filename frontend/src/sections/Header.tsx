@@ -54,7 +54,28 @@ export const Header = () => {
               <li key={link.name}>
                 <a
                   href={link.path}
-                  className="text-[15px] font-medium border-b-2 border-transparent hover:border-black transition-all duration-200 focus: outline-none"
+                  className="
+                    relative
+                    font-semibold text-sm tracking-wide
+                    text-text-body
+                    hover:text-text-hover
+                    transition-colors duration-300
+
+                    after:absolute
+                    after:left-0
+                    after:bottom-0
+                    after:h-[2px]
+                    after:w-full
+                    after:scale-x-0
+                    after:origin-left
+                    after:bg-text-hover
+                    after:transition-transform
+                    after:duration-300
+                    after:content-['']
+
+                    hover:after:scale-x-100
+                    p-4
+                  "
                 >
                   {link.name}
                 </a>
