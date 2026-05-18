@@ -21,8 +21,8 @@ export const Hero = () => {
                     </h1>
 
                     <p className="mt-8 max-w-md text-base leading-7 text-gray-500 sm:text-lg">
-                        Create responsive and beautiful user interfaces using
-                        React, TypeScript, and Tailwind CSS.
+                    A modern platform for animal welfare, connecting pet owners with trusted
+                    veterinary care, rescue support, and essential services.
                     </p>
 
                     <div className="mt-16 flex flex-wrap gap-10 sm:gap-16">

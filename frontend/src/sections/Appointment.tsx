@@ -5,6 +5,24 @@ import { CalendarRange } from 'lucide-react';
 const Appointments = () => {
   const { ref, inView } = useInView();
 
+  const features = [
+    {
+      label: "1",
+      title: "Quick Scheduling",
+      content: "Book veterinary appointments easily in just a few simple steps."
+    },
+    {
+      label: "2",
+      title: "Flexible Time Slots",
+      content: "Choose convenient appointment times that fit your schedule."
+    },
+    {
+      label: "3",
+      title: "Smooth Experience",
+      content: "Enjoy a fast and hassle-free appointment booking process."
+    }
+  ]
+
   return (
     <article
       ref={ref}
@@ -16,7 +34,7 @@ const Appointments = () => {
         {/* Left Content */}
         <div
           className={`
-            transform-gpu transition-all duration-700
+            transform-gpu transition-all duration-[2000ms]
             ease-[cubic-bezier(0.16,1,0.3,1)]
             will-change-transform will-change-opacity
             ${
@@ -30,10 +48,9 @@ const Appointments = () => {
             Book Appointments <br /> <span className="text-btn-black-bg">In Minutes</span>
           </h2>
 
-          <p className="text-lg text-gray-600 leading-relaxed mb-8">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Reprehenderit, perspiciatis. Velit consequatur molestiae
-            laboriosam autem pariatur nemo doloremque.
+          <p className="text-lg text-text-body leading-relaxed mb-8">
+            Schedule veterinary appointments online with a simple and convenient
+            booking experience for your pet’s care needs.
           </p>
 
           <Button
@@ -60,58 +77,23 @@ const Appointments = () => {
           `}
         >
           <div className="space-y-6">
+            {features.map(ft => (
+              <div key={ft.title} className="flex items-start gap-4">
+                <div className="w-12 h-12 rounded-xl bg-surface-muted/10 text-text-hover flex items-center justify-center font-bold">
+                  {ft.label}
+                </div>
 
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 rounded-xl bg-black text-white flex items-center justify-center font-bold">
-                01
+                <div>
+                  <h3 className="text-xl font-bold text-text-body mb-2">
+                    {ft.title}
+                  </h3>
+
+                  <p className="text-text-body">
+                    {ft.content}
+                  </p>
+                </div>
               </div>
-
-              <div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">
-                  Quick Scheduling
-                </h3>
-
-                <p className="text-gray-600">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Doloremque, illum.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 rounded-xl bg-black text-white flex items-center justify-center font-bold">
-                02
-              </div>
-
-              <div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">
-                  Flexible Time Slots
-                </h3>
-
-                <p className="text-gray-600">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Officiis, asperiores.
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 rounded-xl bg-black text-white flex items-center justify-center font-bold">
-                03
-              </div>
-
-              <div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">
-                  Smooth Experience
-                </h3>
-
-                <p className="text-gray-600">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Necessitatibus, rerum.
-                </p>
-              </div>
-            </div>
-
+            ))}
           </div>
         </div>
 

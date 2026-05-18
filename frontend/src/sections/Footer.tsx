@@ -8,7 +8,8 @@ const companyLinks = [
 
 const helpLinks = [
   { name: "Home", path: "/#hero-id" },
-  { name: "About", path: "/#about-id" }
+  { name: "About", path: "/#about-id" },
+  { name: "About the Developer", path: "/#about-id" },
 ];
 
 export const Footer = () => {

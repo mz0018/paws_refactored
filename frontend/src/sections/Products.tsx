@@ -54,7 +54,7 @@ const Products = () => {
         {/* Right Card */}
         <div
           className={`
-            relative transform-gpu transition-all duration-1000
+            relative transform-gpu transition-all duration-[2000ms]
             ease-[cubic-bezier(0.16,1,0.3,1)]
             will-change-transform will-change-opacity
             ${
@@ -68,7 +68,7 @@ const Products = () => {
 
             <div className="grid grid-cols-2 gap-6">
               {offers.map(o => (
-                <div className={`h-32 rounded-2xl bg-surface-muted/10 flex items-center justify-center text-text-hover font-semibold`}>
+                <div key={o.name} className={`h-32 rounded-2xl bg-surface-muted/10 flex items-center justify-center text-text-hover font-semibold`}>
                   {o.icon}
                 </div>
               ))}
