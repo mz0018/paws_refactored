@@ -11,7 +11,7 @@ export const Hero = () => {
     return (
         <section
             id="hero-id"
-            className="flex min-h-dvh w-full px-6 py-5 lg:py-16"
+            className="flex w-full px-6 py-16"
         >
             <div className="mx-auto grid max-w-7xl items-center lg:grid-cols-2">
                 
@@ -30,7 +30,7 @@ export const Hero = () => {
                         className="flex w-1/2 items-center justify-center bg-btn-black-bg hover:bg-btn-black-hover-header-bg text-white px-6 py-4 rounded-sm text-[15px] font-medium transition-all duration-200 mt-4"
                         >
                         <MousePointer2 className="rotate-90 w-4 h-4" />
-                        Get Started
+                        &emsp;Get Started
                         </a>
                     </div>
 
