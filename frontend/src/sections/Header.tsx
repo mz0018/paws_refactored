@@ -119,7 +119,7 @@ export const Header = () => {
             </button>
 
             <Suspense fallback={null}>
-              <SidebarUI
+              {/* <SidebarUI
                 navLinks={[
                   ...navLinks,
                   {
@@ -128,6 +128,11 @@ export const Header = () => {
                     icon: <Shield size={18} />,
                   },
                 ]}
+                isClientMode={false}
+                onLinkClick={() => setIsOpen(false)}
+              /> */}
+              <SidebarUI
+                navLinks={navLinks}
                 isClientMode={false}
                 onLinkClick={() => setIsOpen(false)}
               />

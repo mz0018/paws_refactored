@@ -1,9 +1,10 @@
+import { MousePointer2 } from 'lucide-react'
 
 export const Hero = () => {
 
     const stats = [
         { name: "Animals Rescued", value: "540+"},
-        { name: "Partner Clinics", value: "40+"},
+        { name: "Products", value: "120+" },
         { name: "Adoption Success", value: "95%"},
     ]
 
@@ -22,6 +23,16 @@ export const Hero = () => {
                     <p className="mt-8 line-clamp-2 text-base leading-7 tracking-wide text-text-body sm:text-lg">
                     Connect pet owners with trusted veterinary care, rescue support, and essential pet services.
                     </p>
+
+                    <div className="block md:hidden">
+                        <a
+                        href="/signin"
+                        className="flex w-1/2 items-center justify-center bg-btn-black-bg hover:bg-btn-black-hover-header-bg text-white px-6 py-4 rounded-sm text-[15px] font-medium transition-all duration-200 mt-4"
+                        >
+                        <MousePointer2 className="rotate-90 w-4 h-4" />
+                        Get Started
+                        </a>
+                    </div>
 
                     <div className="mt-16 flex flex-wrap gap-10 sm:gap-16">
 
