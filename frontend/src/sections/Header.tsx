@@ -94,7 +94,7 @@ export const Header = () => {
           </div>
 
           <button
-            className="md:hidden flex items-center justify-center p-2 rounded-md"
+            className="md:hidden text-text-body flex items-center justify-center p-2 rounded-md"
             onClick={() => setIsOpen(true)}
             aria-label="Open Menu"
           >
