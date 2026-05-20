@@ -10,7 +10,7 @@ const ClientLayout = () => {
 
       <Header />
 
-      <main className="relative z-10 pt-28">
+      <main className="relative z-10 lg:pt-28">
         <Outlet />
       </main>
 

@@ -15,20 +15,23 @@ const App = () => {
       <Hero />
       <About />
 
-      <section ref={appointmentsRef} className="min-h-[250px]">
-        {showAppointments && (
-          <Suspense>
-            <Appointments />
-          </Suspense>
-        )}
+      <section ref={appointmentsRef}>
+        <div className="min-h-[700px] md:min-h-[450px]">
+          {showAppointments && (
+            <Suspense>
+              <Appointments />
+            </Suspense>
+          )}
+        </div>
       </section>
-
-      <section ref={productsRef} className="min-h-[250px]">
-        {showProducts && (
-          <Suspense>
-            <Products />
-          </Suspense>
-        )}
+      <section ref={productsRef}>
+        <div className="min-h-[800px] md:min-h-[550px]">
+          {showProducts && (
+            <Suspense>
+              <Products />
+            </Suspense>
+          )}
+        </div>
       </section>
     </>
   )
