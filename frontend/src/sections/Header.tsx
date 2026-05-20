@@ -1,5 +1,5 @@
 import { Suspense, lazy, useState, useEffect } from 'react'
-import { Menu, X, House, Info, Shield, MousePointer2 } from 'lucide-react'
+import { Menu, X, House, Info, MousePointer2 } from 'lucide-react'
 
 const SidebarUI = lazy(() => import('../ui/SidebarUI'))
 
