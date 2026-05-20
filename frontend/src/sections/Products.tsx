@@ -16,7 +16,7 @@ const Products = () => {
     <article
       ref={ref}
       id="product-id"
-      className="min-h-screen flex items-center px-6 py-20"
+      className="flex items-center px-6 py-20"
     >
       <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
 

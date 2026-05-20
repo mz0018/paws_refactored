@@ -27,7 +27,7 @@ const Appointments = () => {
     <article
       ref={ref}
       id="appointment-id"
-      className="min-h-screen flex items-center px-6 py-20"
+      className="flex items-center px-6 py-20"
     >
       <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 items-center">
 

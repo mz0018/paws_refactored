@@ -7,7 +7,7 @@ export const About = () => {
     <section
       ref={ref}
       id="about-id"
-      className="py-20 px-6 min-h-screen flex items-center"
+      className="py-20 px-6 flex items-center"
     >
       <div className="max-w-4xl mx-auto text-center">
         <p className="text-sm uppercase tracking-[0.3em] text-text-hover mb-4">

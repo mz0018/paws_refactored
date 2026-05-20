@@ -15,7 +15,7 @@ const App = () => {
       <Hero />
       <About />
 
-      <section ref={appointmentsRef} className="min-h-screen">
+      <section ref={appointmentsRef} className="min-h-[250px]">
         {showAppointments && (
           <Suspense>
             <Appointments />
@@ -23,7 +23,7 @@ const App = () => {
         )}
       </section>
 
-      <section ref={productsRef} className="min-h-screen">
+      <section ref={productsRef} className="min-h-[250px]">
         {showProducts && (
           <Suspense>
             <Products />

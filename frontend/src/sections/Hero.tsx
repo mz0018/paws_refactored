@@ -10,7 +10,7 @@ export const Hero = () => {
     return (
         <section
             id="hero-id"
-            className="flex min-h-screen w-full px-6 py-10 lg:px-12 lg:py-16"
+            className="flex min-h-dvh w-full px-6 py-10 lg:px-12 lg:py-16"
         >
             <div className="mx-auto grid max-w-7xl items-center lg:grid-cols-2">
                 
