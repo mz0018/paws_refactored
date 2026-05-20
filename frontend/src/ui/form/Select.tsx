@@ -15,7 +15,7 @@ export const Select = ({ className = '', error, label, children, ...props }: Sel
 
             <select
                 {...props}
-                className={`p-4 rounded-sm focus:outline-none border
+                className={`p-4 rounded-sm bg-white focus:outline-none border
                     ${error ? 'border-red-500 text-red-500' : 'border-gray-300 text-gray-500'}
                     ${className}`}
             >

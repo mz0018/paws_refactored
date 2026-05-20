@@ -1,4 +1,3 @@
-// import { Link } from 'react-router-dom'
 
 export const Hero = () => {
 
@@ -11,18 +10,17 @@ export const Hero = () => {
     return (
         <section
             id="hero-id"
-            className="w-full px-6 py-10 lg:px-12 lg:py-16"
+            className="flex min-h-screen w-full px-6 py-10 lg:px-12 lg:py-16"
         >
-            <div className="mx-auto grid max-w-7xl items-center gap-10 lg:grid-cols-2">
+            <div className="mx-auto grid max-w-7xl items-center lg:grid-cols-2">
                 
                 <div className="max-w-xl">
                     <h1 className="text-5xl font-bold leading-[1.05] tracking-tight text-gray-900 sm:text-6xl lg:text-7xl">
                     Pro Animal <span className="text-btn-black-bg">Welfare System</span>
                     </h1>
 
-                    <p className="mt-8 max-w-md text-base leading-7 text-gray-500 sm:text-lg">
-                    A modern platform for animal welfare, connecting pet owners with trusted
-                    veterinary care, rescue support, and essential services.
+                    <p className="mt-8 line-clamp-2 text-base leading-7 tracking-wide text-text-body sm:text-lg">
+                    Connect pet owners with trusted veterinary care, rescue support, and essential pet services.
                     </p>
 
                     <div className="mt-16 flex flex-wrap gap-10 sm:gap-16">
@@ -41,16 +39,12 @@ export const Hero = () => {
                     </div>
                 </div>
 
-                <div className="relative h-[800px] w-full overflow-hidden hidden lg:block">
-                <div
-                    className="absolute inset-0 bg-[url(/img/vet-bg.webp)] bg-cover bg-center
-                    filter brightness-75 contrast-110 blur-[0px]
-                    [mask-image:url(/img/55.png),linear-gradient(black,black)]
-                    [mask-composite:exclude]
-                    [mask-size:cover]
-                    [mask-position:center]
-                    [mask-repeat:no-repeat]"
-                />
+                <div className="hidden h-[450px] w-full overflow-hidden rounded-md shadow-2xl shadow-black/30 lg:block">
+                    <img
+                        src="/img/main.webp"
+                        alt=""
+                        className="h-full w-full object-cover"
+                    />
                 </div>
             </div>
         </section>

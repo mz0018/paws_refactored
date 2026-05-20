@@ -1,8 +1,10 @@
 const ProductOverview = () => {
-
-    return (
-        <>Product overview here...</>
-    )
+    
+  return (
+    <div className="min-h-screen flex items-center justify-center">
+      Product overview here...
+    </div>
+  )
 }
 
 export default ProductOverview

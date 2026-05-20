@@ -1,25 +1,36 @@
-import ClientLayout from './layout/ClientLayout'
+import { Hero } from './sections/Hero'
+import { About } from './sections/About'
+import { lazy, Suspense } from 'react'
+import { useInView } from './hooks/useInView'
+
+const Appointments = lazy(() => import('./sections/Appointment'))
+const Products = lazy(() => import('./sections/Products'))
 
 const App = () => {
+  const { ref: appointmentsRef, inView: showAppointments } = useInView()
+  const { ref: productsRef, inView: showProducts } = useInView()
+
   return (
-    <div className="relative min-h-screen">
-      
-      <div
-        className="
-          fixed inset-0
-          -z-20
-          opacity-10
-          bg-[radial-gradient(circle,black_1px,transparent_1px)]
-          bg-[size:16px_16px]
-        "
-      />
+    <>
+      <Hero />
+      <About />
 
-      <div className="fixed inset-0 -z-10 bg-surface/40" />
+      <section ref={appointmentsRef} className="min-h-screen">
+        {showAppointments && (
+          <Suspense>
+            <Appointments />
+          </Suspense>
+        )}
+      </section>
 
-      <div className="relative z-10">
-        <ClientLayout />
-      </div>
-    </div>
+      <section ref={productsRef} className="min-h-screen">
+        {showProducts && (
+          <Suspense>
+            <Products />
+          </Suspense>
+        )}
+      </section>
+    </>
   )
 }
 

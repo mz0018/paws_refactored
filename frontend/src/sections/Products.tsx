@@ -37,7 +37,7 @@ const Products = () => {
             Veterinary Products <br /> <span className="text-btn-black-bg">You Can Trust</span>
           </h2>
 
-          <p className="text-lg text-text-body leading-relaxed mb-8">
+          <p className="text-lg text-text-body leading-7 tracking-wide mb-8">
             Shop trusted veterinary products for animal care, health, and nutrition.
             Visit our online overview to explore more.
           </p>

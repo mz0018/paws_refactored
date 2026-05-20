@@ -1,39 +1,20 @@
-import { lazy, Suspense } from 'react'
-import { Header } from '../sections/Header'
-import { Hero } from '../sections/Hero'
-import { About } from '../sections/About'
-import { Footer } from '../sections/Footer'
-import { useInView } from '../hooks/useInView'
-
-const Appointments = lazy(() =>import('../sections/Appointment'))
-const Products = lazy(() =>import('../sections/Products'))
+import { Outlet } from "react-router-dom"
+import { Header } from "../sections/Header"
+import { Footer } from "../sections/Footer"
 
 const ClientLayout = () => {
-  const { ref: appointmentsRef, inView: showAppointments } = useInView()
-  const { ref: productsRef, inView: showProducts } = useInView()
-
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="relative min-h-screen">
+      <div className="fixed inset-0 -z-20 opacity-10 bg-[radial-gradient(circle,black_1px,transparent_1px)] bg-[size:16px_16px]" />
+      <div className="fixed inset-0 -z-10 bg-surface/40" />
+
       <Header />
-      <main className="flex-1 pt-28">
-        <Hero />
-        <About />
-        <section ref={appointmentsRef} className="min-h-screen">
-          {showAppointments && (
-              <Suspense>
-                <Appointments />
-              </Suspense>
-          )}
-        </section>
-        <section ref={productsRef} className="min-h-screen">
-          {showProducts && (
-              <Suspense>
-                <Products />
-              </Suspense>
-          )}
-        </section>
-        <Footer />
+
+      <main className="relative z-10 pt-28">
+        <Outlet />
       </main>
+
+      <Footer />
     </div>
   )
 }

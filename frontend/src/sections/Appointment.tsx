@@ -48,7 +48,7 @@ const Appointments = () => {
             Book Appointments <br /> <span className="text-btn-black-bg">In Minutes</span>
           </h2>
 
-          <p className="text-lg text-text-body leading-relaxed mb-8">
+          <p className="text-lg text-text-body leading-7 tracking-wide mb-8">
             Schedule veterinary appointments online with a simple and convenient
             booking experience for your pet’s care needs.
           </p>

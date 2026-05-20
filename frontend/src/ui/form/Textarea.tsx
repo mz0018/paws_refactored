@@ -16,7 +16,7 @@ export const Textarea = ({ className = '', error, label, ...props }: TextareaPro
 
             <textarea
                 {...props}
-                className={`p-4 rounded-sm focus:outline-none w-full
+                className={`p-4 rounded-sm bg-white focus:outline-none w-full
                 ${error ? 'border-red-500 border text-red-500' : 'border-gray-300 border text-gray-500'}
                 ${className}`}
             />
