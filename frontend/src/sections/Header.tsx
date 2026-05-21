@@ -1,30 +1,34 @@
+import { memo, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { Suspense, lazy, useState, useEffect } from 'react'
 import { Menu, X, House, Info, MousePointer2 } from 'lucide-react'
 
 const SidebarUI = lazy(() => import('../ui/SidebarUI'))
 
-export const Header = () => {
+export const Header = memo(() => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const [scrolled, setScrolled] = useState<boolean>(false)
 
-  const navLinks = [
-    {
-      name: 'Home',
-      path: '/#hero-id',
-      icon: <House size={18} />,
-    },
-    {
-      name: 'About',
-      path: '/#about-id',
-      icon: <Info size={18} />,
-    },
-    {
-      name: 'Contact',
-      path: '/#contact-id',
-      icon: <Info size={18} />,
-    },
-  ]
+  const navLinks = useMemo(
+    () => [
+      {
+        name: 'Home',
+        path: '/#hero-id',
+        icon: <House size={18} />,
+      },
+      {
+        name: 'About',
+        path: '/#about-id',
+        icon: <Info size={18} />,
+      },
+      {
+        name: 'Contact',
+        path: '/#contact-id',
+        icon: <Info size={18} />,
+      },
+    ],
+    []
+  )
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 0)
@@ -143,4 +147,4 @@ export const Header = () => {
       )}
     </>
   )
-}
+})
