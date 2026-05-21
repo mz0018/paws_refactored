@@ -19,6 +19,21 @@ const ProductOverview = () => {
 
     if (isError) return <p>{error?.message}</p>
 
+    if (isLoading) {
+        return (
+            <section className="p-5">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                {Array.from({ length: 10 }).map((_, i) => (
+                <div key={i} className="p-3 animate-pulse">
+                    <div className="w-full aspect-square bg-gray-200 rounded" />
+                    <div className="mt-2 h-4 bg-gray-200 rounded w-3/4" />
+                </div>
+                ))}
+            </div>
+            </section>
+        )
+    }
+
     return (
         <section className="p-5">
             <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
