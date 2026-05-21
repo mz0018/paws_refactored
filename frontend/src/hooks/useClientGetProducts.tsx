@@ -22,5 +22,6 @@ export const useGetClientProducts = (searchQuery?: string, category?: string, so
         },
         getNextPageParam: (lastPage) => lastPage.pagination.nextCursor || undefined,
         initialPageParam: undefined,
+        staleTime: 5 * 60 * 1000,
     })
 }

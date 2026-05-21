@@ -1,8 +1,11 @@
 import { useInView } from '../hooks/useInView'
 import { Button } from '../ui/form/Buttons'
+import { useNavigate } from 'react-router-dom';
 import { ShoppingBasket, Cross, Activity, Salad, HandFist } from 'lucide-react'
 
 const Products = () => {
+
+  const navigate = useNavigate()
   const { ref, inView } = useInView();
 
   const offers = [
@@ -43,7 +46,7 @@ const Products = () => {
           </p>
 
           <Button
-            onClick={() => (window.location.href = "/product-overview")}
+            onClick={() => navigate("/product-overview")}
             className="flex items-center justify-center gap-2 px-7 py-4 rounded-xl bg-btn-black-bg text-white hover:bg-btn-black-hover-header-bg transition duration-300"
           >
             <ShoppingBasket className="w-5 h-5" />

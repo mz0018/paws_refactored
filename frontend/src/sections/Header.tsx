@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { Suspense, lazy, useState, useEffect } from 'react'
 import { Menu, X, House, Info, MousePointer2 } from 'lucide-react'
 
@@ -52,8 +53,8 @@ export const Header = () => {
           <ul className="hidden md:flex items-center gap-10 lg:gap-12">
             {navLinks.map((link) => (
               <li key={link.name}>
-                <a
-                  href={link.path}
+                <Link
+                  to={link.path}
                   className="
                     relative
                     font-semibold text-sm tracking-wide
@@ -78,19 +79,19 @@ export const Header = () => {
                   "
                 >
                   {link.name}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
 
           <div className="hidden md:block">
-            <a
-              href="/signin"
+            <Link
+              to="/signin"
               className="flex items-center justify-center gap-2 min-w-[140px] bg-btn-black-bg hover:bg-btn-black-hover-header-bg text-white px-4 py-2 rounded-sm text-[15px] font-medium transition-all duration-200"
             >
               <MousePointer2 className="rotate-90 w-4 h-4" />
               Get Started
-            </a>
+            </Link>
           </div>
 
           <button

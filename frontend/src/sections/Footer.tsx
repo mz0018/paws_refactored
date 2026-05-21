@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { Input } from '../ui/form/Input'
 import { useInView } from '../hooks/useInView'
 
@@ -72,7 +73,7 @@ export const Footer = () => {
               <ul className="space-y-3 text-gray-200">
                 {companyLinks.map((link) => (
                   <li key={link.name}>
-                    <a href={link.path}>{link.name}</a>
+                    <Link to={link.path}>{link.name}</Link>
                   </li>
                 ))}
               </ul>
@@ -86,7 +87,7 @@ export const Footer = () => {
               <ul className="space-y-3 text-gray-200">
                 {helpLinks.map((link) => (
                   <li key={link.name}>
-                    <a href={link.path}>{link.name}</a>
+                    <Link to={link.path}>{link.name}</Link>
                   </li>
                 ))}
               </ul>
