@@ -11,6 +11,7 @@ import { Loader } from './components/Loader'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 const ProductOverview = lazy(() => import('./pages/ProductOverview.tsx'))
+const ClientDetailedProduct = lazy(() => import('./pages/ClientDetailedProduct.tsx'))
 const Appointment = lazy(() => import('./pages/Appointment.tsx'))
 
 const Signin = lazy(() => import('./pages/Signin.tsx'))
@@ -29,6 +30,7 @@ const router = createBrowserRouter([
       { path: "/", element: <App /> },
       { path: "/signin", element: <Signin /> },
       { path: "/product-overview", element: <ProductOverview /> },
+      { path: "/detailed-product-overview/:id", element: <ClientDetailedProduct /> },
       { path: "/appointment", element: <Appointment /> },
     ]
   },
