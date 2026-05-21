@@ -1,18 +1,18 @@
 import { Link } from 'react-router-dom'
 import { Image } from './Image'
 
-type Product = {
+type ClientProduct = {
   _id: string
   productName: string
   productPrice: number
   images: { url: string }[]
 }
 
-type ProductContainerProps = {
-  product: Product
+type ClientProductContainerProps = {
+  product: ClientProduct
 }
 
-export const ProductContainer = ({ product }: ProductContainerProps) => {
+export const ClientProductContainer = ({ product }: ClientProductContainerProps) => {
   return (
     <div className="p-3">
       <Link to={`/admin/products/${product._id}`}>
@@ -21,11 +21,11 @@ export const ProductContainer = ({ product }: ProductContainerProps) => {
           alt={product.productName}
           className="w-full aspect-square object-cover"
         >
-          View Details
+          View More
         </Image>
       </Link>
 
-      <h3 className="mt-2 capitalize text-text-body">
+      <h3 className="mt-2 capitalize text-text-body font-semibold line-clamp-2 tracking-wide">
         {product.productName}
       </h3>
     </div>

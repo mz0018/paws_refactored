@@ -3,6 +3,7 @@ import express from 'express'
 import cookieParser from 'cookie-parser'
 import userRoute from './routes/userRoute.js'
 import adminRoute from './routes/adminRoute.js'
+import clientRoute from './routes/clientRoute.js'
 import connection from './config/connection.js'
 
 import { errorHandler } from './middleware/errorHandler.js'
@@ -39,6 +40,7 @@ app.use(cors({
 
 app.use('/api/users', userRoute)
 app.use('/api/admin', adminRoute)
+app.use('/api', clientRoute)
 
 app.use(errorHandler)
 
