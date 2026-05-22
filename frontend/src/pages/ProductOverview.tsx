@@ -29,7 +29,7 @@ const ProductOverview = () => {
     return (
         <section className="w-full">
 
-            <div className="bg-surface p-5 sticky top-28 z-40 shadow-md">
+            <div className="bg-surface p-5 sticky top-28 z-40 shadow-lg">
                 <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     <div className="col-span-2 md:col-span-2 lg:col-span-1">
                         <SearchBar
@@ -57,7 +57,7 @@ const ProductOverview = () => {
                 <p>No products found.</p>
             ) : (
                 <>
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                    <div className="p-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
                         {products.map((product) => (
                             <div key={product._id}>
                                 <ClientProductContainer key={product._id} product={product} />
