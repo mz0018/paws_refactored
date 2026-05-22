@@ -4,6 +4,7 @@ import { ClientProductContainer } from '../ui/form/ClientProductContainer'
 import { SearchBar } from '../components/SearchBar'
 import { FilterBy } from '../components/FilterBy'
 import { SortBy } from '../components/SortBy'
+import { NotFound } from '../components/NotFound'
 import { useDebounce } from '../hooks/useDebounce'
 import { ButtonLoadMore } from '../ui/form/ButtonLoadMore'
 import { ClipLoader } from 'react-spinners'
@@ -54,7 +55,7 @@ const ProductOverview = () => {
                     ))}
                 </div>
             ) : products.length === 0 ? (
-                <p>No products found.</p>
+                <NotFound label='Products' />
             ) : (
                 <>
                     <div className="p-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">

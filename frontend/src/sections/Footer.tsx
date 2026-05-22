@@ -7,12 +7,6 @@ const companyLinks = [
   { name: "Products", path: "/product-overview" },
 ]
 
-const helpLinks = [
-  { name: "Home", path: "/#hero-id" },
-  { name: "About", path: "/#about-id" },
-  { name: "About the Developer", path: "/#about-id" },
-];
-
 export const Footer = () => {
 
   const { ref } = useInView()
@@ -52,7 +46,7 @@ export const Footer = () => {
             </div>
           </div>
 
-          <div className="grid sm:grid-cols-2 md:grid-cols-4 gap-10 mt-16">
+          <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-10 mt-16">
 
             <div>
               <h4 className="text-sm text-gray-400 font-semibold uppercase mb-5">
@@ -72,20 +66,6 @@ export const Footer = () => {
 
               <ul className="space-y-3 text-gray-200">
                 {companyLinks.map((link) => (
-                  <li key={link.name}>
-                    <Link to={link.path}>{link.name}</Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div>
-              <h4 className="text-sm text-gray-400 font-semibold uppercase mb-5">
-                Help
-              </h4>
-
-              <ul className="space-y-3 text-gray-200">
-                {helpLinks.map((link) => (
                   <li key={link.name}>
                     <Link to={link.path}>{link.name}</Link>
                   </li>

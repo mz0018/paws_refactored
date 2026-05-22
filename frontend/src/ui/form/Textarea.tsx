@@ -5,21 +5,56 @@ type TextareaProps = React.TextareaHTMLAttributes<HTMLTextAreaElement> & {
     label?: string
 }
 
-export const Textarea = ({ className = '', error, label, ...props }: TextareaProps) => {
+export const Textarea = ({
+    className = '',
+    error,
+    label,
+    ...props
+}: TextareaProps) => {
     return (
-        <div className="flex flex-col">
+        <div className="flex flex-col gap-1.5">
             {label && (
-                <label className="font-semibold text-sm text-gray-600 mb-1">
+                <label className="text-sm font-medium text-gray-700">
                     {label}
                 </label>
             )}
 
             <textarea
                 {...props}
-                className={`p-4 rounded-sm bg-white focus:outline-none w-full
-                ${error ? 'border-red-500 border text-red-500' : 'border-gray-300 border text-gray-500'}
-                ${className}`}
+                className={`
+                    w-full
+                    min-h-[120px]
+                    px-4
+                    py-3
+                    rounded-xl
+                    border
+                    bg-white
+                    text-sm
+                    text-gray-700
+                    placeholder:text-gray-400
+                    shadow-sm
+                    transition-all
+                    duration-200
+                    resize-y
+                    focus:outline-none
+                    focus:ring-4
+                    hover:border-gray-400
+                    disabled:cursor-not-allowed
+                    disabled:opacity-60
+                    ${
+                        error
+                            ? 'border-red-500 text-red-500 focus:border-red-500 focus:ring-red-500/20'
+                            : 'border-gray-200 focus:border-blue-500 focus:ring-blue-500/20'
+                    }
+                    ${className}
+                `}
             />
+
+            {error && (
+                <span className="text-sm text-red-500">
+                    {error}
+                </span>
+            )}
         </div>
     )
 }
