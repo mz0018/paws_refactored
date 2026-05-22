@@ -1,11 +1,14 @@
-import { memo, useMemo } from 'react'
 import { Link } from 'react-router-dom'
-import { Suspense, lazy, useState, useEffect } from 'react'
+import { Suspense, lazy, useState, useEffect, memo, useMemo } from 'react'
 import { Menu, X, House, Info, MousePointer2 } from 'lucide-react'
+
+type HeaderProps = {
+  activeSection?: string
+}
 
 const SidebarUI = lazy(() => import('../ui/SidebarUI'))
 
-export const Header = memo(() => {
+export const Header = memo(({ activeSection }: HeaderProps = {}) => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const [scrolled, setScrolled] = useState<boolean>(false)
 
@@ -38,11 +41,19 @@ export const Header = memo(() => {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  const isProductSectionActive = activeSection === '/product-overview'
+
+  useEffect(() => {
+    console.log(`${activeSection} is active`)
+  }, [isProductSectionActive])
+
   return (
     <>
       <header
-        className={`bg-surface fixed top-0 left-0 z-50 w-full px-6 md:px-10 lg:px-16 backdrop-blur-md transition-shadow duration-300 ${
-          scrolled ? '' : 'shadow-none'
+        className={`${
+          isProductSectionActive ? 'bg-surface' : 'bg-surface/50'
+        } fixed top-0 left-0 z-50 w-full px-6 md:px-10 lg:px-16 backdrop-blur-md transition-shadow duration-300 ${
+          scrolled && !isProductSectionActive ? 'shadow-md' : 'shadow-none'
         }`}
       >
         <nav className="w-full flex items-center justify-between h-30">

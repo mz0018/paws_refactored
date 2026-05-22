@@ -24,7 +24,7 @@ export const ClientProductContainer = ({ product }: ClientProductContainerProps)
         </Image>
       </Link>
 
-      <h3 className="mt-2 uppercase text-text-body font-semibold line-clamp-2 tracking-wide">
+      <h3 className="mt-1 md:mt-2 capitalize text-text-body font-medium sm:font-semibold line-clamp-2 tracking-wide text-xs sm:text-sm md:text-base">
         {product.productName}
       </h3>
     </div>
