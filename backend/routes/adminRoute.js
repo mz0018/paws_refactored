@@ -31,7 +31,7 @@ router.get(
 
 router.get(
     '/get-product/:id',
-    authorizeViaCookie,
+    // authorizeViaCookie,
     cacheHeaders(getProductUpdateAt),
     AdminController.getProductById
 )

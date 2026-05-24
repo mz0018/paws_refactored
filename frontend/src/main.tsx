@@ -54,7 +54,7 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryClientProvider client={new QueryClient()}>
       <AuthProvider>
-        <Suspense fallback={<Loader />}>
+        <Suspense fallback={<Loader label="Loading application..." />}>
           <RouterProvider router={router} />
         </Suspense>
       </AuthProvider>
