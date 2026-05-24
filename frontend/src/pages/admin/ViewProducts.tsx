@@ -6,6 +6,7 @@ import { FilterBy } from '../../components/FilterBy'
 import { SortBy } from '../../components/SortBy'
 import { useDebounce } from '../../hooks/useDebounce'
 import { ButtonLoadMore } from '../../ui/form/ButtonLoadMore'
+import { NotFound } from '../../components/NotFound'
 
 import { ClipLoader } from 'react-spinners'
 import { Search } from 'lucide-react'
@@ -49,7 +50,7 @@ const ViewProducts = () => {
             </div>
 
             {products.length === 0 && !isLoading ? (
-                <p>No products found.</p>
+                <NotFound />
             ) : (
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
                     {products.map((product) => (

@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { Image } from '../../ui/form/Image'
 import { Button } from '../../ui/form/Buttons'
+import { NotFound } from '../../components/NotFound'
+import { Loader } from '../../components/Loader'
 import { useViewDetailedProduct } from '../../hooks/useViewDetailedProduct'
 import { ProductUpdateModal } from '../../components/modals/ProductUpdateModal'
 
@@ -14,8 +16,13 @@ const ViewDetailedProduct = () => {
     const [imageOpen, setImageOpen] = useState(false)
     const [isEditOpen, setIsEditOpen] = useState(false)
 
-    if (loading) return <p className="p-4">Loading...</p>
-    if (!product) return <p className="p-4">Product not found</p>
+    if (loading) {
+        return <Loader label="Loading product..." />
+    }
+
+    if (!product) {
+        return <NotFound label="The product was not found or may have been removed." />
+    }
 
     const images = product.images || []
 
