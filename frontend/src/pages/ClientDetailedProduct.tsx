@@ -94,7 +94,7 @@ const ClientDetailedProduct = () => {
                         ₱{Number(product?.productPrice).toLocaleString()}
                     </p>
 
-                    <div className="border-b py-4">
+                    <div className="py-4">
                         <p className="text-gray-600 leading-relaxed text-sm sm:text-base">
                             {product?.productDescription}
                         </p>
@@ -110,23 +110,23 @@ const ClientDetailedProduct = () => {
                                 text-sm font-medium px-2 py-1 rounded
                                 ${
                                     product?.stock > 0
-                                        ? 'bg-green-100 text-green-700'
+                                        ? 'text-green-700'
                                         : 'bg-red-100 text-red-700'
                                 }
                             `}
                         >
                             {product?.stock > 0
-                                ? `${product?.stock} Available`
+                                ? `${product?.stock}`
                                 : 'Out of stock'}
                         </span>
                     </div>
 
                     <div className="pt-2 flex flex-col sm:flex-row gap-3">
-                        <Button className="w-full sm:w-auto px-6 py-3 rounded bg-surface text-footer-bg hover:text-gray-500 transition shadow-sm capitalize font-semibold">
+                        <Button className="w-full md:w-auto px-6 py-3 rounded bg-surface text-footer-bg transition shadow-sm capitalize font-semibold">
                             Add to Cart
                         </Button>
 
-                        <Button className="w-full sm:w-auto px-6 py-3 rounded bg-footer-bg text-white hover:bg-black/90 transition shadow-sm capitalize font-semibold">
+                        <Button className="w-full md:w-auto px-6 py-3 rounded bg-footer-bg text-white hover:bg-black/90 transition shadow-sm capitalize font-semibold">
                             Buy now
                         </Button>
                     </div>
