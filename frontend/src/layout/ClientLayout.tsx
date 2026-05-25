@@ -7,8 +7,6 @@ const ClientLayout = () => {
   const location = useLocation()
   const { pathname } = useLocation()
 
-  // console.log('Active Section:', pathname)
-
   useEffect(() => {
     if (location.hash) {
       const el = document.querySelector(location.hash)

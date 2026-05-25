@@ -5,6 +5,7 @@ import { SearchBar } from '../components/SearchBar'
 import { FilterBy } from '../components/FilterBy'
 import { SortBy } from '../components/SortBy'
 import { NotFound } from '../components/NotFound'
+import { Error } from '../components/Error'
 import { useDebounce } from '../hooks/useDebounce'
 import { ButtonLoadMore } from '../ui/form/ButtonLoadMore'
 import { ClipLoader } from 'react-spinners'
@@ -25,7 +26,11 @@ const ProductOverview = () => {
         })
     }, [debouncedSearch, filteredBy, sortBy])
 
-    if (isError) return <p>{error?.message}</p>
+    if (isError) {
+        return (
+            <Error label={error?.message} />
+        )
+    }
 
     return (
         <section className="w-full">

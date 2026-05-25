@@ -19,6 +19,7 @@ export const useViewDetailedProduct = () => {
 
     const [product, setProduct] = useState<Product | null>(null)
     const [loading, setLoading] = useState<boolean>(false)
+    const [error, setError] = useState<Error | null>(null)
 
     useEffect(() => {
         if (id) {
@@ -37,11 +38,12 @@ export const useViewDetailedProduct = () => {
             const data = await res.json()
             setProduct(data.product)
         } catch (err) {
+            setError(err instanceof Error ? err : new Error('Failed to fetch'))
             console.error('Something went wrong: ', err)
         } finally {
             setLoading(false)
         }
     }
 
-    return { id, product, loading, fetchProduct }
+    return { id, product, loading, fetchProduct, error }
 }

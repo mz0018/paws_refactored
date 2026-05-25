@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Image } from '../../ui/form/Image'
 import { Button } from '../../ui/form/Buttons'
+import { Error } from '../../components/Error'
 import { NotFound } from '../../components/NotFound'
 import { Loader } from '../../components/Loader'
 import { useViewDetailedProduct } from '../../hooks/useViewDetailedProduct'
@@ -10,7 +11,7 @@ import Lightbox from "yet-another-react-lightbox"
 import "yet-another-react-lightbox/styles.css"
 
 const ViewDetailedProduct = () => {
-    const { product, loading, fetchProduct } = useViewDetailedProduct()
+    const { product, loading, error, fetchProduct } = useViewDetailedProduct()
 
     const [activeImage, setActiveImage] = useState(0)
     const [imageOpen, setImageOpen] = useState(false)
@@ -20,8 +21,19 @@ const ViewDetailedProduct = () => {
         return <Loader label="Loading product..." />
     }
 
+    if (error) {
+        return  (
+            <Error label={error.message} />
+        )
+    }
+
     if (!product) {
-        return <NotFound label="The product was not found or may have been removed." />
+        return (
+            <NotFound 
+                label="The product was not found or may have been removed."
+                childLabel="Please refresh the page and try again."
+            />
+        )
     }
 
     const images = product.images || []
