@@ -35,3 +35,7 @@
   --color-sidebar-hover: rgba(255, 255, 255, 0.1); */
 }
 
+html {
+  overflow-y: scroll;
+  scrollbar-gutter: stable;
+}

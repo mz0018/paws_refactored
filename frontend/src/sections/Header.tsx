@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom'
+import { ClientCartModal } from '../components/modals/ClientCartModal'
 import { Suspense, lazy, useState, useEffect, memo, useMemo } from 'react'
 import { Menu, X, House, Info, MousePointer2, ShoppingCart } from 'lucide-react'
 
@@ -10,6 +11,7 @@ const SidebarUI = lazy(() => import('../ui/SidebarUI'))
 
 export const Header = memo(({ activeSection }: HeaderProps = {}) => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const [scrolled, setScrolled] = useState<boolean>(false)
 
   const navLinks = useMemo(
@@ -111,13 +113,12 @@ export const Header = memo(({ activeSection }: HeaderProps = {}) => {
 
           <button
             className="md:hidden text-text-body flex items-center justify-center p-2 rounded-md"
-            onClick={() => setIsOpen(true)}
+            onClick={() => setIsModalOpen(true)}
             aria-label="Open Menu"
           >
             <Menu size={30} />
           </button>
         </nav>
-              {/* <div className='bg-blue-500'>Hello</div> */}
       </header>
 
       <button
@@ -128,10 +129,12 @@ export const Header = memo(({ activeSection }: HeaderProps = {}) => {
           bg-btn-black-bg hover:bg-btn-black-hover-header-bg
           text-white rounded-full shadow-xl cursor-pointer
         "
-        onClick={() => alert('Cart open')}
+        onClick={() => setIsModalOpen(true)}
       >
         <ShoppingCart className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 lg:w-9 lg:h-9" />
       </button>
+
+      <ClientCartModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
 
       {isOpen && (
         <div className="fixed inset-0 z-50 md:hidden">
