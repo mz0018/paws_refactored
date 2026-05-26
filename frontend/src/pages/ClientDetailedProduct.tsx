@@ -4,6 +4,7 @@ import { Loader } from '../components/Loader'
 import { Button } from '../ui/form/Buttons'
 import { Error } from '../components/Error'
 import { NotFound } from '../components/NotFound'
+import { BtnAddToCart } from '../components/buttons/BtnAddToCart'
 import { useViewDetailedProduct } from '../hooks/useViewDetailedProduct'
 
 import Lightbox from 'yet-another-react-lightbox'
@@ -122,9 +123,7 @@ const ClientDetailedProduct = () => {
                     </div>
 
                     <div className="pt-2 flex flex-col sm:flex-row gap-3">
-                        <Button className="w-full md:w-auto px-6 py-3 rounded bg-surface text-footer-bg transition shadow-sm capitalize font-semibold">
-                            Add to Cart
-                        </Button>
+                        <BtnAddToCart product={product} />
 
                         <Button className="w-full md:w-auto px-6 py-3 rounded bg-footer-bg text-white hover:bg-black/90 transition shadow-sm capitalize font-semibold">
                             Buy now
