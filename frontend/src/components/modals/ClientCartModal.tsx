@@ -10,9 +10,16 @@ type ClientCartModalProps = {
 
 export const ClientCartModal = ({ isOpen, onClose }: ClientCartModalProps) => {
 
-    const [cart, setCart] = useState(() =>
-        JSON.parse(localStorage.getItem('shopping_cart') ?? '[]')
-    )
+    const [selectedItems, setSelectedItems] = useState<number[]>([])
+
+    const [cart, setCart] = useState(() => {
+        const stored = JSON.parse(localStorage.getItem('shopping_cart') ?? '[]')
+
+        return stored.map((item: any) => ({
+            ...item,
+            quantity: item.quantity ?? 1
+        }))
+    })
 
     const handleRemoveItem = (index: number) => {
         const updatedCart = cart.filter((_: any, i: number) => i !== index)
@@ -22,13 +29,49 @@ export const ClientCartModal = ({ isOpen, onClose }: ClientCartModalProps) => {
     }
 
     const handleAdjustQuantity = (index: number, action: 'increase' | 'decrease') => {
-        console.log(index, action)
+        const updatedCart = [...cart]
+
+        const currentQty = updatedCart[index].quantity ?? 1
+
+        if (action === 'increase') {
+            updatedCart[index].quantity = currentQty + 1
+        }
+
+        if (action === 'decrease' && currentQty > 1) {
+            updatedCart[index].quantity = currentQty - 1
+        }
+
+        setCart(updatedCart)
+        localStorage.setItem('shopping_cart', JSON.stringify(updatedCart))
+        window.dispatchEvent(new Event('cart-updated'))
+    }
+
+    const handleCheckboxChange = (index: number) => {
+        setSelectedItems(prev =>
+            prev.includes(index)
+                ? prev.filter(i => i !== index)
+                : [...prev, index]
+        )
+    }
+
+    const handleCheckout = () => {
+        if (selectedItems.length === 0) {
+            alert('please select a product to checkout')
+            return
+        }
     }
 
     useEffect(() => {
         if (isOpen) {
             queueMicrotask(() => {
-                setCart(JSON.parse(localStorage.getItem('shopping_cart') ?? '[]'))
+                const stored = JSON.parse(localStorage.getItem('shopping_cart') ?? '[]')
+
+                setCart(
+                    stored.map((item: any) => ({
+                        ...item,
+                        quantity: item.quantity ?? 1
+                    }))
+                )
             })
         }
     }, [isOpen])
@@ -49,15 +92,16 @@ export const ClientCartModal = ({ isOpen, onClose }: ClientCartModalProps) => {
                 <ul className="space-y-2">
                     {cart.map((item: any, i: number) => (
                         <li key={i} className="flex items-center gap-3 text-text-body">
-                            <input type="checkbox" className="h-4 w-4 accent-btn-black-bg"/>
+                            <input type="checkbox" checked={selectedItems.includes(i)} onChange={() => handleCheckboxChange(i)} className="h-4 w-4 accent-btn-black-bg"/>
 
                             <label className="flex-1">
                                 {item.productName} - ₱{item.productPrice}
                             </label>
 
                             <div className="flex items-center gap-2">
-                                <button onClick={() => handleAdjustQuantity(i, 'increase')}>+</button>
                                 <button onClick={() => handleAdjustQuantity(i, 'decrease')}>-</button>
+                                <span>{item.quantity}</span>
+                                <button onClick={() => handleAdjustQuantity(i, 'increase')}>+</button>
                             </div>
 
                             <button
@@ -73,7 +117,7 @@ export const ClientCartModal = ({ isOpen, onClose }: ClientCartModalProps) => {
 
             <div className="flex flex-col-reverse sm:flex-row justify-end gap-2 mt-4">
                 <Button className="text-white w-full" onClick={onClose}>Cancel</Button>
-                <Button className="text-white w-full">Checkout</Button>
+                <Button className="text-white w-full" onClick={handleCheckout}>Checkout</Button>
             </div>
             
         </Modal>
