@@ -19,13 +19,10 @@ export const BtnAddToCart = ({ product }: BtnAddToCartProps) => {
     })
 
     const addProduct = () => {
-        // 2. Create the updated  
         const updatedCart = [...cart, product]
         
-        // 3. Update React state so the UI rerenders instantly
         setCart(updatedCart)
         
-        // 4. Save it to localStorage as a string
         localStorage.setItem('shopping_cart', JSON.stringify(updatedCart))
 
         console.log(updatedCart)
