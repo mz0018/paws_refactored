@@ -20,6 +20,10 @@ export const ClientCartModal = ({ isOpen, onClose }: ClientCartModalProps) => {
         localStorage.setItem('shopping_cart', JSON.stringify(updatedCart))
     }
 
+    const handleAdjustQuantity = (index: number, action: 'increase' | 'decrease') => {
+        console.log(index, action)
+    }
+
     return (
         <Modal isOpen={isOpen} onClose={onClose} closeOnBackdrop={false} className="w-full sm:max-w-lg">
             <h2 className="text-lg font-bold mb-4">Cart</h2>
@@ -29,25 +33,26 @@ export const ClientCartModal = ({ isOpen, onClose }: ClientCartModalProps) => {
             ) : (
                 <ul className="space-y-2">
                     {cart.map((item: any, i: number) => (
-                        <li
-                        key={i}    
-                        className="flex items-center gap-3 text-text-body"
-                        >
-                        <input
-                            type="checkbox"
-                            className="h-4 w-4 accent-btn-black-bg"
-                        />
+                        <li key={i} className="flex items-center gap-3 text-text-body">
+                            <input type="checkbox" className="h-4 w-4 accent-btn-black-bg"/>
 
-                        <label className="flex-1">
-                            {item.productName} - ₱{item.productPrice}
-                        </label>
+                            <label className="flex-1">
+                                {item.productName} - ₱{item.productPrice}
+                            </label>
 
-                        <button
-                            onClick={() => handleRemoveItem(i)}
-                            className="bg-red-500 text-white px-2 rounded"
-                        >
-                            X
-                        </button>
+                            {/** Quantity Counter */}
+                            <div className="flex items-center gap-2">
+                                <button onClick={() => handleAdjustQuantity(i, 'increase')}>+</button>
+                                <button onClick={() => handleAdjustQuantity(i, 'decrease')}>-</button>
+                            </div>
+
+                            {/** Remove */}
+                            <button
+                                onClick={() => handleRemoveItem(i)}
+                                className="bg-red-500 text-white px-2 rounded"
+                            >
+                                X
+                            </button>
                         </li>
                     ))}
                 </ul>
