@@ -40,13 +40,11 @@ export const ClientCartModal = ({ isOpen, onClose }: ClientCartModalProps) => {
                                 {item.productName} - ₱{item.productPrice}
                             </label>
 
-                            {/** Quantity Counter */}
                             <div className="flex items-center gap-2">
                                 <button onClick={() => handleAdjustQuantity(i, 'increase')}>+</button>
                                 <button onClick={() => handleAdjustQuantity(i, 'decrease')}>-</button>
                             </div>
 
-                            {/** Remove */}
                             <button
                                 onClick={() => handleRemoveItem(i)}
                                 className="bg-red-500 text-white px-2 rounded"

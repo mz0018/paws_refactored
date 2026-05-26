@@ -18,13 +18,15 @@ export const BtnAddToCart = ({ product }: BtnAddToCartProps) => {
         return savedCart ? JSON.parse(savedCart) : []
     })
 
-    const addProduct = () => {
-        const updatedCart = [...cart, product]
-        
-        setCart(updatedCart)
-        
-        localStorage.setItem('shopping_cart', JSON.stringify(updatedCart))
+    const isInCart = product._id && cart.some((item) => item._id === product._id)
 
+    const addProduct = () => {
+
+        if (isInCart) return
+
+        const updatedCart = [...cart, product]
+        setCart(updatedCart)
+        localStorage.setItem('shopping_cart', JSON.stringify(updatedCart))
         console.log(updatedCart)
     }
 
@@ -32,9 +34,10 @@ export const BtnAddToCart = ({ product }: BtnAddToCartProps) => {
         <Button
             className="text-white font-semibold"
             onClick={addProduct}
+            disabled={!!isInCart}
         >
             <ShoppingCart size={18} />
-            Add to cart {cart.length > 0 && `(${cart.length})`}
+            {isInCart ? 'Already in cart' : 'Add to cart'}
         </Button>
     )
 }
