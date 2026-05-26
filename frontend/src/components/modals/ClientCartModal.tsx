@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { NotFound } from '../NotFound'
 import { Modal } from '../../ui/form/Modal'
 import { Button } from '../../ui/form/Buttons'
@@ -18,11 +18,26 @@ export const ClientCartModal = ({ isOpen, onClose }: ClientCartModalProps) => {
         const updatedCart = cart.filter((_: any, i: number) => i !== index)
         setCart(updatedCart)
         localStorage.setItem('shopping_cart', JSON.stringify(updatedCart))
+        window.dispatchEvent(new Event('cart-updated'))
     }
 
     const handleAdjustQuantity = (index: number, action: 'increase' | 'decrease') => {
         console.log(index, action)
     }
+
+    useEffect(() => {
+        if (isOpen) {
+            queueMicrotask(() => {
+                setCart(JSON.parse(localStorage.getItem('shopping_cart') ?? '[]'))
+            })
+        }
+    }, [isOpen])
+
+    useEffect(() => {
+        const sync = () => setCart(JSON.parse(localStorage.getItem('shopping_cart') ?? '[]'))
+        window.addEventListener('cart-updated', sync)
+        return () => window.removeEventListener('cart-updated', sync)
+    }, [])
 
     return (
         <Modal isOpen={isOpen} onClose={onClose} closeOnBackdrop={false} className="w-full sm:max-w-lg">
