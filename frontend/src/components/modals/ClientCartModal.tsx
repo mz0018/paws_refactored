@@ -59,6 +59,11 @@ export const ClientCartModal = ({ isOpen, onClose }: ClientCartModalProps) => {
             alert('please select a product to checkout')
             return
         }
+        console.log('=== CHECKOUT ITEMS ===')
+        selectedItems.forEach(index => {
+            const item = cart[index]
+            console.log(`Product: ${item.productName}, Price: ₱${item.productPrice}, Quantity: ${item.quantity}`)
+        })
     }
 
     useEffect(() => {
