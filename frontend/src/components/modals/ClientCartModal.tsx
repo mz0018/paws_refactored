@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { NotFound } from '../NotFound'
 import { Modal } from '../../ui/form/Modal'
+import { Image } from '../../ui/form/Image'
 import { Button } from '../../ui/form/Buttons'
 
 type ClientCartModalProps = {
@@ -96,32 +98,39 @@ export const ClientCartModal = ({ isOpen, onClose }: ClientCartModalProps) => {
             ) : (
                 <ul className="space-y-2">
                     {cart.map((item: any, i: number) => (
-                        <li key={i} className="flex items-center gap-3 text-text-body">
-                            <input type="checkbox" checked={selectedItems.includes(i)} onChange={() => handleCheckboxChange(i)} className="h-4 w-4 accent-btn-black-bg"/>
+                        <div key={i} className="p-5 border border-gray-400 rounded-md">
+                            <li key={i} className="flex items-center gap-3 text-text-body">
+                                <input type="checkbox" checked={selectedItems.includes(i)} onChange={() => handleCheckboxChange(i)} className="h-4 w-4 accent-btn-black-bg"/>
 
-                            <img 
-                                src={item.images?.[item.selectedImageIndex ?? 0]?.url}
-                                alt={item.productName}
-                                className="w-12 h-12 object-cover rounded"
-                            />
+                                <Link to={`/detailed-product-overview/${item._id}`} onClick={onClose}>
+                                    <Image 
+                                        src={item.images?.[item.selectedImageIndex ?? 0]?.url}
+                                        alt={item.productName}
+                                        className="w-16 h-16 object-cover rounded-md"
+                                    />
+                                </Link>
 
-                            <label className="flex-1">
-                                {item.productName} - ₱{item.productPrice}
-                            </label>
+                                <label className="flex-1 flex flex-col">
+                                    <span className="font-semibold">{item.productName}</span>
+                                    <span className="text-sm text-gray-500">
+                                        ₱{item.productPrice}
+                                    </span>
+                                </label>
 
-                            <div className="flex items-center gap-2">
-                                <button onClick={() => handleAdjustQuantity(i, 'decrease')}>-</button>
-                                <span>{item.quantity}</span>
-                                <button onClick={() => handleAdjustQuantity(i, 'increase')}>+</button>
-                            </div>
+                                <div className="flex items-center gap-2">
+                                    <button onClick={() => handleAdjustQuantity(i, 'decrease')}>-</button>
+                                    <span>{item.quantity}</span>
+                                    <button onClick={() => handleAdjustQuantity(i, 'increase')}>+</button>
+                                </div>
 
-                            <button
-                                onClick={() => handleRemoveItem(i)}
-                                className="bg-red-500 text-white px-2 rounded"
-                            >
-                                X
-                            </button>
-                        </li>
+                                <button
+                                    onClick={() => handleRemoveItem(i)}
+                                    className="bg-red-500 text-white px-2 rounded"
+                                >
+                                    X
+                                </button>
+                            </li>
+                        </div>
                     ))}
                 </ul>
             )}
