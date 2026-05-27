@@ -113,7 +113,7 @@ export const Header = memo(({ activeSection }: HeaderProps = {}) => {
 
           <button
             className="md:hidden text-text-body flex items-center justify-center p-2 rounded-md"
-            onClick={() => setIsModalOpen(true)}
+            onClick={() => setIsOpen(true)}
             aria-label="Open Menu"
           >
             <Menu size={30} />
@@ -152,18 +152,6 @@ export const Header = memo(({ activeSection }: HeaderProps = {}) => {
             </button>
 
             <Suspense fallback={null}>
-              {/* <SidebarUI
-                navLinks={[
-                  ...navLinks,
-                  {
-                    name: 'Get Started',
-                    path: '/signin',
-                    icon: <Shield size={18} />,
-                  },
-                ]}
-                isClientMode={false}
-                onLinkClick={() => setIsOpen(false)}
-              /> */}
               <SidebarUI
                 navLinks={navLinks}
                 isClientMode={false}
