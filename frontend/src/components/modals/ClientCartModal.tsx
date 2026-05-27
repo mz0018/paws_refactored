@@ -98,7 +98,7 @@ export const ClientCartModal = ({ isOpen, onClose }: ClientCartModalProps) => {
             ) : (
                 <ul className="space-y-2">
                     {cart.map((item: any, i: number) => (
-                        <div key={i} className="p-5 border border-gray-400 rounded-md">
+                        <div key={i} className="px-3 py-4 border-b border-gray-200 shadow">
                             <li key={i} className="flex items-center gap-3 text-text-body">
                                 <input type="checkbox" checked={selectedItems.includes(i)} onChange={() => handleCheckboxChange(i)} className="h-4 w-4 accent-btn-black-bg"/>
 
@@ -110,24 +110,26 @@ export const ClientCartModal = ({ isOpen, onClose }: ClientCartModalProps) => {
                                     />
                                 </Link>
 
-                                <label className="flex-1 flex flex-col">
-                                    <span className="font-semibold">{item.productName}</span>
-                                    <span className="text-sm text-gray-500">
-                                        ₱{item.productPrice}
-                                    </span>
-                                </label>
+                                <label className="flex-1 flex items-center justify-between">
+                                    <div className="flex flex-col">
+                                        <span className="font-semibold line-clamp-1">{item.productName}</span>
+                                        <span className="text-sm text-gray-500">
+                                            ₱{item.productPrice}
+                                        </span>
+                                    </div>
 
-                                <div className="flex items-center gap-2">
-                                    <button onClick={() => handleAdjustQuantity(i, 'decrease')}>-</button>
-                                    <span>{item.quantity}</span>
-                                    <button onClick={() => handleAdjustQuantity(i, 'increase')}>+</button>
-                                </div>
+                                    <div className="flex items-center gap-2">
+                                        <button className="cursor-pointer" onClick={() => handleAdjustQuantity(i, 'decrease')}>-</button>
+                                        <span>{item.quantity}</span>
+                                        <button className="cursor-pointer" onClick={() => handleAdjustQuantity(i, 'increase')}>+</button>
+                                    </div>
+                                </label>
 
                                 <button
                                     onClick={() => handleRemoveItem(i)}
-                                    className="bg-red-500 text-white px-2 rounded"
+                                    className="px-2 text-xs rounded cursor-pointer"
                                 >
-                                    X
+                                    Remove
                                 </button>
                             </li>
                         </div>
