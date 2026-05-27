@@ -6,13 +6,16 @@ type Product = {
     _id?: string
     productName: string
     productPrice: number
+    images?: { url: string }[]
+    selectedImageIndex?: number
 }
 
 type BtnAddToCartProps = {
     product: Product
+    selectedImageIndex?: number
 }
 
-export const BtnAddToCart = ({ product }: BtnAddToCartProps) => {
+export const BtnAddToCart = ({ product, selectedImageIndex = 0 }: BtnAddToCartProps) => {
     const [cart, setCart] = useState<Product[]>(() => {
         const savedCart = localStorage.getItem('shopping_cart')
         return savedCart ? JSON.parse(savedCart) : []
@@ -24,7 +27,9 @@ export const BtnAddToCart = ({ product }: BtnAddToCartProps) => {
 
         if (isInCart) return
 
-        const updatedCart = [...cart, product]
+        const itemToAdd = { ...product, selectedImageIndex }
+        const updatedCart = [...cart, itemToAdd]
+
         setCart(updatedCart)
         localStorage.setItem('shopping_cart', JSON.stringify(updatedCart))
         window.dispatchEvent(new Event('cart-updated'))

@@ -89,7 +89,7 @@ export const ClientCartModal = ({ isOpen, onClose }: ClientCartModalProps) => {
 
     return (
         <Modal isOpen={isOpen} onClose={onClose} closeOnBackdrop={false} className="w-full sm:max-w-lg">
-            <h2 className="text-lg font-bold mb-4">Cart</h2>
+            <h2 className="text-lg font-bold mb-4 text-black">Your <span className="text-btn-black-bg">Cart</span></h2>
             
             {cart.length === 0 ? (
                 <NotFound label="Your Cart is Empty" childLabel="Browse products and add items to your cart."  />
@@ -98,6 +98,12 @@ export const ClientCartModal = ({ isOpen, onClose }: ClientCartModalProps) => {
                     {cart.map((item: any, i: number) => (
                         <li key={i} className="flex items-center gap-3 text-text-body">
                             <input type="checkbox" checked={selectedItems.includes(i)} onChange={() => handleCheckboxChange(i)} className="h-4 w-4 accent-btn-black-bg"/>
+
+                            <img 
+                                src={item.images?.[item.selectedImageIndex ?? 0]?.url}
+                                alt={item.productName}
+                                className="w-12 h-12 object-cover rounded"
+                            />
 
                             <label className="flex-1">
                                 {item.productName} - ₱{item.productPrice}
@@ -121,8 +127,8 @@ export const ClientCartModal = ({ isOpen, onClose }: ClientCartModalProps) => {
             )}
 
             <div className="flex flex-col-reverse sm:flex-row justify-end gap-2 mt-4">
-                <Button className="text-white w-full" onClick={onClose}>Cancel</Button>
-                <Button className="text-white w-full" onClick={handleCheckout}>Checkout</Button>
+                <Button className="text-text-body border border-gray-400 font-semibold bg-none w-full hover:bg-gray-50" onClick={onClose}>Cancel</Button>
+                <Button className="text-white font-semibold w-full bg-btn-black-bg hover:bg-btn-black-hover-header-bg" onClick={handleCheckout}>Checkout</Button>
             </div>
             
         </Modal>

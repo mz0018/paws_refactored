@@ -123,7 +123,7 @@ const ClientDetailedProduct = () => {
                     </div>
 
                     <div className="pt-2 flex flex-col sm:flex-row gap-3">
-                        <BtnAddToCart product={product} />
+                        <BtnAddToCart product={product} selectedImageIndex={activeImage} />
 
                         <Button className="w-full md:w-auto px-6 py-3 rounded bg-footer-bg text-white hover:bg-black/90 transition shadow-sm capitalize font-semibold">
                             Buy now
