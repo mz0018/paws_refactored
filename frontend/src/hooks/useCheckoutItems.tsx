@@ -25,7 +25,13 @@ export const useCheckoutItems = () => {
             })
 
             if (res.ok) {
-                alert('Save 200')
+                alert('submit 200')
+                const orderedIds = items.map((item: any) => item._id)
+                const cart = JSON.parse(localStorage.getItem('shopping_cart') ?? '[]')
+                const updatedCart = cart.filter((item: any) => !orderedIds.includes(item._id))
+
+                localStorage.setItem('shopping_cart', JSON.stringify(updatedCart))
+                window.dispatchEvent(new Event('cart-updated'))
                 sessionStorage.removeItem('checkout_items')
                 navigate('/')
             } else {

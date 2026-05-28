@@ -71,6 +71,7 @@ export const ClientCartModal = ({ isOpen, onClose }: ClientCartModalProps) => {
 
     useEffect(() => {
         if (isOpen) {
+            setSelectedItems([])
             queueMicrotask(() => {
                 const stored = JSON.parse(localStorage.getItem('shopping_cart') ?? '[]')
 
