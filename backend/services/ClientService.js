@@ -53,5 +53,9 @@ class ClientService {
             pagination: { nextCursor, hasNextPage, limit }
         }
     }
+
+    async saveClientOrder(data) {
+        console.log('from client service',data)
+    }
 }
 export default new ClientService()

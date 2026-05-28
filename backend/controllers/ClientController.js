@@ -10,5 +10,13 @@ class ClientController {
             next(error)
         }
     }
+    async saveClientOrder(req, res, next) {
+        try {
+            const result = await ClientService.saveClientOrder(req.body)
+            res.status(200).json(result)
+        } catch (error) {
+            next(error)
+        }
+    }
 }
 export default new ClientController()

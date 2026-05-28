@@ -10,4 +10,8 @@ router.get(
     cacheHeaders(getProductUpdateAt),
     ClientController.getProducts
 )
+router.post(
+    '/save-order',
+    ClientController.saveClientOrder
+)
 export default router

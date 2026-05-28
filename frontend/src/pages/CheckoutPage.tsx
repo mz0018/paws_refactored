@@ -3,9 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Image } from '../ui/form/Image'
 import { Button } from '../ui/form/Buttons'
 import { NotFound } from '../components/NotFound'
-import { useQRGenerator } from '../hooks/useQRGenerator'
-
-import { QRCode } from 'react-qr-code'
+import { useCheckoutItems } from '../hooks/useCheckoutItems'
 
 type CheckoutItem = {
   _id: string
@@ -17,7 +15,7 @@ type CheckoutItem = {
 }
 const CheckoutPage = () => {
   const [items, setItems] = useState<CheckoutItem[]>([])
-  const { qrValue, handleGenerate, closeQR } = useQRGenerator()
+  const { handleSaveOrder } = useCheckoutItems()
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -45,7 +43,7 @@ const CheckoutPage = () => {
   }
 
   const handleCheckout = () => {
-    handleGenerate(items)
+    handleSaveOrder(items)
   }
   
   return (
@@ -117,18 +115,6 @@ const CheckoutPage = () => {
               ₱{grandTotal.toLocaleString()}
             </span>
           </div>
-
-          {qrValue && (
-            <div className="fixed inset-0 flex items-center justify-center bg-black/50">
-              <div className="bg-white p-4 rounded-lg">
-                <QRCode value={qrValue} size={256} level="M" />
-
-                <button onClick={closeQR} className="mt-3">
-                  Close
-                </button>
-              </div>
-            </div>
-          )}
 
           <div className="flex flex-col sm:flex-row gap-3 mt-5 sm:mt-6">
             <Button
