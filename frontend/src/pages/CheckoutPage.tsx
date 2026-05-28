@@ -3,6 +3,10 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Image } from '../ui/form/Image'
 import { Button } from '../ui/form/Buttons'
 import { NotFound } from '../components/NotFound'
+import { useQRGenerator } from '../hooks/useQRGenerator'
+
+import { QRCode } from 'react-qr-code'
+
 type CheckoutItem = {
   _id: string
   productName: string
@@ -13,6 +17,7 @@ type CheckoutItem = {
 }
 const CheckoutPage = () => {
   const [items, setItems] = useState<CheckoutItem[]>([])
+  const { qrValue, handleGenerate, closeQR } = useQRGenerator()
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -37,6 +42,10 @@ const CheckoutPage = () => {
   const handleCancel = () => {
     sessionStorage.removeItem('checkout_items')
     navigate('/')
+  }
+
+  const handleCheckout = () => {
+    handleGenerate(items)
   }
   
   return (
@@ -109,6 +118,18 @@ const CheckoutPage = () => {
             </span>
           </div>
 
+          {qrValue && (
+            <div className="fixed inset-0 flex items-center justify-center bg-black/50">
+              <div className="bg-white p-4 rounded-lg">
+                <QRCode value={qrValue} size={256} level="M" />
+
+                <button onClick={closeQR} className="mt-3">
+                  Close
+                </button>
+              </div>
+            </div>
+          )}
+
           <div className="flex flex-col sm:flex-row gap-3 mt-5 sm:mt-6">
             <Button
               className="flex-1 h-11 sm:h-12 rounded-md border border-gray-400 bg-white hover:bg-gray-50 text-sm sm:text-base text-gray-700 font-semibold transition-all"
@@ -117,7 +138,7 @@ const CheckoutPage = () => {
               Cancel
             </Button>
 
-            <Button className="flex-1 h-11 sm:h-12 rounded-md bg-btn-black-bg hover:bg-btn-black-hover-header-bg text-sm sm:text-base text-white font-semibold shadow-md transition-all">
+            <Button onClick={handleCheckout} className="flex-1 h-11 sm:h-12 rounded-md bg-btn-black-bg hover:bg-btn-black-hover-header-bg text-sm sm:text-base text-white font-semibold shadow-md transition-all">
               Place Order
             </Button>
           </div>
