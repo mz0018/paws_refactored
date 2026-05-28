@@ -4,6 +4,7 @@ import { Image } from '../ui/form/Image'
 import { Button } from '../ui/form/Buttons'
 import { NotFound } from '../components/NotFound'
 import { useCheckoutItems } from '../hooks/useCheckoutItems'
+import { ErrorText } from '../ui/form/ErrorText'
 
 type CheckoutItem = {
   _id: string
@@ -15,7 +16,7 @@ type CheckoutItem = {
 }
 const CheckoutPage = () => {
   const [items, setItems] = useState<CheckoutItem[]>([])
-  const { handleSaveOrder } = useCheckoutItems()
+  const { loading, hasError, isRateLimit, handleSaveOrder } = useCheckoutItems()
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -111,10 +112,12 @@ const CheckoutPage = () => {
               Total
             </span>
 
-            <span className="text-xl sm:text-2xl font-bold text-footer-bg">
+            <span className="text-xl sm:text-2xl font-bold text-footer-bg mb-3">
               ₱{grandTotal.toLocaleString()}
             </span>
           </div>
+
+          <ErrorText message={hasError.general} />
 
           <div className="flex flex-col sm:flex-row gap-3 mt-5 sm:mt-6">
             <Button
@@ -124,7 +127,7 @@ const CheckoutPage = () => {
               Cancel
             </Button>
 
-            <Button onClick={handleCheckout} className="flex-1 h-11 sm:h-12 rounded-md bg-btn-black-bg hover:bg-btn-black-hover-header-bg text-sm sm:text-base text-white font-semibold shadow-md transition-all">
+            <Button onClick={handleCheckout} disabled={isRateLimit || loading} className="flex-1 h-11 sm:h-12 rounded-md bg-btn-black-bg hover:bg-btn-black-hover-header-bg text-sm sm:text-base text-white font-semibold shadow-md transition-all">
               Place Order
             </Button>
           </div>
