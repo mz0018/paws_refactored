@@ -121,18 +121,20 @@ export const Header = memo(({ activeSection }: HeaderProps = {}) => {
         </nav>
       </header>
 
-      <button
-        className="
-          fixed bottom-4 right-4 z-40
-          w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-24 lg:h-24
-          flex items-center justify-center
-          bg-btn-black-bg hover:bg-btn-black-hover-header-bg
-          text-white rounded-full shadow-xl cursor-pointer
-        "
-        onClick={() => setIsModalOpen(true)}
-      >
-        <ShoppingCart className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 lg:w-9 lg:h-9" />
-      </button>
+      {activeSection !== '/checkout' && (
+        <button
+          className="
+            fixed bottom-4 right-4 z-40
+            w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-24 lg:h-24
+            flex items-center justify-center
+            bg-btn-black-bg hover:bg-btn-black-hover-header-bg
+            text-white rounded-full shadow-xl cursor-pointer
+          "   
+          onClick={() => setIsModalOpen(true)}
+        >
+          <ShoppingCart className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 lg:w-9 lg:h-9" />
+        </button>
+      )}
 
       <ClientCartModal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)} />
 

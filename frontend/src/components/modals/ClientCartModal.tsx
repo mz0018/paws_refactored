@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { NotFound } from '../NotFound'
 import { Modal } from '../../ui/form/Modal'
 import { Image } from '../../ui/form/Image'
@@ -12,6 +12,7 @@ type ClientCartModalProps = {
 
 export const ClientCartModal = ({ isOpen, onClose }: ClientCartModalProps) => {
 
+    const navigate = useNavigate()
     const [selectedItems, setSelectedItems] = useState<number[]>([])
 
     const [cart, setCart] = useState(() => {
@@ -61,11 +62,11 @@ export const ClientCartModal = ({ isOpen, onClose }: ClientCartModalProps) => {
             alert('please select a product to checkout')
             return
         }
-        console.log('=== CHECKOUT ITEMS ===')
-        selectedItems.forEach(index => {
-            const item = cart[index]
-            console.log(`Product: ${item.productName}, Price: ₱${item.productPrice}, Quantity: ${item.quantity}`)
-        })
+        
+        const items = selectedItems.map(i => cart[i])
+        sessionStorage.setItem('checkout_items', JSON.stringify(items))
+        navigate('/checkout')
+        onClose()
     }
 
     useEffect(() => {
@@ -139,7 +140,9 @@ export const ClientCartModal = ({ isOpen, onClose }: ClientCartModalProps) => {
 
             <div className="flex flex-col-reverse sm:flex-row justify-end gap-2 mt-4">
                 <Button className="text-text-body border border-gray-400 font-semibold bg-none w-full hover:bg-gray-50" onClick={onClose}>Cancel</Button>
-                <Button className="text-white font-semibold w-full bg-btn-black-bg hover:bg-btn-black-hover-header-bg" onClick={handleCheckout}>Checkout</Button>
+                <Button className="text-white font-semibold w-full bg-btn-black-bg hover:bg-btn-black-hover-header-bg" onClick={handleCheckout}>
+                    Checkout {selectedItems.length > 0 ? `(${selectedItems.length})` : ''}
+                </Button>
             </div>
             
         </Modal>
