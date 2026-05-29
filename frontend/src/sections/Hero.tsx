@@ -9,8 +9,10 @@ export const Hero = () => {
     ]
 
     return (
+        <>
+        <div className="h-18" id="hero-id" />
         <section
-            id="hero-id"
+            
             className="flex w-full px-6 py-16"
         >
             <div className="mx-auto grid max-w-7xl items-center lg:grid-cols-2">
@@ -59,5 +61,6 @@ export const Hero = () => {
                 </div>
             </div>
         </section>
+        </>
     );
 };

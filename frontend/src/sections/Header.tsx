@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { ClientCartModal } from '../components/modals/ClientCartModal'
 import { Suspense, lazy, useState, useMemo, memo } from 'react'
-import { Menu, X, House, Info, MousePointer2, ShoppingCart } from 'lucide-react'
+import { Menu, X, House, Info, MousePointer2, ShoppingCart, ChevronDown } from 'lucide-react'
 
 type HeaderProps = {
   activeSection?: string
@@ -26,6 +26,11 @@ export const Header = memo(({ activeSection }: HeaderProps = {}) => {
         icon: <Info size={18} />,
       },
       {
+        name: 'Feature',
+        path: '/#contact-id',
+        icon: <ChevronDown size={18} />,
+      },
+      {
         name: 'Contact',
         path: '/#contact-id',
         icon: <Info size={18} />,
@@ -41,7 +46,7 @@ export const Header = memo(({ activeSection }: HeaderProps = {}) => {
       <header
         className={`${
           isProductSectionActive ? 'bg-surface' : 'bg-surface/50'
-        } fixed top-0 left-0 z-50 w-full px-6 md:px-10 lg:px-16 backdrop-blur-md shadow-none`}
+        } fixed top-0 left-0 z-50 w-full px-6 md:px-10 lg:px-16 backdrop-blur-md shadow-sm`}
       >
         <nav className="w-full flex items-center justify-between h-30">
           <div className="flex-shrink-0">
