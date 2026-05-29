@@ -15,6 +15,7 @@ const ClientDetailedProduct = () => {
 
     const [activeImage, setActiveImage] = useState<number>(0)
     const [imageOpen, setImageOpen] = useState<boolean>(false)
+    const [productQty, setProductQty] = useState<number>(1)
 
     if (loading) {
         return <Loader label="Loading product..." />
@@ -36,6 +37,18 @@ const ClientDetailedProduct = () => {
     }
 
     const images = product.images || []
+
+    const increaseQty = () => {
+        if (productQty < product.stock) {
+            setProductQty(prev => prev + 1)
+        }
+    }
+
+    const decreaseQty = () => {
+        if (productQty > 1) {
+            setProductQty(prev => prev - 1)
+        }
+    }
 
     return (
         <section className="mx-auto px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-10">
@@ -126,8 +139,34 @@ const ClientDetailedProduct = () => {
                         </span>
                     </div>
 
+                    <div className="pt-4">
+                        <p className="text-sm text-footer-bg mb-2">
+                            Quantity:
+                        </p>
+
+                        <div className="flex items-center gap-3">
+                            <button
+                                onClick={decreaseQty}
+                                className="w-10 h-10 border border-gray-200 rounded-sm text-lg font-semibold"
+                            >
+                                -
+                            </button>
+
+                            <span className="w-10 text-center font-medium text-lg">
+                                {productQty}
+                            </span>
+
+                            <button
+                                onClick={increaseQty}
+                                className="w-10 h-10 border border-gray-200 rounded-sm text-lg font-semibold"
+                            >
+                                +
+                            </button>
+                        </div>
+                    </div>
+
                     <div className="pt-2 flex flex-col sm:flex-row gap-3">
-                        <BtnBuyNow product={product} selectedImageIndex={activeImage} />
+                        <BtnBuyNow product={product} productQty={productQty} selectedImageIndex={activeImage} />
                         <BtnAddToCart product={product} selectedImageIndex={activeImage} />
                     </div>
                 </div>

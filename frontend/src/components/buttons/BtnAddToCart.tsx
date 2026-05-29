@@ -53,7 +53,7 @@ export const BtnAddToCart = ({ product, selectedImageIndex = 0 }: BtnAddToCartPr
 
     return (
         <Button
-            className="w-full text-white font-semibold bg-btn-black-bg"
+            className="w-full text-white font-semibold bg-btn-black-bg hover:bg-btn-black-hover-header-bg transition"
             onClick={addProduct}
             disabled={!!isInCart}
         >
