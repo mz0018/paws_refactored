@@ -53,13 +53,13 @@ const ClientDetailedProduct = () => {
     return (
         <section className="mx-auto px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-10">
 
-            <div className="bg-white p-5 rounded-sm grid grid-cols-1 lg:grid-cols-2 gap-2 max-w-5xl mx-auto">
+            <div className="bg-white p-5 rounded-md grid grid-cols-1 md:grid-cols-2 gap-2 max-w-5xl mx-auto shadow-lg">
 
                 {/* LEFT SIDE */}
                 <div className="space-y-2">
                     <div
                         onClick={() => setImageOpen(true)}
-                        className="rounded-sm overflow-hidden bg-gray-50"
+                        className="rounded-sm overflow-hidden"
                     >
                         <Image
                             src={images[activeImage]?.url}
