@@ -62,8 +62,8 @@ const ProductOverview = () => {
             ) : products.length === 0 ? (
                 <NotFound label='Products' />
             ) : (
-                <>
-                    <div className="max-w-7xl mx-auto p-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+                <div className="max-w-7xl mx-auto">
+                    <div className="p-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
                         {products.map((product) => (
                             <div key={product._id}>
                                 <ClientProductContainer key={product._id} product={product} />
@@ -75,7 +75,7 @@ const ProductOverview = () => {
                             {isFetchingNextPage ? <ClipLoader size={14} color='blue' /> : 'Load More'}
                         </ButtonLoadMore>
                     )}
-                </>
+                </div>
             )}
         </section>
     )
