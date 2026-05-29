@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import { Image } from '../ui/form/Image'
 import { Loader } from '../components/Loader'
-import { Button } from '../ui/form/Buttons'
 import { Error } from '../components/Error'
 import { NotFound } from '../components/NotFound'
+import { BtnBuyNow } from '../components/buttons/BtnBuyNow'
 import { BtnAddToCart } from '../components/buttons/BtnAddToCart'
 import { useViewDetailedProduct } from '../hooks/useViewDetailedProduct'
 
@@ -38,19 +38,20 @@ const ClientDetailedProduct = () => {
     const images = product.images || []
 
     return (
-        <section className="bg-surface/50 mx-auto px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-10">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-7xl mx-auto">
+        <section className="mx-auto px-4 py-6 sm:px-6 sm:py-8 lg:px-8 lg:py-10">
+
+            <div className="bg-white p-5 rounded-sm grid grid-cols-1 lg:grid-cols-2 gap-2 max-w-5xl mx-auto">
 
                 {/* LEFT SIDE */}
-                <div className="space-y-4">
+                <div className="space-y-2">
                     <div
                         onClick={() => setImageOpen(true)}
-                        className="rounded-sm overflow-hidden bg-gray-50 cursor-zoom-in"
+                        className="rounded-sm overflow-hidden bg-gray-50"
                     >
                         <Image
                             src={images[activeImage]?.url}
                             alt="Product"
-                            className="w-full h-[400px] object-cover"
+                            className="w-full h-[380px] object-cover border-b border-gray-200"
                         />
                     </div>
 
@@ -63,8 +64,8 @@ const ClientDetailedProduct = () => {
                                     w-20 h-20 overflow-hidden rounded border
                                     ${
                                         activeImage === index
-                                            ? 'border-blue-500'
-                                            : 'border-gray-300'
+                                            ? 'border-btn-black-bg'
+                                            : 'border-gray-200'
                                     }
                                 `}
                             >
@@ -79,29 +80,32 @@ const ClientDetailedProduct = () => {
                 </div>
 
                 {/* RIGHT SIDE */}
-                <div className="flex flex-col gap-3 lg:pl-4">
+                <div className="flex flex-col lg:pl-4">
     
                     <div>
-                        <p className="text-sm text-gray-500 uppercase tracking-wide">
-                            {product?.productCategory}
-                        </p>
-
-                        <h1 className="text-3xl sm:text-4xl md:text-5xl font-semibold text-text-body mt-1">
+                        <h1 className="capitalize text-lg sm:text-1xl md:text-2xl font-semibold text-text-body mt-1">
                             {product?.productName}
                         </h1>
+                        <p className="text-sm text-gray-500 capitalize tracking-wide flex items-center gap-1">
+                            {product?.productCategory}
+                        </p>
                     </div>
 
-                    <p className="text-2xl sm:text-3xl md:text-4xl font-medium text-btn-black-bg">
-                        ₱{Number(product?.productPrice).toLocaleString()}
+                    <p className="text-2xl sm:text-3xl md:text-4xl font-bold text-btn-black-bg tracking-wide">
+                        <span className="text-[24px]">₱</span>{Number(product?.productPrice).toLocaleString()}.00
                     </p>
 
                     <div className="py-4">
-                        <p className="text-gray-600 leading-relaxed text-sm sm:text-base">
-                            {product?.productDescription}
+                        <p className="text-sm text-gray-500 mb-1">
+                            Description:
+                        </p>
+
+                        <p className="text-footer-bg leading-none text-sm sm:text-base">
+                            {product?.productDescription}.
                         </p>
                     </div>
 
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center">
                         <span className="text-sm text-gray-500">
                             Stock:
                         </span>
@@ -117,17 +121,14 @@ const ClientDetailedProduct = () => {
                             `}
                         >
                             {product?.stock > 0
-                                ? `${product?.stock}`
+                                ? `${product?.stock} pcs`
                                 : 'Out of stock'}
                         </span>
                     </div>
 
                     <div className="pt-2 flex flex-col sm:flex-row gap-3">
+                        <BtnBuyNow product={product} selectedImageIndex={activeImage} />
                         <BtnAddToCart product={product} selectedImageIndex={activeImage} />
-
-                        <Button className="w-full md:w-auto px-6 py-3 rounded bg-footer-bg text-white hover:bg-black/90 transition shadow-sm capitalize font-semibold">
-                            Buy now
-                        </Button>
                     </div>
                 </div>
             </div>
