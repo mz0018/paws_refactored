@@ -4,15 +4,35 @@ import { Header } from '../sections/Header'
 import { Footer } from '../sections/Footer'
 
 const ClientLayout = () => {
-  const location = useLocation()
   const { pathname } = useLocation()
 
   useEffect(() => {
-    if (location.hash) {
-      const el = document.querySelector(location.hash)
-      if (el) el.scrollIntoView({ behavior: 'smooth' })
+    const scrollToHash = (hash: string) => {
+      if (hash) {
+        document.querySelector(hash)?.scrollIntoView({ behavior: 'smooth' })
+      }
     }
-  }, [location.hash])
+
+    scrollToHash(window.location.hash)
+
+    const onHashChange = () => scrollToHash(window.location.hash)
+    window.addEventListener('hashchange', onHashChange)
+
+    const onClick = (e: MouseEvent) => {
+      const link = (e.target as HTMLElement).closest('a[href^="/#"]')
+      if (link) {
+        const hash = '#' + link.getAttribute('href')?.split('#')[1]
+        if (hash) requestAnimationFrame(() => scrollToHash(hash))
+      }
+    }
+    document.addEventListener('click', onClick)
+
+    return () => {
+      window.removeEventListener('hashchange', onHashChange)
+      document.removeEventListener('click', onClick)
+    }
+  }, [])
+
   return (
     <div className="relative">
       <div className="fixed inset-0 -z-20 opacity-10 bg-[radial-gradient(circle,black_1px,transparent_1px)] bg-[size:16px_16px]" />
