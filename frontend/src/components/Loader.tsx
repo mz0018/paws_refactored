@@ -4,7 +4,7 @@ type LoaderProps = {
 
 export const Loader = ({ label }: LoaderProps) => {
     return (
-        <div className="flex h-screen bg-gray-100">
+        <div className="flex min-h-screen bg-gray-100">
             <main className="flex-1 flex flex-col items-center justify-center gap-3">
                 <div className="animate-spin h-10 w-10 border-4 border-btn-black-bg border-t-transparent rounded-full" />
 

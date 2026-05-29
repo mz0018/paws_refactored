@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { ClientCartModal } from '../components/modals/ClientCartModal'
-import { Suspense, lazy, useState, useEffect, memo, useMemo } from 'react'
+import { Suspense, lazy, useState, useMemo, memo } from 'react'
 import { Menu, X, House, Info, MousePointer2, ShoppingCart } from 'lucide-react'
 
 type HeaderProps = {
@@ -12,7 +12,6 @@ const SidebarUI = lazy(() => import('../ui/SidebarUI'))
 export const Header = memo(({ activeSection }: HeaderProps = {}) => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
-  const [scrolled, setScrolled] = useState<boolean>(false)
 
   const navLinks = useMemo(
     () => [
@@ -35,28 +34,14 @@ export const Header = memo(({ activeSection }: HeaderProps = {}) => {
     []
   )
 
-  useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 0)
-
-    window.addEventListener('scroll', onScroll)
-
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
-
   const isProductSectionActive = activeSection === '/product-overview'
-
-  useEffect(() => {
-    console.log(`${activeSection} is active`)
-  }, [isProductSectionActive])
 
   return (
     <>
       <header
         className={`${
           isProductSectionActive ? 'bg-surface' : 'bg-surface/50'
-        } fixed top-0 left-0 z-50 w-full px-6 md:px-10 lg:px-16 backdrop-blur-md transition-shadow duration-300 ${
-          scrolled && !isProductSectionActive ? 'shadow-md' : 'shadow-none'
-        }`}
+        } fixed top-0 left-0 z-50 w-full px-6 md:px-10 lg:px-16 backdrop-blur-md shadow-none`}
       >
         <nav className="w-full flex items-center justify-between h-30">
           <div className="flex-shrink-0">

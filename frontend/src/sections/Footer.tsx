@@ -67,17 +67,7 @@ export const Footer = () => {
               <ul className="space-y-3 text-gray-200">
                 {companyLinks.map((link) => (
                   <li key={link.name}>
-                    <Link 
-                    to={link.path}
-                    onClick={() => {
-                      setTimeout(() => {
-                        window.scrollTo({
-                          top: 0,
-                          behavior: 'smooth',
-                        });
-                      }, 0);
-                    }}
-                    >{link.name}</Link>
+                    <Link to={link.path}>{link.name}</Link>
                   </li>
                 ))}
               </ul>
