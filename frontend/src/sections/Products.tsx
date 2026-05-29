@@ -1,11 +1,8 @@
 import { useInView } from '../hooks/useInView'
-import { Button } from '../ui/form/Buttons'
-import { useNavigate } from 'react-router-dom';
-import { ShoppingBasket, Cross, Activity, Salad, HandFist } from 'lucide-react'
+import { Cross, Activity, Salad, HandFist } from 'lucide-react'
 
 const Products = () => {
 
-  const navigate = useNavigate()
   const { ref, inView } = useInView();
 
   const offers = [
@@ -23,7 +20,6 @@ const Products = () => {
     >
       <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
 
-        {/* Left Content */}
         <div
           className={`
             transform-gpu transition-all duration-700
@@ -44,17 +40,8 @@ const Products = () => {
             Shop trusted veterinary products for animal care, health, and nutrition.
             Visit our online overview to explore more.
           </p>
-
-          <Button
-            onClick={() => navigate("/product-overview")}
-            className="flex items-center justify-center gap-2 px-7 py-4 rounded-xl bg-btn-black-bg text-white hover:bg-btn-black-hover-header-bg transition duration-300"
-          >
-            <ShoppingBasket className="w-5 h-5" />
-            <span>Visit Vet Products</span>
-          </Button>
         </div>
 
-        {/* Right Card */}
         <div
           className={`
             relative transform-gpu transition-all duration-[2000ms]

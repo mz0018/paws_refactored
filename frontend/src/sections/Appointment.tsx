@@ -1,6 +1,4 @@
-import { useInView } from '../hooks/useInView';
-import { Button } from '../ui/form/Buttons';
-import { CalendarRange } from 'lucide-react';
+import { useInView } from '../hooks/useInView'
 
 const Appointments = () => {
   const { ref, inView } = useInView();
@@ -31,7 +29,6 @@ const Appointments = () => {
     >
       <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 items-center">
 
-        {/* Left Content */}
         <div
           className={`
             transform-gpu transition-all duration-[2000ms]
@@ -52,17 +49,8 @@ const Appointments = () => {
             Schedule veterinary appointments online with a simple and convenient
             booking experience for your pet’s care needs.
           </p>
-
-          <Button
-            onClick={() => (window.location.href = "/appointment")}
-            className="flex items-center justify-center gap-2 px-7 py-4 rounded-xl bg-btn-black-bg text-white hover:bg-btn-black-hover-header-bg transition duration-300"
-          >
-            <CalendarRange className="w-5 h-5" />
-            <span>Start an Appointment</span>
-          </Button>
         </div>
 
-        {/* Right Feature Card */}
         <div
           className={`
             bg-white rounded-3xl p-8 shadow-xl border border-gray-100

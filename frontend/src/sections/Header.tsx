@@ -27,8 +27,11 @@ export const Header = memo(({ activeSection }: HeaderProps = {}) => {
       },
       {
         name: 'Feature',
-        path: '/#contact-id',
         icon: <ChevronDown size={18} />,
+        children: [
+          { name: 'Appointment', path: '/appointment' },
+          { name: 'Products', path: '/product-overview' },
+        ],
       },
       {
         name: 'Contact',
@@ -58,37 +61,88 @@ export const Header = memo(({ activeSection }: HeaderProps = {}) => {
           </div>
 
           <ul className="hidden md:flex items-center gap-10 lg:gap-12">
-            {navLinks.map((link) => (
-              <li key={link.name}>
-                <Link
-                  to={link.path}
-                  className="
-                    relative
-                    font-semibold text-sm tracking-wide
-                    text-text-body
-                    hover:text-text-hover
-                    transition-colors duration-300
+            {navLinks.map((link) =>
+              link.children ? (
+                <li key={link.name} className="relative group">
+                  
+                  <button
+                    className="
+                      relative
+                      font-semibold text-sm tracking-wide
+                      text-text-body
+                      hover:text-text-hover
+                      transition-colors duration-300
+                      flex items-center gap-1 cursor-pointer
+                      p-4
+                    "
+                  >
+                    {link.name}
+                    <ChevronDown
+                      size={16}
+                      className="transition-transform duration-300 group-hover:rotate-180"
+                    />
+                  </button>
 
-                    after:absolute
-                    after:left-0
-                    after:bottom-0
-                    after:h-[2px]
-                    after:w-full
-                    after:scale-x-0
-                    after:origin-left
-                    after:bg-text-hover
-                    after:transition-transform
-                    after:duration-300
-                    after:content-['']
+                  <div
+                    className="
+                      absolute top-full left-0 mt-1
+                      min-w-[180px]
+                      bg-white rounded-lg shadow-lg
+                      opacity-0 invisible
+                      group-hover:opacity-100 group-hover:visible
+                      transition-all duration-200
+                      z-50 overflow-hidden
+                    "
+                  >
+                    {link.children.map((child) => (
+                      <Link
+                        key={child.name}
+                        to={child.path!}
+                        className="
+                          block px-4 py-3 text-sm font-medium
+                          text-gray-700 hover:text-text-hover
+                          hover:bg-gray-50
+                          transition-colors duration-200
+                        "
+                      >
+                        {child.name}
+                      </Link>
+                    ))}
+                  </div>
+                </li>
+              ) : (
+                <li key={link.name}>
+                  <Link
+                    to={link.path!}
+                    className="
+                      relative
+                      font-semibold text-sm tracking-wide
+                      text-text-body
+                      hover:text-text-hover
+                      transition-colors duration-300
+                      inline-flex items-center
 
-                    hover:after:scale-x-100
-                    p-4
-                  "
-                >
-                  {link.name}
-                </Link>
-              </li>
-            ))}
+                      after:absolute
+                      after:left-0
+                      after:bottom-0
+                      after:h-[2px]
+                      after:w-full
+                      after:scale-x-0
+                      after:origin-left
+                      after:bg-text-hover
+                      after:transition-transform
+                      after:duration-300
+                      after:content-['']
+
+                      hover:after:scale-x-100
+                      p-4
+                    "
+                  >
+                    {link.name}
+                  </Link>
+                </li>
+              )
+            )}
           </ul>
 
           <div className="hidden md:block">
