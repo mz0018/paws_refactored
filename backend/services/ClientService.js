@@ -63,38 +63,43 @@ class ClientService {
 
         const ids = data.items.map(item => item._id)
         const products = await Product.find({ _id: { $in: ids } })
-        const productMap = new Map(products.map(p => [p._id.toString(), p]))
+        const productMap = new Map(
+            products.map(p => [p._id.toString(), p])
+        )
 
         let totalAmount = 0
 
-        const items = data.items.map(item => {
+        const orderPromises = data.items.map(async item => {
             const product = productMap.get(item._id)
+
             if (!product) {
                 throw new ErrorController(`Product not found: ${item._id}`, 404)
             }
+
             if (product.stock < item.quantity) {
                 throw new ErrorController(`Insufficient stock for ${product.productName}`, 400)
             }
+
             const subtotal = product.productPrice * item.quantity
             totalAmount += subtotal
-            
-            const order = {
+
+            const order = new Order({
                 product: item._id,
                 quantity: item.quantity,
                 price: product.productPrice,
                 subtotal
-            }
+            })
 
-            const newOrder = new Order(order)
-            newOrder.save()
-
-            console.log(`Saved order for ${item.quantity} of ${product.productName} at $${product.productPrice} each, subtotal: $${subtotal.toFixed(2)}`)
-
-            return { message: `Ordered ${item.quantity} of ${product.productName} for $${subtotal.toFixed(2)}` }
+            return await order.save()
         })
 
+        const orders = await Promise.all(orderPromises)
 
+        return {
+            totalAmount,
+            orders
         }
+    }
 
 }
 export default new ClientService()
