@@ -1,5 +1,6 @@
 import mongoose from 'mongoose'
 import Product from '../models/product.model.js'
+import ErrorController from '../controllers/ErrorController.js'
 import { getSortOptions, getSortDetails } from '../utils/sortOptions.js'
 class ClientService {
     async getProducts(options = {}) {
@@ -55,7 +56,39 @@ class ClientService {
     }
 
     async saveClientOrder(data) {
-        console.log('from client service',data)
-    }
+        if (!data?.items?.length) {
+            throw new ErrorController('No items provided', 400)
+        }
+
+        const ids = data.items.map(item => item._id)
+        const products = await Product.find({ _id: { $in: ids } })
+        const productMap = new Map(products.map(p => [p._id.toString(), p]))
+
+        let totalAmount = 0
+
+        const items = data.items.map(item => {
+            const product = productMap.get(item._id)
+            if (!product) {
+                throw new ErrorController(`Product not found: ${item._id}`, 404)
+            }
+            if (product.stock < item.quantity) {
+                throw new ErrorController(`Insufficient stock for ${product.productName}`, 400)
+            }
+            const subtotal = product.productPrice * item.quantity
+            totalAmount += subtotal
+
+            console.log({ product: item._id, quantity: item.quantity, price: product.productPrice, subtotal })
+            
+            // return {
+            //     product: item._id,
+            //     quantity: item.quantity,
+            //     price: product.productPrice,
+            //     subtotal
+            // }
+        })
+
+
+        }
+
 }
 export default new ClientService()
