@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import Order from '../models/order.model.js'
 import Product from '../models/product.model.js'
 import ErrorController from '../controllers/ErrorController.js'
 import { getSortOptions, getSortDetails } from '../utils/sortOptions.js'
@@ -76,15 +77,20 @@ class ClientService {
             }
             const subtotal = product.productPrice * item.quantity
             totalAmount += subtotal
-
-            console.log({ product: item._id, quantity: item.quantity, price: product.productPrice, subtotal })
             
-            // return {
-            //     product: item._id,
-            //     quantity: item.quantity,
-            //     price: product.productPrice,
-            //     subtotal
-            // }
+            const order = {
+                product: item._id,
+                quantity: item.quantity,
+                price: product.productPrice,
+                subtotal
+            }
+
+            const newOrder = new Order(order)
+            newOrder.save()
+
+            console.log(`Saved order for ${item.quantity} of ${product.productName} at $${product.productPrice} each, subtotal: $${subtotal.toFixed(2)}`)
+
+            return { message: `Ordered ${item.quantity} of ${product.productName} for $${subtotal.toFixed(2)}` }
         })
 
 

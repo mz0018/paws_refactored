@@ -25,7 +25,6 @@ export const useCheckoutItems = () => {
             })
 
             if (res.ok) {
-                alert('submit 200')
                 const orderedIds = items.map((item: any) => item._id)
                 const cart = JSON.parse(localStorage.getItem('shopping_cart') ?? '[]')
                 const updatedCart = cart.filter((item: any) => !orderedIds.includes(item._id))
