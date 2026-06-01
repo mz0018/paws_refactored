@@ -16,4 +16,10 @@ router.post(
     placeOrderRateLimiter,
     ClientController.saveClientOrder
 )
+
+router.get(
+    '/get-orders',
+    ClientController.getOrders
+)
+
 export default router

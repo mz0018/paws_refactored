@@ -15,7 +15,7 @@ const orderModel = new mongoose.Schema(
             type: Number,
             required: true
         },
-        subtotal: {
+        subtotal: {                          
             type: Number,
             required: true
         }

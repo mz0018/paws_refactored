@@ -1,6 +1,6 @@
 const placeOrderAttempts = new Map()
 const MAX_PLACE_ORDER_ATTEMPTS = 3
-const WINDOW_MS = 15 * 60 * 1000
+const WINDOW_MS = 86400000 // 24 hours
 
 export const placeOrderRateLimiter = (req, res, next) => {
     const ip = req.headers['x-forwarded-for']?.split(',')[0] || req.ip || req.socket.remoteAddress

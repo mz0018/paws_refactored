@@ -101,5 +101,13 @@ class ClientService {
         }
     }
 
+    async getOrders() {
+        const orders = await Order.find()
+            .populate('product', 'productName productPrice')
+            .sort({ createdAt: -1 })
+        return orders
+    }
+    
+
 }
 export default new ClientService()
