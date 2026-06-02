@@ -19,15 +19,6 @@ class ClientController {
             next(error)
         }
     }
-
-    async getOrders(req, res, next) {
-        try {
-            const result = await ClientService.getOrders()
-            res.status(200).json(result)
-        } catch (error) {
-            next(error)
-        }
-    }
     
 }
 

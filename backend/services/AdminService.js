@@ -1,11 +1,13 @@
 import mongoose from 'mongoose'
+import Order from '../models/order.model.js'
 import Product from '../models/product.model.js'
 
-import ErrorController from '../controllers/ErrorController.js'
 import R2Service from '../services/R2Service.js'
+import ErrorController from '../controllers/ErrorController.js'
 
-import { getSortOptions, getSortDetails } from '../utils/sortOptions.js'
 import { updateProductSchema } from '../schemas/product.schema.js'
+import { getSortOptions, getSortDetails } from '../utils/sortOptions.js'
+
 class AdminService {
 
     //authorizeViaCookie handles the user_id checker!
@@ -192,6 +194,20 @@ class AdminService {
         await product.save()
 
         return { message: 'Product updated successfully', product }
+    }
+
+    async getOrderByUserId(user_id) {
+        if (!user_id) {
+            throw new ErrorController('Unauthorized access', 401)
+        }
+
+        const products = await Product.find({ createdBy: user_id }).select('_id')
+        const productIds = products.map(p => p._id)
+
+        const orders = await Order.find({ product: { $in: productIds } })
+            .populate('product')
+
+        return { orders }
     }
 
 }

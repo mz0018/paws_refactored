@@ -17,9 +17,4 @@ router.post(
     ClientController.saveClientOrder
 )
 
-router.get(
-    '/get-orders',
-    ClientController.getOrders
-)
-
 export default router

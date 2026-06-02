@@ -44,4 +44,10 @@ router.patch(
     AdminController.updateProduct
 )
 
+router.get(
+    '/get-order',
+    authorizeViaCookie,
+    AdminController.getOrderByUserId
+)
+
 export default router

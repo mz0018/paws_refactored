@@ -1,7 +1,7 @@
 import { Suspense, lazy } from 'react'
 import { Outlet } from 'react-router-dom'
 import { MainLayoutUI } from '../ui/MainLayoutUI'
-import { LayoutDashboard, Package, Settings } from 'lucide-react'
+import { LayoutDashboard, Package, Settings, BringToFront } from 'lucide-react'
 
 const SidebarUI = lazy(() => import('../ui/SidebarUI'))
 
@@ -9,6 +9,7 @@ const AdminLayout = () => {
 
   const navLinks = [
     { name: 'Appointments', path: '/admin/dashboard', icon: <LayoutDashboard size={18} /> },
+    { name: 'Orders', path: '/admin/orders', icon: <BringToFront size={18} /> },
     {
       name: 'Products',
       icon: <Package size={18} />,

@@ -1,0 +1,22 @@
+Error: TypeError: AdminService.getOrderById is not a function
+    at getOrderByUserId (file:///C:/Users/Mz/Desktop/paws_refactored/backend/controllers/AdminController.js:46:47)
+    at Layer.handleRequest (C:\Users\Mz\Desktop\paws_refactored\backend\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\Mz\Desktop\paws_refactored\backend\node_modules\router\lib\route.js:157:13)
+    at authorizeViaCookie (file:///C:/Users/Mz/Desktop/paws_refactored/backend/middleware/authorizeViaCookie.js:21:9)
+    at Layer.handleRequest (C:\Users\Mz\Desktop\paws_refactored\backend\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\Mz\Desktop\paws_refactored\backend\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (C:\Users\Mz\Desktop\paws_refactored\backend\node_modules\router\lib\route.js:117:3)
+    at handle (C:\Users\Mz\Desktop\paws_refactored\backend\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (C:\Users\Mz\Desktop\paws_refactored\backend\node_modules\router\lib\layer.js:152:17)
+    at C:\Users\Mz\Desktop\paws_refactored\backend\node_modules\router\index.js:295:15
+Error: TypeError: AdminService.getOrderById is not a function
+    at getOrderByUserId (file:///C:/Users/Mz/Desktop/paws_refactored/backend/controllers/AdminController.js:46:47)
+    at Layer.handleRequest (C:\Users\Mz\Desktop\paws_refactored\backend\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\Mz\Desktop\paws_refactored\backend\node_modules\router\lib\route.js:157:13)
+    at authorizeViaCookie (file:///C:/Users/Mz/Desktop/paws_refactored/backend/middleware/authorizeViaCookie.js:21:9)
+    at Layer.handleRequest (C:\Users\Mz\Desktop\paws_refactored\backend\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\Mz\Desktop\paws_refactored\backend\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (C:\Users\Mz\Desktop\paws_refactored\backend\node_modules\router\lib\route.js:117:3)
+    at handle (C:\Users\Mz\Desktop\paws_refactored\backend\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (C:\Users\Mz\Desktop\paws_refactored\backend\node_modules\router\lib\layer.js:152:17)
+    at C:\Users\Mz\Desktop\paws_refactored\backend\node_modules\router\index.js:295:15
