@@ -197,9 +197,11 @@ class AdminService {
     }
 
     async getOrderByUserId(user_id) {
-        if (!user_id) throw new ErrorController('Unauthorized access', 401)
+        if (!user_id) {
+            throw new ErrorController('Unauthorized access', 401)
+        }
 
-        const orders = await Order.find({ createdBy: user_id }).populate('product')
+        const orders = await Order.find({ 'items.createdBy': user_id }).populate('items.product')
 
         return { orders }
     }

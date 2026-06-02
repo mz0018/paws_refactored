@@ -68,33 +68,31 @@ class ClientService {
         )
 
         let totalAmount = 0
+        const orderItems = []
 
-        const orderPromises = data.items.map(async item => {
+        for (const item of data.items) {
             const product = productMap.get(item._id)
-
             if (!product) {
-                throw new ErrorController(`Product not found: ${item._id}`, 404)
+                throw new ErrorController(`Product with ID ${item._id} not found`, 404)
             }
-
             if (product.stock < item.quantity) {
-                throw new ErrorController(`Insufficient stock for ${product.productName}`, 400)
+                throw new ErrorController(`Insufficient stock for product ${product.productName}`, 400)
             }
 
             const subtotal = product.productPrice * item.quantity
             totalAmount += subtotal
 
-            const order = new Order({
+            orderItems.push({
                 product: item._id,
                 quantity: item.quantity,
                 price: product.productPrice,
                 subtotal,
                 createdBy: product.createdBy
             })
+        }
 
-            return await order.save()
-        })
-
-        const orders = await Promise.all(orderPromises)
+        const orders = new Order({ items: orderItems })
+        await orders.save()
 
         return {
             totalAmount,
