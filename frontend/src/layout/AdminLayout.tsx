@@ -22,7 +22,8 @@ const AdminLayout = () => {
   ]
 
   return (
-    <div className="h-screen bg-gray-100 flex overflow-hidden">
+    <div className="h-screen flex overflow-hidden">
+      <div className="fixed inset-0 -z-20 opacity-10 bg-[radial-gradient(circle,black_1px,transparent_1px)] bg-[size:16px_16px]" />
 
       <Suspense fallback={null}>
         <SidebarUI navLinks={navLinks} />

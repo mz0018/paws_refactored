@@ -1,6 +1,8 @@
 import { useGetOrderByUserId } from '../../hooks/useGetOrderbyUserId'
 import { useEffect, useState } from 'react'
 import { NotFound } from '../../components/NotFound'
+import { Loader } from '../../components/Loader'
+import { Error } from '../../components/Error'
 import { Button } from '../../ui/form/Buttons'
 import { ViewOrderModal } from '../../components/modals/ViewOrderModal'
 
@@ -41,45 +43,93 @@ const ListOfOrders = () => {
         fetchOrders()
     }, [])
 
-    if (loading) return <div>Loading orders...</div>
-    if (error) return <div>{error}</div>
+    if (loading) {
+        return (
+            <Loader label="Loading orders..." />
+        )
+    }
+
+    if (error) {
+        return (
+            <Error label={error as string} />
+        )
+    }
 
     return (
         <>
-            <div>
-                {orders.length === 0 ? (
-                    <NotFound label="" childLabel="No orders found for your products." />
-                ) : (
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Total Qty</th>
-                                <th>Total Amount</th>
-                                <th>Status</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody className="">
-                            {orders.map(order => {
-                                const totalQty = order.items.reduce((sum, item) => sum + item.quantity, 0)
-                                const totalAmount = order.items.reduce((sum, item) => sum + item.subtotal, 0)
+            <div className="overflow-x-auto">
+                <table className="text-footer-bg min-w-full bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm">
+                    <thead className="bg-gray-100">
+                        <tr>
+                            <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+                                Date
+                            </th>
+                            <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+                                Total Qty
+                            </th>
+                            <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+                                Total Amount
+                            </th>
+                            <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+                                Status
+                            </th>
+                            <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700">
+                                Actions
+                            </th>
+                        </tr>
+                    </thead>
 
-                                return (
-                                    <tr key={order._id}>
-                                        <td>{new Date(order.createdAt).toLocaleDateString()}</td>
-                                        <td>{totalQty}pcs.</td>
-                                        <td className="font-bold text-green-500">${totalAmount.toFixed(2)}</td>
-                                        <td>{order.status}</td>
-                                        <td>
-                                            <Button className="bg-blue-500 text-white" onClick={() => { setSelectedOrder(order); setIsModalOpen(true); }}>View</Button>
-                                        </td>
-                                    </tr>
-                                )
-                            })}
-                        </tbody>
-                    </table>
-                )}
+                    <tbody>
+                        {orders.map(order => {
+                            const totalQty = order.items.reduce(
+                                (sum, item) => sum + item.quantity,
+                                0
+                            )
+
+                            const totalAmount = order.items.reduce(
+                                (sum, item) => sum + item.subtotal,
+                                0
+                            )
+
+                            return (
+                                <tr
+                                    key={order._id}
+                                    className="border-t border-gray-200 hover:bg-gray-50 transition-colors"
+                                >
+                                    <td className="px-4 py-3">
+                                        {new Date(order.createdAt).toLocaleDateString()}
+                                    </td>
+
+                                    <td className="px-4 py-3">
+                                        {totalQty} pcs.
+                                    </td>
+
+                                    <td className="px-4 py-3 font-bold text-green-500">
+                                         ₱{totalAmount.toFixed(2)}
+                                    </td>
+
+                                    <td className="px-4 py-3">
+                                        <span className="px-2 py-1 text-xs font-medium rounded-full bg-gray-100 text-gray-700">
+                                            {order.status}
+                                        </span>
+                                    </td>
+
+                                    <td className="px-4 py-3">
+                                        <Button
+                                            className="bg-btn-black-bg hover:bg-btn-black-hover-header-bg text-white"
+                                            onClick={() => {
+                                                setSelectedOrder(order)
+                                                setIsModalOpen(true)
+                                            }}
+                                        >
+                                            View
+                                        </Button>
+                                    </td>
+                                </tr>
+                            )
+                        })}
+                    </tbody>
+                </table>
             </div>
             <ViewOrderModal isOpen={isModalOpen} onClose={() => { setIsModalOpen(false); setSelectedOrder(null); }} order={selectedOrder} />
         </>
