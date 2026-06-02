@@ -9,6 +9,7 @@ interface Order {
     quantity: number
     price: number
     subtotal: number
+    createdBy: string
     createdAt: string
 }
 
@@ -48,6 +49,7 @@ const ListOfOrders = () => {
                             <th>Quantity</th>
                             <th>Price</th>
                             <th>Subtotal</th>
+                            <th>Created By</th>
                             <th>Date</th>
                         </tr>
                     </thead>
@@ -58,6 +60,7 @@ const ListOfOrders = () => {
                                 <td>{order.quantity}</td>
                                 <td>${order.price}</td>
                                 <td>${order.subtotal}</td>
+                                <td>{order.createdBy || 'N/A'}</td>
                                 <td>{new Date(order.createdAt).toLocaleDateString()}</td>
                             </tr>
                         ))}

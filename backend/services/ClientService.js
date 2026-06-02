@@ -87,7 +87,8 @@ class ClientService {
                 product: item._id,
                 quantity: item.quantity,
                 price: product.productPrice,
-                subtotal
+                subtotal,
+                createdBy: product.createdBy
             })
 
             return await order.save()
