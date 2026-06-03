@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { NotFound } from '../../components/NotFound'
 import { Loader } from '../../components/Loader'
 import { Error } from '../../components/Error'
-import { Button } from '../../ui/form/Buttons'
+import { OrderTable } from '../../ui/form/OrderTable'
 import { ViewOrderModal } from '../../components/modals/ViewOrderModal'
 
 interface OrderItem {
@@ -28,6 +28,14 @@ const ListOfOrders = () => {
     const [selectedOrder, setSelectedOrder] = useState<Order | null>(null)
     const [loading, setLoading] = useState<boolean>(true)
     const [error, setError] = useState<string | null>(null)
+
+    const th = [
+        'Date',
+        'Total Qty',
+        'Total Amount',
+        'Status',
+        'Actions'
+    ]
 
     useEffect(() => {
         const fetchOrders = async () => {
@@ -55,79 +63,40 @@ const ListOfOrders = () => {
         )
     }
 
+
     return (
         <>
-            <div className="overflow-x-auto">
-                <table className="text-footer-bg min-w-full bg-white border border-gray-200 rounded-lg overflow-hidden shadow-sm">
+            <div className="overflow-x-auto rounded-lg shadow-lg">
+                <table className="text-footer-bg bg-white min-w-full rounded-lg overflow-hidden">
                     <thead className="bg-gray-100">
                         <tr>
-                            <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-                                Date
-                            </th>
-                            <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-                                Total Qty
-                            </th>
-                            <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-                                Total Amount
-                            </th>
-                            <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-                                Status
-                            </th>
-                            <th className="px-4 py-3 text-left text-sm font-semibold text-gray-700">
-                                Actions
-                            </th>
+                            {th.map((header, idx) => (
+                                <th key={idx} className="text-left px-4 py-3 text-sm font-medium text-footer-bg capitalize">
+                                    {header}
+                                </th>
+                            ))}
                         </tr>
                     </thead>
 
                     <tbody>
-                        {orders.map(order => {
-                            const totalQty = order.items.reduce(
-                                (sum, item) => sum + item.quantity,
-                                0
-                            )
-
-                            const totalAmount = order.items.reduce(
-                                (sum, item) => sum + item.subtotal,
-                                0
-                            )
-
-                            return (
-                                <tr
-                                    key={order._id}
-                                    className="border-t border-gray-200 hover:bg-gray-50 transition-colors"
-                                >
-                                    <td className="px-4 py-3">
-                                        {new Date(order.createdAt).toLocaleDateString()}
-                                    </td>
-
-                                    <td className="px-4 py-3">
-                                        {totalQty} pcs.
-                                    </td>
-
-                                    <td className="px-4 py-3 font-bold text-green-500">
-                                         ₱{totalAmount.toFixed(2)}
-                                    </td>
-
-                                    <td className="px-4 py-3">
-                                        <span className="px-2 py-1 text-xs font-medium rounded-full bg-gray-100 text-gray-700">
-                                            {order.status}
-                                        </span>
-                                    </td>
-
-                                    <td className="px-4 py-3">
-                                        <Button
-                                            className="bg-btn-black-bg hover:bg-btn-black-hover-header-bg text-white"
-                                            onClick={() => {
-                                                setSelectedOrder(order)
-                                                setIsModalOpen(true)
-                                            }}
-                                        >
-                                            View
-                                        </Button>
-                                    </td>
-                                </tr>
-                            )
-                        })}
+                        {orders.length === 0 && !loading ? (
+                            <NotFound label="No orders found" childLabel="You haven't made any orders yet." />
+                        ) : (
+                            <>
+                            {orders.map((order) => (
+                                <OrderTable 
+                                key={order._id} 
+                                order={order} 
+                                onViewOrder={
+                                    (o) => { 
+                                        setSelectedOrder(o);    
+                                        setIsModalOpen(true) 
+                                    }
+                                } 
+                                />
+                            ))}
+                            </>
+                        )}
                     </tbody>
                 </table>
             </div>
