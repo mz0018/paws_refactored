@@ -32,7 +32,7 @@ const ListOfOrders = () => {
     const th = [
         'Date',
         'Total Qty',
-        'Total Amount',
+        'Total',
         'Status',
         'Actions'
     ]
@@ -65,13 +65,18 @@ const ListOfOrders = () => {
 
 
     return (
-        <>
-            <div className="overflow-x-auto rounded-lg shadow-lg">
-                <table className="text-footer-bg bg-white min-w-full rounded-lg overflow-hidden">
-                    <thead className="bg-gray-100">
+        <section className="w-full">
+            <div className="overflow-x-auto bg-white rounded-lg shadow-lg">
+                <table className="text-footer-bg min-w-full rounded-lg overflow-hidden">
+                    <thead className="bg-surface">
                         <tr>
                             {th.map((header, idx) => (
-                                <th key={idx} className="text-left px-4 py-3 text-sm font-medium text-footer-bg capitalize">
+                                <th
+                                    key={idx}
+                                    className={`text-left px-2 py-2 text-xs sm:px-3 sm:py-2 sm:text-sm md:px-4 md:py-3 font-medium text-text-body capitalize ${
+                                        header === 'Total Qty' ? 'hidden sm:table-cell' : ''
+                                    }`}
+                                >
                                     {header}
                                 </th>
                             ))}
@@ -101,7 +106,7 @@ const ListOfOrders = () => {
                 </table>
             </div>
             <ViewOrderModal isOpen={isModalOpen} onClose={() => { setIsModalOpen(false); setSelectedOrder(null); }} order={selectedOrder} />
-        </>
+        </section>
     )
 }
 

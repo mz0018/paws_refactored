@@ -1,4 +1,5 @@
 import { Modal } from '../../ui/form/Modal'
+import { Button } from '../../ui/form/Buttons'
 
 type ViewOrderModalProps = {
     isOpen: boolean
@@ -12,42 +13,77 @@ type ViewOrderModalProps = {
 }
 
 export const ViewOrderModal = ({ isOpen, onClose, order }: ViewOrderModalProps) => {
+
+    const th = ['Product', 'Qty', 'Price', 'Subtotal']
+
     if (!order) return null
 
     return (
-        <Modal isOpen={isOpen} onClose={onClose}>
-            <div className="p-4">
-                <h2 className="text-xl font-bold mb-4">Order Details</h2>
-                <p className="mb-2">Order ID: {order._id}</p>
-                <p className="mb-2">Date: {new Date(order.createdAt).toLocaleDateString()}</p>
-                <p className="mb-4">Status: {order.status}</p>
+        <Modal isOpen={isOpen} onClose={onClose} closeOnBackdrop={false}>
+            <div className="p-3 sm:p-4 text-text-body">
 
-                <table className="w-full border-collapse border">
-                    <thead>
-                        <tr className="bg-gray-100">
-                            <th className="border p-2">Product</th>
-                            <th className="border p-2">Qty</th>
-                            <th className="border p-2">Price</th>
-                            <th className="border p-2">Subtotal</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {order.items.map((item, idx) => (
-                            <tr key={idx}>
-                                <td className="border p-2">
-                                    {typeof item.product === 'string' ? item.product : item.product.productName}
-                                </td>
-                                <td className="border p-2">{item.quantity}</td>
-                                <td className="border p-2">${item.price.toFixed(2)}</td>
-                                <td className="border p-2">${item.subtotal.toFixed(2)}</td>
+                <h2 className="text-xl font-bold mb-2 text-footer-bg leading-tight">
+                Order <span className="text-btn-black-bg">Details</span>
+                </h2>
+
+                <div className="overflow-x-auto mb-2">
+                    <table className="w-full border-collapse border border-gray-200">
+                        <thead>
+                            <tr className="bg-gray-100">
+                                {th.map((header, idx) => (
+                                    <th key={idx} className="p-2 text-left text-sm font-medium text-gray-700">
+                                        {header}
+                                    </th>
+                                ))}
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody className="divide-y divide-gray-200">
+                            {order.items.map((item, idx) => (
+                                <tr key={idx}>
+                                    <td className=" p-1.5 sm:p-2 text-xs sm:text-sm">
+                                        {typeof item.product === 'string' ? item.product : item.product.productName}
+                                    </td>
+                                    <td className="p-1.5 sm:p-2 text-xs sm:text-sm flex items-center gap-1">
+                                        <span>{item.quantity}</span>
+                                        <span className="text-gray-500">×</span>
+                                    </td>
 
-                <button onClick={onClose} className="mt-4 bg-blue-500 text-white px-4 py-2 rounded">
+                                    <td className="p-1.5 sm:p-2 text-xs sm:text-sm">
+                                        {item.price.toLocaleString('en-PH', {
+                                            style: 'currency',
+                                            currency: 'PHP'
+                                        })}
+                                    </td>
+                                    <td className="p-1.5 sm:p-2 text-xs sm:text-sm">
+                                        {item.subtotal.toLocaleString('en-PH', {
+                                            style: 'currency',
+                                            currency: 'PHP'
+                                        })}
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+
+                <div className="text-xs space-y-1 mb-3 capitalize">
+                    <p className="leading-snug">
+                        <span className="font-medium">Order ID:</span> {order._id}
+                    </p>
+
+                    <p className="leading-snug">
+                        <span className="font-medium">Date:</span>{" "}
+                        {new Date(order.createdAt).toLocaleDateString()}
+                    </p>
+
+                    <p className="leading-snug">
+                        <span className="font-medium">Status:</span> {order.status}
+                    </p>
+                </div>
+
+                <Button onClick={onClose} className="text-text-body border border-gray-400 font-semibold bg-none w-full hover:bg-gray-50">
                     Close
-                </button>
+                </Button>
             </div>
         </Modal>
     )
