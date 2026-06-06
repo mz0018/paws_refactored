@@ -201,7 +201,7 @@ class AdminService {
             throw new ErrorController('Unauthorized access', 401)
         }
 
-        const orders = await Order.find({ 'items.createdBy': user_id }).populate('items.product')
+        const orders = await Order.find({ 'items.createdBy': user_id }).populate('items.product').sort({ createdAt: -1 })
 
         return { orders }
     }

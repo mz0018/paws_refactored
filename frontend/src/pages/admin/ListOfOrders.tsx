@@ -43,7 +43,7 @@ const ListOfOrders = () => {
     const th = [
         'Order ID',
         'Date',
-        'Total Qty',
+        'Quantity',
         'Total',
         'Status',
         'Actions'
@@ -95,7 +95,7 @@ const ListOfOrders = () => {
 
     return (
         <section className="w-full">
-            <div className="overflow-x-auto bg-white rounded-lg shadow-lg p-5">
+            <div className="bg-white rounded-lg shadow-lg p-5">
                 <h1 className="text-2xl font-bold text-text-body mb-4">List of <span className="text-btn-black-bg">Orders</span></h1>
                 
                 <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-5">
@@ -115,6 +115,7 @@ const ListOfOrders = () => {
                 {searchedOrders.length === 0 && !loading ? (
                     <NotFound label="No orders found" childLabel="You haven't made any orders yet." />
                 ) : (
+                    <div className="overflow-x-auto">
                     <table className="text-footer-bg min-w-full rounded-sm overflow-hidden">
                         <thead className="bg-gray-100">
                             <tr>
@@ -122,7 +123,7 @@ const ListOfOrders = () => {
                                     <th
                                         key={idx}
                                         className={`text-left px-2 py-2 text-xs sm:px-3 sm:py-2 sm:text-sm md:px-4 md:py-3 font-medium text-text-body capitalize ${
-                                            header === 'Total Qty' || header === 'Total' ? 'hidden sm:table-cell' : ''
+                                            header === 'Quantity' || header === 'Total' ? 'hidden sm:table-cell' : ''
                                         }`}
                                     >
                                         {header}
@@ -146,6 +147,7 @@ const ListOfOrders = () => {
                             ))}
                         </tbody>
                     </table>
+                    </div>
                 )}
             </div>
             <ViewOrderModal isOpen={isModalOpen} onClose={() => { setIsModalOpen(false); setSelectedOrder(null); }} order={selectedOrder} />
