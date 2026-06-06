@@ -7,6 +7,7 @@ import { SortBy } from '../../components/SortBy'
 import { useDebounce } from '../../hooks/useDebounce'
 import { ButtonLoadMore } from '../../ui/form/ButtonLoadMore'
 import { NotFound } from '../../components/NotFound'
+import { PRODUCT_CATEGORIES } from '../../mocks/categories'
 
 import { ClipLoader } from 'react-spinners'
 import { Search } from 'lucide-react'
@@ -40,6 +41,7 @@ const ViewProducts = () => {
                 <FilterBy 
                     onChange={(e) => setFilteredBy(e.target.value)}
                     value={filteredBy} 
+                    options={PRODUCT_CATEGORIES}
                 />
 
                 <SortBy 

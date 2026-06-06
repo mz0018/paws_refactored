@@ -10,6 +10,8 @@ import { useDebounce } from '../hooks/useDebounce'
 import { ButtonLoadMore } from '../ui/form/ButtonLoadMore'
 import { ClipLoader } from 'react-spinners'
 import { Search } from 'lucide-react'
+import { PRODUCT_CATEGORIES } from '../mocks/categories'
+
 const ProductOverview = () => {
     const [searchQuery, setSearchQuery] = useState('')
     const [filteredBy, setFilteredBy] = useState('')
@@ -45,7 +47,7 @@ const ProductOverview = () => {
                             icon={<Search size={16} />}
                         />
                     </div>
-                    <FilterBy onChange={(e) => setFilteredBy(e.target.value)} value={filteredBy} />
+                    <FilterBy onChange={(e) => setFilteredBy(e.target.value)} value={filteredBy} options={PRODUCT_CATEGORIES} />
                     <SortBy onChange={(e) => setSortBy(e.target.value)} value={sortBy} />
                 </div>
             </div>

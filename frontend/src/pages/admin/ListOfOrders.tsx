@@ -5,6 +5,8 @@ import { Loader } from '../../components/Loader'
 import { Error } from '../../components/Error'
 import { OrderTable } from '../../ui/form/OrderTable'
 import { ViewOrderModal } from '../../components/modals/ViewOrderModal'
+import { FilterBy } from '../../components/FilterBy'
+import { ORDER_CATEGORIES } from '../../mocks/orderCategories'
 
 interface OrderItem {
     product: { productName: string } | string
@@ -22,6 +24,7 @@ interface Order {
 }
 
 const ListOfOrders = () => {
+    const [filteredBy, setFilteredBy] = useState<string>('')
     const { handleGetOrderByUserId } = useGetOrderByUserId()
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
     const [orders, setOrders] = useState<Order[]>([])
@@ -66,9 +69,11 @@ const ListOfOrders = () => {
 
     return (
         <section className="w-full">
-            <div className="overflow-x-auto bg-white rounded-lg shadow-lg">
-                <table className="text-footer-bg min-w-full rounded-lg overflow-hidden">
-                    <thead className="bg-surface">
+            <div className="overflow-x-auto bg-white rounded-lg shadow-lg p-5">
+                <h1 className="text-2xl font-bold text-text-body mb-4">List of <span className="text-btn-black-bg">Orders</span></h1>
+                <FilterBy onChange={(e) => setFilteredBy(e.target.value)} value={filteredBy} options={ORDER_CATEGORIES} />
+                <table className="text-footer-bg min-w-full rounded-sm overflow-hidden">
+                    <thead className="bg-gray-100">
                         <tr>
                             {th.map((header, idx) => (
                                 <th
