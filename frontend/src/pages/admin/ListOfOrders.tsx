@@ -5,10 +5,13 @@ import { Loader } from '../../components/Loader'
 import { Error } from '../../components/Error'
 import { OrderTable } from '../../ui/form/OrderTable'
 import { ViewOrderModal } from '../../components/modals/ViewOrderModal'
+import { SearchBar } from '../../components/SearchBar'
 import { FilterBy } from '../../components/FilterBy'
 import { SortBy } from '../../components/SortBy'
 import { ORDER_CATEGORIES } from '../../mocks/orderCategories'
 import { ORDER_SORT_OPTIONS } from '../../mocks/orderSortOptions'
+import { Search } from 'lucide-react'
+import { useDebounce } from '../../hooks/useDebounce'
 
 interface OrderItem {
     product: { productName: string } | string
@@ -26,6 +29,8 @@ interface Order {
 }
 
 const ListOfOrders = () => {
+    const [searchQuery, setSearchQuery] = useState<string>('')
+    const debouncedSearchQuery = useDebounce(searchQuery, 600)
     const [filteredBy, setFilteredBy] = useState<string>('')
     const [sortBy, setSortBy] = useState<string>('')
     const { handleGetOrderByUserId } = useGetOrderByUserId()
@@ -36,6 +41,7 @@ const ListOfOrders = () => {
     const [error, setError] = useState<string | null>(null)
 
     const th = [
+        'Order ID',
         'Date',
         'Total Qty',
         'Total',
@@ -70,6 +76,11 @@ const ListOfOrders = () => {
         }
     })
 
+    const searchedOrders = debouncedSearchQuery.trim()
+        ? sortedOrders.filter(order =>
+            order._id.toLowerCase().includes(debouncedSearchQuery.trim().toLowerCase())
+        ) : sortedOrders  
+
     if (loading) {
         return (
             <Loader label="Loading orders..." />
@@ -82,40 +93,46 @@ const ListOfOrders = () => {
         )
     }
 
-
     return (
         <section className="w-full">
             <div className="overflow-x-auto bg-white rounded-lg shadow-lg p-5">
                 <h1 className="text-2xl font-bold text-text-body mb-4">List of <span className="text-btn-black-bg">Orders</span></h1>
                 
-                <div>
+                <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-5">
+                    <div className="col-span-2 md:col-span-2 lg:col-span-1">
+                        <SearchBar
+                            value={searchQuery}
+                            onChange={(e) => setSearchQuery(e.target.value)}
+                            icon={<Search size={16} />}
+                            placeholder="Search orders by Order ID"
+                        />
+                    </div>
                     <FilterBy onChange={(e) => setFilteredBy(e.target.value)} value={filteredBy} options={ORDER_CATEGORIES} />
                     <SortBy onChange={(e) => setSortBy(e.target.value)} value={sortBy} options={ORDER_SORT_OPTIONS} />
                 </div>
 
 
-                <table className="text-footer-bg min-w-full rounded-sm overflow-hidden">
-                    <thead className="bg-gray-100">
-                        <tr>
-                            {th.map((header, idx) => (
-                                <th
-                                    key={idx}
-                                    className={`text-left px-2 py-2 text-xs sm:px-3 sm:py-2 sm:text-sm md:px-4 md:py-3 font-medium text-text-body capitalize ${
-                                        header === 'Total Qty' ? 'hidden sm:table-cell' : ''
-                                    }`}
-                                >
-                                    {header}
-                                </th>
-                            ))}
-                        </tr>
-                    </thead>
+                {searchedOrders.length === 0 && !loading ? (
+                    <NotFound label="No orders found" childLabel="You haven't made any orders yet." />
+                ) : (
+                    <table className="text-footer-bg min-w-full rounded-sm overflow-hidden">
+                        <thead className="bg-gray-100">
+                            <tr>
+                                {th.map((header, idx) => (
+                                    <th
+                                        key={idx}
+                                        className={`text-left px-2 py-2 text-xs sm:px-3 sm:py-2 sm:text-sm md:px-4 md:py-3 font-medium text-text-body capitalize ${
+                                            header === 'Total Qty' || header === 'Total' ? 'hidden sm:table-cell' : ''
+                                        }`}
+                                    >
+                                        {header}
+                                    </th>
+                                ))}
+                            </tr>
+                        </thead>
 
-                    <tbody>
-                        {sortedOrders.length === 0 && !loading ? (
-                            <NotFound label="No orders found" childLabel="You haven't made any orders yet." />
-                        ) : (
-                            <>
-                            {sortedOrders.map((order) => (
+                        <tbody>
+                            {searchedOrders.map((order) => (
                                 <OrderTable 
                                 key={order._id} 
                                 order={order} 
@@ -127,10 +144,9 @@ const ListOfOrders = () => {
                                 } 
                                 />
                             ))}
-                            </>
-                        )}
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                )}
             </div>
             <ViewOrderModal isOpen={isModalOpen} onClose={() => { setIsModalOpen(false); setSelectedOrder(null); }} order={selectedOrder} />
         </section>

@@ -27,6 +27,7 @@ export const OrderTable = ({ order, onViewOrder }: OrderTableProps) => {
 
     return (
         <tr className="border-b border-gray-200 hover:bg-gray-50 transition">
+            <td className="px-2 py-2 text-xs sm:px-3 sm:py-2 sm:text-sm md:px-4 md:py-3 text-gray-500 capitalize">{order._id}</td>
             <td className="px-2 py-2 text-xs text-gray-500 sm:px-3 sm:py-2 sm:text-sm md:px-4 md:py-3">
             <span className="block truncate sm:hidden">
                 {new Date(order.createdAt).toLocaleDateString('en-US', {
@@ -47,7 +48,7 @@ export const OrderTable = ({ order, onViewOrder }: OrderTableProps) => {
             <td className="hidden sm:table-cell px-3 py-2 text-sm text-gray-500 md:px-4 md:py-3">
                 {totalQty} pcs.
             </td>
-            <td className="px-2 py-2 text-xs sm:px-3 sm:py-2 sm:text-sm md:px-4 md:py-3 text-btn-black-bg font-semibold">
+            <td className="hidden sm:table-cell px-2 py-2 text-xs sm:px-3 sm:py-2 sm:text-sm md:px-4 md:py-3 text-btn-black-bg font-semibold">
                 {totalAmount.toLocaleString('en-PH', {
                     style: 'currency',
                     currency: 'PHP',
