@@ -8,6 +8,7 @@ import { useDebounce } from '../../hooks/useDebounce'
 import { ButtonLoadMore } from '../../ui/form/ButtonLoadMore'
 import { NotFound } from '../../components/NotFound'
 import { PRODUCT_CATEGORIES } from '../../mocks/categories'
+import { SORT_OPTIONS } from '../../mocks/sortOptions'
 
 import { ClipLoader } from 'react-spinners'
 import { Search } from 'lucide-react'
@@ -42,11 +43,14 @@ const ViewProducts = () => {
                     onChange={(e) => setFilteredBy(e.target.value)}
                     value={filteredBy} 
                     options={PRODUCT_CATEGORIES}
+                    placeholder="All Categories"
                 />
 
                 <SortBy 
                     onChange={(e) => setSortBy(e.target.value)}
                     value={sortBy}
+                    options={SORT_OPTIONS}
+                    placeholder="Default"
                 />
 
             </div>

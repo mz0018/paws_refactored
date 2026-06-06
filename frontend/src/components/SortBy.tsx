@@ -1,16 +1,24 @@
-import { SORT_OPTIONS } from '../mocks/sortOptions'
 import { Select } from '../ui/form/Select'
+
+interface SortOption {
+    value: string
+    label: string
+}
+
 interface SortByProps {
     onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void
     value: string
+    options?: readonly SortOption[]
+    placeholder?: string
 }
-export const SortBy = ({ onChange, value }: SortByProps) => {
+
+export const SortBy = ({ onChange, value, options, placeholder }: SortByProps) => {
     return (
         <Select value={value} onChange={onChange}>
-            <option value="">Default</option>
-            {SORT_OPTIONS.map(option => (
-                <option key={option.value} value={option.value}>
-                    {option.label}
+            <option value="">{placeholder || 'Default'}</option>
+            {options?.map(opt => (
+                <option key={opt.value} value={opt.value}>
+                    {opt.label}
                 </option>
             ))}
         </Select>

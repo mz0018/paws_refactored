@@ -6,7 +6,9 @@ import { Error } from '../../components/Error'
 import { OrderTable } from '../../ui/form/OrderTable'
 import { ViewOrderModal } from '../../components/modals/ViewOrderModal'
 import { FilterBy } from '../../components/FilterBy'
+import { SortBy } from '../../components/SortBy'
 import { ORDER_CATEGORIES } from '../../mocks/orderCategories'
+import { ORDER_SORT_OPTIONS } from '../../mocks/orderSortOptions'
 
 interface OrderItem {
     product: { productName: string } | string
@@ -25,6 +27,7 @@ interface Order {
 
 const ListOfOrders = () => {
     const [filteredBy, setFilteredBy] = useState<string>('')
+    const [sortBy, setSortBy] = useState<string>('')
     const { handleGetOrderByUserId } = useGetOrderByUserId()
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
     const [orders, setOrders] = useState<Order[]>([])
@@ -56,6 +59,17 @@ const ListOfOrders = () => {
 
     const filteredOrders = filteredBy ? orders.filter(order => order.status === filteredBy) : orders
 
+    const sortedOrders = [...filteredOrders].sort((a, b) => {
+        switch (sortBy) {
+            case 'date_desc':
+                return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+            case 'date_asc':
+                return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime()
+            default:
+                return 0
+        }
+    })
+
     if (loading) {
         return (
             <Loader label="Loading orders..." />
@@ -73,7 +87,13 @@ const ListOfOrders = () => {
         <section className="w-full">
             <div className="overflow-x-auto bg-white rounded-lg shadow-lg p-5">
                 <h1 className="text-2xl font-bold text-text-body mb-4">List of <span className="text-btn-black-bg">Orders</span></h1>
-                <FilterBy onChange={(e) => setFilteredBy(e.target.value)} value={filteredBy} options={ORDER_CATEGORIES} />
+                
+                <div>
+                    <FilterBy onChange={(e) => setFilteredBy(e.target.value)} value={filteredBy} options={ORDER_CATEGORIES} />
+                    <SortBy onChange={(e) => setSortBy(e.target.value)} value={sortBy} options={ORDER_SORT_OPTIONS} />
+                </div>
+
+
                 <table className="text-footer-bg min-w-full rounded-sm overflow-hidden">
                     <thead className="bg-gray-100">
                         <tr>
@@ -91,11 +111,11 @@ const ListOfOrders = () => {
                     </thead>
 
                     <tbody>
-                        {filteredOrders.length === 0 && !loading ? (
+                        {sortedOrders.length === 0 && !loading ? (
                             <NotFound label="No orders found" childLabel="You haven't made any orders yet." />
                         ) : (
                             <>
-                            {filteredOrders.map((order) => (
+                            {sortedOrders.map((order) => (
                                 <OrderTable 
                                 key={order._id} 
                                 order={order} 

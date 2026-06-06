@@ -11,6 +11,7 @@ import { ButtonLoadMore } from '../ui/form/ButtonLoadMore'
 import { ClipLoader } from 'react-spinners'
 import { Search } from 'lucide-react'
 import { PRODUCT_CATEGORIES } from '../mocks/categories'
+import { SORT_OPTIONS } from '../mocks/sortOptions'
 
 const ProductOverview = () => {
     const [searchQuery, setSearchQuery] = useState('')
@@ -47,8 +48,8 @@ const ProductOverview = () => {
                             icon={<Search size={16} />}
                         />
                     </div>
-                    <FilterBy onChange={(e) => setFilteredBy(e.target.value)} value={filteredBy} options={PRODUCT_CATEGORIES} />
-                    <SortBy onChange={(e) => setSortBy(e.target.value)} value={sortBy} />
+                    <FilterBy onChange={(e) => setFilteredBy(e.target.value)} value={filteredBy} options={PRODUCT_CATEGORIES} placeholder="All Categories" />
+                    <SortBy onChange={(e) => setSortBy(e.target.value)} value={sortBy} options={SORT_OPTIONS} placeholder="Default" />
                 </div>
             </div>
 
