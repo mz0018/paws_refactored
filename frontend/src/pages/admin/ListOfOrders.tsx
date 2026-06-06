@@ -36,6 +36,8 @@ const ListOfOrders = () => {
     const { handleGetOrderByUserId } = useGetOrderByUserId()
     const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
     const [orders, setOrders] = useState<Order[]>([])
+    const [page, setPage] = useState<number>(1)
+    const [totalPages, setTotalPages] = useState<number>(1)
     const [selectedOrder, setSelectedOrder] = useState<Order | null>(null)
     const [loading, setLoading] = useState<boolean>(true)
     const [error, setError] = useState<string | null>(null)
@@ -52,8 +54,9 @@ const ListOfOrders = () => {
     useEffect(() => {
         const fetchOrders = async () => {
             try {
-                const data = await handleGetOrderByUserId()
+                const data = await handleGetOrderByUserId({ limit: 10, page })
                 setOrders(data.orders)
+                setTotalPages(data.totalPages || 1)
             } catch {
                 setError('Failed to load orders')
             } finally {
@@ -61,7 +64,7 @@ const ListOfOrders = () => {
             }
         }
         fetchOrders()
-    }, [])
+    }, [page])
 
     const filteredOrders = filteredBy ? orders.filter(order => order.status === filteredBy) : orders
 
@@ -147,6 +150,21 @@ const ListOfOrders = () => {
                             ))}
                         </tbody>
                     </table>
+                    {totalPages > 1 && (
+                        <div>
+                            <button 
+                            className='bg-blue-500'
+                            onClick={() => setPage(prev => Math.max(1, prev - 1))}
+                            disabled={page === 1}
+                            >Previous</button>
+                            
+                            <button 
+                            className='bg-red-500'
+                            onClick={() => setPage(prev => Math.min(totalPages, prev + 1))}
+                            disabled={page === totalPages}
+                            >Next</button>
+                        </div>
+                    )}
                     </div>
                 )}
             </div>

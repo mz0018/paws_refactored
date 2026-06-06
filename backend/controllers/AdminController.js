@@ -1,3 +1,4 @@
+import { parse } from 'dotenv'
 import AdminService from '../services/AdminService.js'
 
 class AdminController {
@@ -43,7 +44,9 @@ class AdminController {
 
     async getOrderByUserId(req, res, next) {
         try {
-            const result = await AdminService.getOrderByUserId(req.user_id)
+            const limit = parseInt(req.query.limit) || 10
+            const page = parseInt(req.query.page) || 1
+            const result = await AdminService.getOrderByUserId(req.user_id, limit, page)
             res.status(200).json(result)
         } catch (error) {
             console.error('Error:', error)
