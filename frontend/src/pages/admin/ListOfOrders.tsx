@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Search } from 'lucide-react'
+import { ChevronLeft, ChevronRight, RefreshCcw, Search } from 'lucide-react'
 
 import { useGetOrderByUserId } from '../../hooks/useGetOrderbyUserId'
 import { useDebounce } from '../../hooks/useDebounce'
@@ -43,7 +43,7 @@ const TABLE_HEADERS = [
 
 const ListOfOrders = () => {
     const [page, setPage] = useState(1)
-    const { data, isLoading, isError, error } = useGetOrderByUserId(10, page)
+    const { data, isLoading, isFetching, isError, refetch, error } = useGetOrderByUserId(10, page)
 
     const orders: Order[] = data?.orders ?? []
 
@@ -103,8 +103,8 @@ const ListOfOrders = () => {
                     <span className="text-btn-black-bg">Orders</span>
                 </h1>
 
-                <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-5">
-                    <div className="col-span-2 md:col-span-2 lg:col-span-1">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-5">
+                    <div className="sm:col-span-2 lg:col-span-1">
                         <SearchBar
                             value={searchQuery}
                             onChange={e => setSearchQuery(e.target.value)}
@@ -124,6 +124,40 @@ const ListOfOrders = () => {
                         onChange={e => setSortBy(e.target.value)}
                         options={ORDER_SORT_OPTIONS}
                     />
+
+                    <div className="justify-self-end flex items-center rounded-sm overflow-hidden w-fit">
+                        <span className="px-3 py-1 text-sm text-text-body whitespace-nowrap">
+                            Page {page} of {totalPages}
+                        </span>
+
+                        {totalPages > 1 && (
+                            <>
+                                <button
+                                    onClick={() => setPage(p => Math.max(1, p - 1))}
+                                    disabled={page === 1}
+                                    className="px-2 py-1 cursor-pointer"
+                                >
+                                    <ChevronLeft size={16} color="gray" />
+                                </button>
+
+                                <button
+                                    onClick={() => setPage(p => Math.min(totalPages, p + 1))}
+                                    disabled={page === totalPages}
+                                    className="px-2 py-1 cursor-pointer"
+                                >
+                                    <ChevronRight size={16} color="gray" />
+                                </button>
+                            </>
+                        )}
+
+                        <button
+                            title="Refresh List"
+                            onClick={() => refetch()}
+                            className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-surface-muted/10 text-gray-400 hover:text-btn-black-bg transition-colors cursor-pointer"
+                        >
+                            <RefreshCcw size={16} />
+                        </button>
+                    </div>
                 </div>
 
                 {searchedOrders.length === 0 ? (
@@ -153,7 +187,14 @@ const ListOfOrders = () => {
                             </thead>
 
                             <tbody>
-                                {searchedOrders.map(order => (
+                                {isFetching && orders.length > 0 ? (
+                                    <tr>
+                                        <td colSpan={TABLE_HEADERS.length} className="text-center  py-8">
+                                            <Loader label="Fetching Orders" size="sm" fullScreen={false} />
+                                        </td>
+                                    </tr>
+                                ) : (
+                                    searchedOrders.map(order => (
                                     <OrderTable
                                         key={order._id}
                                         order={order}
@@ -162,29 +203,10 @@ const ListOfOrders = () => {
                                             setIsModalOpen(true)
                                         }}
                                     />
-                                ))}
+                                ))
+                                )}
                             </tbody>
                         </table>
-
-                        {totalPages > 1 && (
-                            <div className="flex items-center justify-between mt-4">
-                                <button
-                                    onClick={() => setPage(p => Math.max(1, p - 1))}
-                                    disabled={page === 1}
-                                    className='bg-red-500 p-4 text-white'
-                                >
-                                    Previous
-                                </button>
-
-                                <button
-                                    onClick={() => setPage(p => Math.min(totalPages, p + 1))}
-                                    disabled={page === totalPages}
-                                    className='bg-red-500 p-4 text-white'
-                                >
-                                    Next
-                                </button>
-                            </div>
-                        )}
                     </div>
                 )}
             </div>

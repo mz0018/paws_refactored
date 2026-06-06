@@ -40,6 +40,5 @@ export const useGetOrderByUserId = (limit = 10, page = 1) => {
         queryFn: () => fetchOrders({ limit, page }),
         placeholderData: (previousData) => previousData,
         staleTime: 5 * 60 * 1000,
-        // refetchInterval: 10 * 1000
     })
 }

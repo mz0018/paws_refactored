@@ -22,7 +22,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
                         w-full
                         px-4
                         py-3
-                        rounded-xl
+                        rounded-sm
                         border
                         bg-white
                         text-sm
@@ -33,13 +33,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
                         duration-200
                         focus:outline-none
                         focus:ring-4
-                        hover:border-gray-400
+                        hover:border-btn-black-bg
                         disabled:cursor-not-allowed
                         disabled:opacity-60
                         ${
                             error
                                 ? 'border-red-500 text-red-500 focus:ring-red-500/20 focus:border-red-500'
-                                : 'border-gray-200 focus:border-blue-500 focus:ring-blue-500/20'
+                                : 'border-gray-200 focus:border-btn-black-bg focus:ring-btn-black-bg/20 focus:placeholder:text-gray-200'
                         }
                         ${className}
                     `}

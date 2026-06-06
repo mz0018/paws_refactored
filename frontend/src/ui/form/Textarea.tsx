@@ -44,7 +44,7 @@ export const Textarea = ({
                     ${
                         error
                             ? 'border-red-500 text-red-500 focus:border-red-500 focus:ring-red-500/20'
-                            : 'border-gray-200 focus:border-blue-500 focus:ring-blue-500/20'
+                            : 'border-gray-200 focus:border-btn-black-bg focus:ring-btn-black-bg/20 focus:placeholder:text-gray-200'
                     }
                     ${className}
                 `}

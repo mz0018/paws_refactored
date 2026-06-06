@@ -11,7 +11,7 @@ export const FilterBy = ({ onChange, value, options, placeholder }: FilterByProp
         <Select
             value={value}
             onChange={onChange}
-            className="p-2 border rounded-md capitalize"
+            className="p-2 border rounded-sm capitalize"
         >
             <option value="">{placeholder || 'All Categories'}</option>
 

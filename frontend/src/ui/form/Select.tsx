@@ -37,13 +37,13 @@ export const Select = ({
                         duration-200
                         focus:outline-none
                         focus:ring-4
-                        hover:border-gray-400
+                        hover:border-btn-black-bg
                         disabled:cursor-not-allowed
                         disabled:opacity-60
                         ${
                             error
                                 ? 'border-red-500 text-red-500 focus:border-red-500 focus:ring-red-500/20'
-                                : 'border-gray-200 text-gray-700 focus:border-blue-500 focus:ring-blue-500/20'
+                                : 'border-gray-200 text-gray-700 focus:border-btn-black-bg focus:ring-btn-black-bg/20'
                         }
                         ${className}
                     `}
