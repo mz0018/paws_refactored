@@ -54,6 +54,8 @@ const ListOfOrders = () => {
         fetchOrders()
     }, [])
 
+    const filteredOrders = filteredBy ? orders.filter(order => order.status === filteredBy) : orders
+
     if (loading) {
         return (
             <Loader label="Loading orders..." />
@@ -89,11 +91,11 @@ const ListOfOrders = () => {
                     </thead>
 
                     <tbody>
-                        {orders.length === 0 && !loading ? (
+                        {filteredOrders.length === 0 && !loading ? (
                             <NotFound label="No orders found" childLabel="You haven't made any orders yet." />
                         ) : (
                             <>
-                            {orders.map((order) => (
+                            {filteredOrders.map((order) => (
                                 <OrderTable 
                                 key={order._id} 
                                 order={order} 

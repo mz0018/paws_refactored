@@ -8,9 +8,9 @@ const orderModel = new mongoose.Schema({
         subtotal: { type: Number, required: true },
         createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
     }],
-    status: { type: String, default: 'pending' }
+    status: { type: String, enum: ['pending', 'completed'], default: 'pending' }
 }, { timestamps: true })
 
-orderModel.index({ product: 1 })
+orderModel.index({ 'items.product': 1 })
 
 export default mongoose.model('Order', orderModel)
