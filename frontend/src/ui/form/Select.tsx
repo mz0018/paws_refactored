@@ -28,7 +28,7 @@ export const Select = ({
                         px-4
                         py-3
                         pr-10
-                        rounded-xl
+                        rounded-sm
                         border
                         bg-white
                         text-sm

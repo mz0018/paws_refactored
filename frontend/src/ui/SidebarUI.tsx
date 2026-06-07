@@ -38,7 +38,7 @@ const SidebarUI = ({ navLinks, isClientMode = true, onLinkClick }: SidebarUIProp
      className={`
         fixed lg:static
         h-full
-        bg-[#28282B] text-white
+        bg-text-body text-white
         flex flex-col
         z-50
         transition-all duration-300
