@@ -36,7 +36,7 @@ export const BtnAddToCart = ({ product, selectedImageIndex = 0 }: BtnAddToCartPr
         localStorage.setItem('shopping_cart', JSON.stringify(updatedCart))
         window.dispatchEvent(new Event('cart-updated'))
         
-        toast.custom((t) => (
+        toast.custom(() => (
             <div className="flex items-center gap-4 bg-white shadow-lg rounded-lg p-4 border-l-4 border-btn-black-bg min-w-[300px]">
                 <CircleCheckBig
                     size={24}
