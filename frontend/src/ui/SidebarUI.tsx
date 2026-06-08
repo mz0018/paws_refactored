@@ -47,16 +47,23 @@ const SidebarUI = ({ navLinks, isClientMode = true, onLinkClick }: SidebarUIProp
       `} 
     >
       <div className="p-4 flex justify-between items-center border-b border-gray-700">
-        <span className={`${collapsed ? 'hidden' : 'block'} font-bold`}>
-          Logo
-        </span>
+        <div className={`${collapsed ? 'hidden' : 'flex'} items-center gap-3`}>
+          <img src="/img/paws.png" className="h-16 w-16" alt="PAWS Logo" />
+
+          <div className="flex flex-col">
+            <span className="font-bold text-lg">PAWS</span>
+            <span className="text-sm text-gray-400">
+              Pro Animal Welfare System
+            </span>
+          </div>
+        </div>
 
         {isClientMode && (
-          <button 
+          <button
             onClick={() => setCollapsed(!collapsed)}
             className="cursor-pointer flex items-center justify-center p-2 rounded hover:bg-white/10"
           >
-            <PanelLeft size={18}/>
+            <PanelLeft size={18} />
           </button>
         )}
       </div>
