@@ -9,6 +9,8 @@ export const useCheckoutItems = () => {
     }>({})
     const [isRateLimit, setIsRateLimit] = useState<boolean>(false)
     const [success, setSuccess] = useState<boolean>(false)
+    const [orderId, setOrderId] = useState<string | null>(null)
+    const [orderDate, setOrderDate] = useState<string | null>(null)
     
     const handleSaveOrder = async (items: any) => {
         setLoading(true)
@@ -32,6 +34,10 @@ export const useCheckoutItems = () => {
                 localStorage.setItem('shopping_cart', JSON.stringify(updatedCart))
                 window.dispatchEvent(new Event('cart-updated'))
                 sessionStorage.removeItem('checkout_items')
+
+                const data = await res.json()
+                setOrderId(data.orders._id)
+                setOrderDate(data.orders.createdAt)
                 
                 toast.success('Order placed successfully!')
                 setSuccess(true)
@@ -48,7 +54,11 @@ export const useCheckoutItems = () => {
         }
     }
 
-    const resetSuccess = () => setSuccess(false)
+    const resetSuccess = () => {
+        setSuccess(false)
+        setOrderId(null)
+        setOrderDate(null)
+    }
     
-    return { loading, hasError, isRateLimit, handleSaveOrder, success, resetSuccess }
+    return { loading, hasError, isRateLimit, handleSaveOrder, success, resetSuccess, orderId, orderDate }
 }

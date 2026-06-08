@@ -21,7 +21,7 @@ const CheckoutPage = () => {
   const [showQR, setShowQR] = useState<boolean>(false)
 
   const { qrValue, handleGenerate, closeQR } = useQRGenerator()
-  const { loading, hasError, isRateLimit, handleSaveOrder, success, resetSuccess } = useCheckoutItems()
+  const { loading, hasError, isRateLimit, handleSaveOrder, success, resetSuccess, orderId, orderDate } = useCheckoutItems()
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -32,11 +32,11 @@ const CheckoutPage = () => {
   }, [])
 
   useEffect(() => {
-    if (success) {
-      handleGenerate(items)
+    if (success && orderId) {
+      handleGenerate(items, { orderId, orderDate: orderDate! })
       setShowQR(true)
     }
-  }, [success])
+  }, [success, orderId, orderDate])
 
   if (items.length === 0) {
     return (
@@ -137,6 +137,8 @@ const CheckoutPage = () => {
             <QRModal 
               isOpen={showQR}
               qrValue={qrValue}
+              orderId={orderId}
+              orderDate={orderDate}
               onClose={() => {
                 closeQR()
                 resetSuccess()

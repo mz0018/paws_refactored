@@ -5,14 +5,15 @@ export const useQRGenerator = () => {
 
     const [qrValue, setQrValue] = useState<string | null>(null)
 
-    const handleGenerate = (dataToConvert: any) => {
+    const handleGenerate = (dataToConvert: any, orderMeta?: { orderId?: string; orderDate?: string }) => {
         try {
             const receipt = dataToConvert.map((item: any) => ({
                 name: item.productName,
                 price: item.productPrice,
                 qty: item.quantity
             }))
-            setQrValue(JSON.stringify(receipt))
+            const qrData = { ...orderMeta, items: receipt }
+            setQrValue(JSON.stringify(qrData))
         } catch (err) {
             console.error('QR Generation failed: ', err)
         }
