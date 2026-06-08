@@ -5,6 +5,8 @@ import { Button } from '../ui/form/Buttons'
 import { NotFound } from '../components/NotFound'
 import { useCheckoutItems } from '../hooks/useCheckoutItems'
 import { ErrorText } from '../ui/form/ErrorText'
+import { useQRGenerator } from '../hooks/useQRGenerator'
+import { QRModal } from '../components/modals/QRModal'
 
 type CheckoutItem = {
   _id: string
@@ -16,7 +18,10 @@ type CheckoutItem = {
 }
 const CheckoutPage = () => {
   const [items, setItems] = useState<CheckoutItem[]>([])
-  const { loading, hasError, isRateLimit, handleSaveOrder } = useCheckoutItems()
+  const [showQR, setShowQR] = useState<boolean>(false)
+
+  const { qrValue, handleGenerate, closeQR } = useQRGenerator()
+  const { loading, hasError, isRateLimit, handleSaveOrder, success, resetSuccess } = useCheckoutItems()
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -25,6 +30,14 @@ const CheckoutPage = () => {
       setItems(JSON.parse(stored))
     }
   }, [])
+
+  useEffect(() => {
+    if (success) {
+      handleGenerate(items)
+      setShowQR(true)
+    }
+  }, [success])
+
   if (items.length === 0) {
     return (
       <NotFound
@@ -120,6 +133,16 @@ const CheckoutPage = () => {
           <ErrorText message={hasError.general} />
 
           <div className="flex flex-col sm:flex-row gap-3 mt-5 sm:mt-6">
+
+            <QRModal 
+              isOpen={showQR}
+              qrValue={qrValue}
+              onClose={() => {
+                closeQR()
+                resetSuccess()
+                navigate('/')
+              }} />
+
             <Button
               className="flex-1 h-11 sm:h-12 rounded-md border border-gray-400 bg-white hover:bg-gray-50 text-sm sm:text-base text-gray-700 font-semibold transition-all"
               onClick={handleCancel}

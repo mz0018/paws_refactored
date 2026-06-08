@@ -1,15 +1,14 @@
 import { useState } from 'react'
 import { toast } from 'sonner'
-import { useNavigate } from 'react-router-dom'
 
 export const useCheckoutItems = () => {
 
-    const navigate = useNavigate()
     const [loading, setLoading] = useState<boolean>(false)
     const [hasError, setHasError] = useState<{
         general?: string
     }>({})
     const [isRateLimit, setIsRateLimit] = useState<boolean>(false)
+    const [success, setSuccess] = useState<boolean>(false)
     
     const handleSaveOrder = async (items: any) => {
         setLoading(true)
@@ -35,7 +34,7 @@ export const useCheckoutItems = () => {
                 sessionStorage.removeItem('checkout_items')
                 
                 toast.success('Order placed successfully!')
-                navigate('/')
+                setSuccess(true)
             } else {
                 if (res.status === 429) {
                     setHasError({ general: 'You’ve reached your limit of 3 order attempts for today. Please try again tomorrow.'})
@@ -48,6 +47,8 @@ export const useCheckoutItems = () => {
             setLoading(false)
         }
     }
+
+    const resetSuccess = () => setSuccess(false)
     
-    return { loading, hasError, isRateLimit, handleSaveOrder }
+    return { loading, hasError, isRateLimit, handleSaveOrder, success, resetSuccess }
 }
