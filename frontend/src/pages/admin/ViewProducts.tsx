@@ -27,8 +27,9 @@ const ViewProducts = () => {
     if (isError) return <p>{error?.message}</p>
 
     return (
-        <>
-            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="bg-white p-4 shadow-lg">
+            <h1 className="text-2xl font-bold text-text-body mb-4">List of <span className="text-btn-black-bg">Products</span></h1>
+            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-5">
     
                 <div className="col-span-2 md:col-span-2 lg:col-span-1">
                     <SearchBar
@@ -56,7 +57,7 @@ const ViewProducts = () => {
             </div>
 
             {products.length === 0 && !isLoading ? (
-                <NotFound />
+                <NotFound label='Product not found' childLabel="We couldn't find any products matching your search." />
             ) : (
                 <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
                     {products.map((product) => (
@@ -70,7 +71,7 @@ const ViewProducts = () => {
                     {isFetchingNextPage ? <ClipLoader size={14} color='blue' /> : 'Load More'}
                 </ButtonLoadMore>
             )}
-        </>
+        </div>
     )
 }
 export default ViewProducts
