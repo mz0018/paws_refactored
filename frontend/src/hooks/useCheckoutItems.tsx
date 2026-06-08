@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { toast } from 'sonner'
 import { useNavigate } from 'react-router-dom'
 
 export const useCheckoutItems = () => {
@@ -32,6 +33,8 @@ export const useCheckoutItems = () => {
                 localStorage.setItem('shopping_cart', JSON.stringify(updatedCart))
                 window.dispatchEvent(new Event('cart-updated'))
                 sessionStorage.removeItem('checkout_items')
+                
+                toast.success('Order placed successfully!')
                 navigate('/')
             } else {
                 if (res.status === 429) {

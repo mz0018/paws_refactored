@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import { Button } from '../../ui/form/Buttons'
-import { ShoppingCart } from 'lucide-react'
+import { ShoppingCart, CircleCheckBig } from 'lucide-react'
+
+import { toast } from 'sonner'
 
 type Product = {
     _id?: string
@@ -33,7 +35,25 @@ export const BtnAddToCart = ({ product, selectedImageIndex = 0 }: BtnAddToCartPr
         setCart(updatedCart)
         localStorage.setItem('shopping_cart', JSON.stringify(updatedCart))
         window.dispatchEvent(new Event('cart-updated'))
-        console.log(updatedCart)
+        
+        toast.custom((t) => (
+            <div className="flex items-center gap-4 bg-white shadow-lg rounded-lg p-4 border-l-4 border-btn-black-bg min-w-[300px]">
+                <CircleCheckBig
+                    size={24}
+                    className="text-btn-black-bg"
+                />
+
+                <div>
+                    <p className="font-semibold text-text-body">
+                        {product.productName}
+                    </p>
+
+                    <p className="text-sm text-gray-500">
+                        Added to cart
+                    </p>
+                </div>
+            </div>
+        ))
     }
 
     useEffect(() => {

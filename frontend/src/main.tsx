@@ -1,5 +1,6 @@
 import { StrictMode, Suspense, lazy } from 'react'
 import { createRoot } from 'react-dom/client'
+import { Toaster } from 'sonner'
 import './index.css'
 import App from './App.tsx'
 
@@ -58,6 +59,7 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <QueryClientProvider client={new QueryClient()}>
       <AuthProvider>
+        <Toaster richColors position="top-right" />
         <Suspense fallback={<Loader label="Loading application..." />}>
           <RouterProvider router={router} />
         </Suspense>

@@ -20,6 +20,7 @@
     "react-qr-code": "^2.0.21",
     "react-router-dom": "^7.13.2",
     "react-spinners": "^0.17.0",
+    "sonner": "^2.0.7",
     "tailwindcss": "^4.2.2",
     "yet-another-react-lightbox": "^3.32.0"
   },
