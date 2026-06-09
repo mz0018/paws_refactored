@@ -1,7 +1,13 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Html5Qrcode } from 'html5-qrcode';
 import { Modal } from '../../ui/form/Modal';
 import { useInMobileDevice } from '../../hooks/useInMobileDevice';
+
+type ScannedOrder = {
+  orderId: string
+  orderDate: string
+  items: Array<{ name: string; price: number; qty: number}>
+}
 
 type ScannerModalProps = {
   isOpen: boolean;
@@ -11,9 +17,10 @@ type ScannerModalProps = {
 export const ScannerModal = ({ isOpen, onClose }: ScannerModalProps) => {
 
   const isMobile = useInMobileDevice()
+  const [scannedOrder, setScannedOrder] = useState<ScannedOrder | null>(null)
 
   useEffect(() => {
-    if (!isOpen || !isMobile) return;
+    if (!isOpen || !isMobile || scannedOrder) return;
 
     const scanner = new Html5Qrcode('qr-reader');
 
@@ -28,9 +35,14 @@ export const ScannerModal = ({ isOpen, onClose }: ScannerModalProps) => {
           (decodedText) => {
             console.log('QR:', decodedText);
 
-            void scanner.stop().then(() => {
-              onClose();
-            });
+            try {
+              const parsed = JSON.parse(decodedText) as ScannedOrder
+              setScannedOrder(parsed)
+            } catch {
+              console.error('Invalid QR data')
+            }
+
+            void scanner.stop()
           },
           () => {
             // qr scan failure per frame (ignore or log if needed)
@@ -55,7 +67,11 @@ export const ScannerModal = ({ isOpen, onClose }: ScannerModalProps) => {
         }
       })();
     };
-  }, [isOpen, onClose]);
+  }, [isOpen, isMobile, scannedOrder]);
+
+  useEffect(() => {
+    if (!isOpen) setScannedOrder(null)
+  }, [isOpen])
 
   return (
     <Modal
@@ -63,13 +79,25 @@ export const ScannerModal = ({ isOpen, onClose }: ScannerModalProps) => {
       onClose={onClose}
       closeOnBackdrop={false}
     >
-      <div className="relative w-full">
-        <div id="qr-reader" />
-
-        <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-          <div className="h-64 w-64 rounded-xl border-4 border-white shadow-lg" />
-        </div>
-      </div>
+        {scannedOrder ? (
+          <>
+            <h2>Order details</h2>
+            <p>{scannedOrder.orderId}</p>
+            {scannedOrder.items.map((item, i) => (
+              <div key={i}>
+                <p>{item.name}</p>
+              </div>
+            ))}
+            <button onClick={onClose} className='bg-red-500'>Close</button>
+          </>
+        ) : (
+          <div className='relative w-full'>
+            <div id="qr-reader" />
+            <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+              <div className="h-64 w-64 rounded-xl border-4 border-white shadow-lg" />
+            </div>
+          </div>
+        )}  
     </Modal>
   );
 };
