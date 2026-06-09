@@ -1,16 +1,19 @@
 import { useState } from 'react'
-import { ChevronLeft, ChevronRight, RefreshCcw, Search } from 'lucide-react'
+import { ChevronLeft, ChevronRight, RefreshCcw, Search, Camera } from 'lucide-react'
 
 import { useGetOrderByUserId } from '../../hooks/useGetOrderbyUserId'
 import { useDebounce } from '../../hooks/useDebounce'
 
+import { Button } from '../../ui/form/Buttons'
 import { NotFound } from '../../components/NotFound'
 import { Loader } from '../../components/Loader'
 import { Error } from '../../components/Error'
-import { ViewOrderModal } from '../../components/modals/ViewOrderModal'
 import { SearchBar } from '../../components/SearchBar'
 import { FilterBy } from '../../components/FilterBy'
 import { SortBy } from '../../components/SortBy'
+
+import { ViewOrderModal } from '../../components/modals/ViewOrderModal'
+import { ScannerModal } from '../../components/modals/ScannerModal'
 
 import { OrderTable } from '../../ui/form/OrderTable'
 
@@ -51,6 +54,7 @@ const ListOfOrders = () => {
     const [filteredBy, setFilteredBy] = useState('')
     const [sortBy, setSortBy] = useState('')
     const [isModalOpen, setIsModalOpen] = useState(false)
+    const [isScannerOpen, setIsScannerOpen] = useState(false)
     const [selectedOrder, setSelectedOrder] = useState<Order | null>(null)
 
     const debouncedSearchQuery = useDebounce(searchQuery, 600)
@@ -111,6 +115,8 @@ const ListOfOrders = () => {
                             icon={<Search size={16} />}
                             placeholder="Search orders by Order ID"
                         />
+                        
+                        <Button onClick={() => setIsScannerOpen(true)} className='bg-btn-black-bg text-white p-2'><Camera /></Button>
                     </div>
 
                     <FilterBy
@@ -217,6 +223,13 @@ const ListOfOrders = () => {
                 onClose={() => {
                     setIsModalOpen(false)
                     setSelectedOrder(null)
+                }}
+            />
+
+            <ScannerModal 
+                isOpen={isScannerOpen}
+                onClose={() => {
+                    setIsScannerOpen(false)
                 }}
             />
         </section>
