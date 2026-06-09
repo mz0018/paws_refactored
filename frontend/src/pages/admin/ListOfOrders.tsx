@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { ChevronLeft, ChevronRight, RefreshCcw, Search, Camera } from 'lucide-react'
 
 import { useGetOrderByUserId } from '../../hooks/useGetOrderbyUserId'
+import { useInMobileDevice } from '../../hooks/useInMobileDevice'
 import { useDebounce } from '../../hooks/useDebounce'
 
 import { Button } from '../../ui/form/Buttons'
@@ -48,6 +49,7 @@ const ListOfOrders = () => {
     const [page, setPage] = useState(1)
     const { data, isLoading, isFetching, isError, refetch, error } = useGetOrderByUserId(10, page)
 
+    const isMobile = useInMobileDevice()
     const orders: Order[] = data?.orders ?? []
 
     const [searchQuery, setSearchQuery] = useState('')
@@ -116,7 +118,9 @@ const ListOfOrders = () => {
                             placeholder="Search orders by Order ID"
                         />
                         
-                        <Button onClick={() => setIsScannerOpen(true)} className='bg-btn-black-bg text-white p-2'><Camera /></Button>
+                        {isMobile && (
+                            <Button onClick={() => setIsScannerOpen(true)} className='bg-btn-black-bg text-white p-2'><Camera /></Button>
+                        )}
                     </div>
 
                     <FilterBy

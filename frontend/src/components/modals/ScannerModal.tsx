@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { Html5Qrcode } from 'html5-qrcode';
 import { Modal } from '../../ui/form/Modal';
+import { useInMobileDevice } from '../../hooks/useInMobileDevice';
 
 type ScannerModalProps = {
   isOpen: boolean;
@@ -8,8 +9,11 @@ type ScannerModalProps = {
 };
 
 export const ScannerModal = ({ isOpen, onClose }: ScannerModalProps) => {
+
+  const isMobile = useInMobileDevice()
+
   useEffect(() => {
-    if (!isOpen) return;
+    if (!isOpen || !isMobile) return;
 
     const scanner = new Html5Qrcode('qr-reader');
 
