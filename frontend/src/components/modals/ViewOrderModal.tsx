@@ -1,5 +1,6 @@
 import { Modal } from '../../ui/form/Modal'
 import { Button } from '../../ui/form/Buttons'
+import { useMarkAsComplete } from '../../hooks/useMarkAsComplete'
 
 type ViewOrderModalProps = {
     isOpen: boolean
@@ -15,6 +16,8 @@ type ViewOrderModalProps = {
 export const ViewOrderModal = ({ isOpen, onClose, order }: ViewOrderModalProps) => {
 
     const th = ['Product', 'Qty', 'Price', 'Subtotal']
+
+    const { handleMarkAsComplete, isLoading } = useMarkAsComplete(order?._id as string)
 
     if (!order) return null
 
@@ -82,10 +85,11 @@ export const ViewOrderModal = ({ isOpen, onClose, order }: ViewOrderModalProps) 
                 </div>
 
                 <Button 
-                    onClick={() => alert('Mark as done!')}
+                    disabled={isLoading}
+                    onClick={() => handleMarkAsComplete()}
                     className="bg-btn-black-bg hover:bg-btn-black-hover-header-bg text-white w-full transition-colors mb-2"
                 >
-                    Mark as Complete
+                    {isLoading ? 'Loading...' : 'Mark as Complete'}
                 </Button>
 
                 <Button onClick={onClose} className="text-text-body border border-gray-400 font-semibold bg-none w-full hover:bg-gray-50">
