@@ -110,9 +110,9 @@ const ListOfOrders = () => {
                     <span className="text-btn-black-bg">Orders</span>
                 </h1>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-4 mb-5">
                     {/* Search */}
-                    <div className="sm:col-span-2 lg:col-span-1 min-w-0">
+                    <div className="sm:col-span-2 lg:col-span-4 xl:col-span-3 min-w-0">
                         <SearchBar
                             value={searchQuery}
                             onChange={e => setSearchQuery(e.target.value)}
@@ -122,7 +122,7 @@ const ListOfOrders = () => {
                     </div>
 
                     {/* Filter */}
-                    <div className="min-w-0">
+                    <div className="lg:col-span-2 min-w-0">
                         <FilterBy
                             value={filteredBy}
                             onChange={e => setFilteredBy(e.target.value)}
@@ -131,7 +131,7 @@ const ListOfOrders = () => {
                     </div>
 
                     {/* Sort */}
-                    <div className="min-w-0">
+                    <div className="lg:col-span-2 min-w-0">
                         <SortBy
                             value={sortBy}
                             onChange={e => setSortBy(e.target.value)}
@@ -140,32 +140,26 @@ const ListOfOrders = () => {
                     </div>
 
                     {/* Actions */}
-                    <div className="md:col-span-2 lg:col-span-1">
-                        <div className="flex flex-wrap lg:flex-nowrap items-center justify-between lg:justify-end gap-2">
+                    <div className="sm:col-span-2 lg:col-span-4 xl:col-span-5">
+                        <div className="flex items-center justify-end gap-2">
+                            <PaginationUI page={page} totalPages={totalPages} onPageChange={setPage} />
 
-                            <div className="flex items-center gap-1 shrink-0">
-                                <PaginationUI page={page} totalPages={totalPages} onPageChange={setPage} />
+                            <button
+                                title="Refresh List"
+                                onClick={() => refetch()}
+                                className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-surface-muted/10 text-gray-400 hover:text-btn-black-bg transition-colors cursor-pointer shrink-0"
+                            >
+                                <RefreshCcw size={16} />
+                            </button>
 
-                                <div className="flex items-center gap-1 shrink-0">
-                                    <button
-                                        title="Refresh List"
-                                        onClick={() => refetch()}
-                                        className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-surface-muted/10 text-gray-400 hover:text-btn-black-bg transition-colors cursor-pointer shrink-0"
-                                    >
-                                        <RefreshCcw size={16} />
-                                    </button>
-
-                                    {isMobile && (
-                                        <Button
-                                            onClick={() => setIsScannerOpen(true)}
-                                            className="bg-btn-black-bg hover:bg-btn-black-hover-header-bg transition-colors text-white shrink-0"
-                                        >
-                                            <Camera />
-                                        </Button>
-                                    )}
-                                </div>
-                            </div>
-
+                            {isMobile && (
+                                <Button
+                                    onClick={() => setIsScannerOpen(true)}
+                                    className="bg-btn-black-bg hover:bg-btn-black-hover-header-bg transition-colors text-white shrink-0"
+                                >
+                                    <Camera />
+                                </Button>
+                            )}
                         </div>
                     </div>
                 </div>
