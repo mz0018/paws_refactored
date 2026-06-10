@@ -91,10 +91,36 @@ export const ScannerModal = ({ isOpen, onClose, onOrderScanned }: ScannerModalPr
           </div>
         </div>
       ) : (
-        <div className='relative w-full h-72 sm:h-80 md:h-96'>
+        <div className='relative w-full h-72 sm:h-80 md:h-96 overflow-hidden rounded-lg bg-black'>
           <div id="qr-reader" />
+          <style>{`
+            #qr-reader {
+              position: absolute !important;
+              inset: 0 !important;
+              width: 100% !important;
+              height: 100% !important;
+              border: none !important;
+              padding: 0 !important;
+            }
+            #qr-reader video {
+              width: 100% !important;
+              height: 100% !important;
+              object-fit: cover !important;
+            }
+            #qr-reader__dashboard {
+              display: none !important;
+            }
+          `}</style>
           <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-            <div className="h-64 w-64 rounded-xl border-4 border-white shadow-lg" />
+            <div className="relative h-64 w-64">
+              <div className="absolute left-0 top-0 h-12 w-12 border-l-4 border-t-4 border-white rounded-tl-xl" />
+
+              <div className="absolute right-0 top-0 h-12 w-12 border-r-4 border-t-4 border-white rounded-tr-xl" />
+
+              <div className="absolute bottom-0 left-0 h-12 w-12 border-b-4 border-l-4 border-white rounded-bl-xl" />
+
+              <div className="absolute bottom-0 right-0 h-12 w-12 border-b-4 border-r-4 border-white rounded-br-xl" />
+            </div>
           </div>
         </div>
       )}
