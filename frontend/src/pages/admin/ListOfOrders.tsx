@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { ChevronLeft, ChevronRight, RefreshCcw, Search, Camera } from 'lucide-react'
+import { RefreshCcw, Search, Camera } from 'lucide-react'
 
 import { useGetOrderByUserId } from '../../hooks/useGetOrderbyUserId'
 import { useInMobileDevice } from '../../hooks/useInMobileDevice'
@@ -17,6 +17,7 @@ import { ViewOrderModal } from '../../components/modals/ViewOrderModal'
 import { ScannerModal } from '../../components/modals/ScannerModal'
 
 import { OrderTable } from '../../ui/form/OrderTable'
+import { PaginationUI } from '../../ui/form/PaginationUI'
 
 import { ORDER_CATEGORIES } from '../../mocks/orderCategories'
 import { ORDER_SORT_OPTIONS } from '../../mocks/orderSortOptions'
@@ -110,63 +111,62 @@ const ListOfOrders = () => {
                 </h1>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-5">
-                    <div className="sm:col-span-2 lg:col-span-1">
+                    {/* Search */}
+                    <div className="sm:col-span-2 lg:col-span-1 min-w-0">
                         <SearchBar
                             value={searchQuery}
                             onChange={e => setSearchQuery(e.target.value)}
                             icon={<Search size={16} />}
                             placeholder="Search orders by Order ID"
                         />
-                        
-                        {isMobile && (
-                            <Button onClick={() => setIsScannerOpen(true)} className='bg-btn-black-bg text-white p-2'><Camera /></Button>
-                        )}
                     </div>
 
-                    <FilterBy
-                        value={filteredBy}
-                        onChange={e => setFilteredBy(e.target.value)}
-                        options={ORDER_CATEGORIES}
-                    />
+                    {/* Filter */}
+                    <div className="min-w-0">
+                        <FilterBy
+                            value={filteredBy}
+                            onChange={e => setFilteredBy(e.target.value)}
+                            options={ORDER_CATEGORIES}
+                        />
+                    </div>
 
-                    <SortBy
-                        value={sortBy}
-                        onChange={e => setSortBy(e.target.value)}
-                        options={ORDER_SORT_OPTIONS}
-                    />
+                    {/* Sort */}
+                    <div className="min-w-0">
+                        <SortBy
+                            value={sortBy}
+                            onChange={e => setSortBy(e.target.value)}
+                            options={ORDER_SORT_OPTIONS}
+                        />
+                    </div>
 
-                    <div className="justify-self-end flex items-center rounded-sm overflow-hidden w-fit">
-                        <span className="px-3 py-1 text-sm text-text-body whitespace-nowrap">
-                            Page {page} of {totalPages}
-                        </span>
+                    {/* Actions */}
+                    <div className="md:col-span-2 lg:col-span-1">
+                        <div className="flex flex-wrap lg:flex-nowrap items-center justify-between lg:justify-end gap-2">
 
-                        {totalPages > 1 && (
-                            <>
-                                <button
-                                    onClick={() => setPage(p => Math.max(1, p - 1))}
-                                    disabled={page === 1}
-                                    className="px-2 py-1 cursor-pointer"
-                                >
-                                    <ChevronLeft size={16} color="gray" />
-                                </button>
+                            <div className="flex items-center gap-1 shrink-0">
+                                <PaginationUI page={page} totalPages={totalPages} onPageChange={setPage} />
 
-                                <button
-                                    onClick={() => setPage(p => Math.min(totalPages, p + 1))}
-                                    disabled={page === totalPages}
-                                    className="px-2 py-1 cursor-pointer"
-                                >
-                                    <ChevronRight size={16} color="gray" />
-                                </button>
-                            </>
-                        )}
+                                <div className="flex items-center gap-1 shrink-0">
+                                    <button
+                                        title="Refresh List"
+                                        onClick={() => refetch()}
+                                        className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-surface-muted/10 text-gray-400 hover:text-btn-black-bg transition-colors cursor-pointer shrink-0"
+                                    >
+                                        <RefreshCcw size={16} />
+                                    </button>
 
-                        <button
-                            title="Refresh List"
-                            onClick={() => refetch()}
-                            className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-surface-muted/10 text-gray-400 hover:text-btn-black-bg transition-colors cursor-pointer"
-                        >
-                            <RefreshCcw size={16} />
-                        </button>
+                                    {isMobile && (
+                                        <Button
+                                            onClick={() => setIsScannerOpen(true)}
+                                            className="bg-btn-black-bg hover:bg-btn-black-hover-header-bg transition-colors text-white shrink-0"
+                                        >
+                                            <Camera />
+                                        </Button>
+                                    )}
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
 
