@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Html5Qrcode } from 'html5-qrcode';
 import { Modal } from '../../ui/form/Modal';
+import { Button } from '../../ui/form/Buttons';
 import { useInMobileDevice } from '../../hooks/useInMobileDevice';
 
 type ScannedOrder = {
@@ -88,16 +89,17 @@ export const ScannerModal = ({ isOpen, onClose }: ScannerModalProps) => {
                 <p>{item.name}</p>
               </div>
             ))}
-            <button onClick={onClose} className='bg-red-500'>Close</button>
+            <Button className='bg-btn-black-bg hover:bg-btn-black-hover-header-bg transition-colors text-white w-full mb-2'>Mark as Done</Button>
           </>
         ) : (
-          <div className='relative w-full'>
+          <div className='relative w-full h-72 sm:h-80 md:h-96'>
             <div id="qr-reader" />
             <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
               <div className="h-64 w-64 rounded-xl border-4 border-white shadow-lg" />
             </div>
           </div>
         )}  
+        <Button onClick={onClose} className='bg-none border border-gray-400 hover:bg-gray-50 w-full font-semibold text-text-body tracking-wide'>Close</Button>
     </Modal>
   );
 };
