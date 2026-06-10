@@ -81,6 +81,13 @@ export const ViewOrderModal = ({ isOpen, onClose, order }: ViewOrderModalProps) 
                     </p>
                 </div>
 
+                <Button 
+                    onClick={() => alert('Mark as done!')}
+                    className="bg-btn-black-bg hover:bg-btn-black-hover-header-bg text-white w-full transition-colors mb-2"
+                >
+                    Mark as Complete
+                </Button>
+
                 <Button onClick={onClose} className="text-text-body border border-gray-400 font-semibold bg-none w-full hover:bg-gray-50">
                     Close
                 </Button>

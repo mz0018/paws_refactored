@@ -160,7 +160,6 @@ const ListOfOrders = () => {
                                     <Camera />
                                 </Button>
                             )}
-                            
                         </div>
                     </div>
                 </div>

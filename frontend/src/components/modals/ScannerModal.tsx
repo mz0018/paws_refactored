@@ -112,19 +112,11 @@ export const ScannerModal = ({ isOpen, onClose, onOrderScanned }: ScannerModalPr
             }
           `}</style>
           <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-            <div className="relative h-64 w-64">
-              <div className="absolute left-0 top-0 h-12 w-12 border-l-4 border-t-4 border-white rounded-tl-xl" />
-
-              <div className="absolute right-0 top-0 h-12 w-12 border-r-4 border-t-4 border-white rounded-tr-xl" />
-
-              <div className="absolute bottom-0 left-0 h-12 w-12 border-b-4 border-l-4 border-white rounded-bl-xl" />
-
-              <div className="absolute bottom-0 right-0 h-12 w-12 border-b-4 border-r-4 border-white rounded-br-xl" />
-            </div>
+            <div className="relative h-64 w-64 animate-pulse" />
           </div>
         </div>
       )}
-      <Button onClick={onClose} className='bg-none border border-gray-400 hover:bg-gray-50 w-full font-semibold text-text-body tracking-wide'>Close</Button>
+      <Button onClick={onClose} className='bg-none border border-gray-400 hover:bg-gray-50 w-full font-semibold text-text-body tracking-wide mt-2'>Close</Button>
     </Modal>
   );
 };
