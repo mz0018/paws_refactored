@@ -50,4 +50,9 @@ router.get(
     AdminController.getOrderByUserId
 )
 
+router.patch(
+    '/order/:id/complete',
+    AdminController.markAsComplete
+)
+
 export default router

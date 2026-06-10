@@ -54,6 +54,16 @@ class AdminController {
         }
     }
 
+    async markAsComplete(req, res, next) {
+        try {
+            const orderId = req.params.id
+            res.status(200).json({ orderId })
+        } catch (error) {
+            console.error('Error:', error)
+            next(error)
+        }
+    }
+
 }
 
 export default new AdminController()
