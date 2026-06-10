@@ -226,8 +226,21 @@ const ListOfOrders = () => {
 
             <ScannerModal 
                 isOpen={isScannerOpen}
-                onClose={() => {
-                    setIsScannerOpen(false)
+                onClose={() => setIsScannerOpen(false)}
+                onOrderScanned={(scanned) => {
+                    setSelectedOrder({
+                        _id: scanned.orderId,
+                        createdAt: scanned.orderDate,
+                        items: scanned.items.map(item => ({
+                            product: item.name,
+                            quantity: item.qty,
+                            price: item.price,
+                            subtotal: item.qty * item.price,
+                            createdBy: '',
+                        })),
+                        status: 'Pending',
+                    })
+                    setIsModalOpen(true)
                 }}
             />
         </section>

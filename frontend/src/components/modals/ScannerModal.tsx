@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { Html5Qrcode } from 'html5-qrcode';
 import { Modal } from '../../ui/form/Modal';
 import { Button } from '../../ui/form/Buttons';
@@ -13,19 +13,23 @@ type ScannedOrder = {
 type ScannerModalProps = {
   isOpen: boolean;
   onClose: () => void;
+  onOrderScanned: (order: ScannedOrder) => void;
 };
 
-export const ScannerModal = ({ isOpen, onClose }: ScannerModalProps) => {
+export const ScannerModal = ({ isOpen, onClose, onOrderScanned }: ScannerModalProps) => {
 
   const isMobile = useInMobileDevice()
-  const [scannedOrder, setScannedOrder] = useState<ScannedOrder | null>(null)
+  const [isInitializing, setIsInitializing] = useState(false)
+  const onOrderScannedRef = useRef(onOrderScanned)
+  onOrderScannedRef.current = onOrderScanned
 
   useEffect(() => {
-    if (!isOpen || !isMobile || scannedOrder) return;
+    if (!isOpen || !isMobile) return;
 
     const scanner = new Html5Qrcode('qr-reader');
 
     const startScanner = async () => {
+      setIsInitializing(true)
       try {
         await scanner.start(
           { facingMode: 'environment' },
@@ -38,7 +42,8 @@ export const ScannerModal = ({ isOpen, onClose }: ScannerModalProps) => {
 
             try {
               const parsed = JSON.parse(decodedText) as ScannedOrder
-              setScannedOrder(parsed)
+              onOrderScannedRef.current(parsed)
+              onClose()
             } catch {
               console.error('Invalid QR data')
             }
@@ -49,8 +54,10 @@ export const ScannerModal = ({ isOpen, onClose }: ScannerModalProps) => {
             // qr scan failure per frame (ignore or log if needed)
           }
         );
+        setIsInitializing(false)
       } catch (err) {
         console.error(err);
+        setIsInitializing(false)
       }
     };
 
@@ -68,11 +75,7 @@ export const ScannerModal = ({ isOpen, onClose }: ScannerModalProps) => {
         }
       })();
     };
-  }, [isOpen, isMobile, scannedOrder]);
-
-  useEffect(() => {
-    if (!isOpen) setScannedOrder(null)
-  }, [isOpen])
+  }, [isOpen, isMobile]);
 
   return (
     <Modal
@@ -80,26 +83,22 @@ export const ScannerModal = ({ isOpen, onClose }: ScannerModalProps) => {
       onClose={onClose}
       closeOnBackdrop={false}
     >
-        {scannedOrder ? (
-          <>
-            <h2>Order details</h2>
-            <p>{scannedOrder.orderId}</p>
-            {scannedOrder.items.map((item, i) => (
-              <div key={i}>
-                <p>{item.name}</p>
-              </div>
-            ))}
-            <Button className='bg-btn-black-bg hover:bg-btn-black-hover-header-bg transition-colors text-white w-full mb-2'>Mark as Done</Button>
-          </>
-        ) : (
-          <div className='relative w-full h-72 sm:h-80 md:h-96'>
-            <div id="qr-reader" />
-            <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-              <div className="h-64 w-64 rounded-xl border-4 border-white shadow-lg" />
-            </div>
+      {isInitializing ? (
+        <div className="flex items-center justify-center py-16">
+          <div className="flex flex-col items-center gap-3">
+            <div className="w-8 h-8 border-4 border-gray-300 border-t-btn-black-bg rounded-full animate-spin" />
+            <p className="text-sm text-gray-500">Initializing scanner...</p>
           </div>
-        )}  
-        <Button onClick={onClose} className='bg-none border border-gray-400 hover:bg-gray-50 w-full font-semibold text-text-body tracking-wide'>Close</Button>
+        </div>
+      ) : (
+        <div className='relative w-full h-72 sm:h-80 md:h-96'>
+          <div id="qr-reader" />
+          <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+            <div className="h-64 w-64 rounded-xl border-4 border-white shadow-lg" />
+          </div>
+        </div>
+      )}
+      <Button onClick={onClose} className='bg-none border border-gray-400 hover:bg-gray-50 w-full font-semibold text-text-body tracking-wide'>Close</Button>
     </Modal>
   );
 };
