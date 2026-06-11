@@ -221,7 +221,20 @@ class AdminService {
             throw new ErrorController('Order id not found', 401)
         }
 
-        return { message: 'update 200' }
+        const order = await Order.findById(orderId)
+
+        if (!order) {
+            throw new ErrorController('Order not found', 404)
+        }
+
+        if (order.status === 'completed') {
+            throw new ErrorController('Order is already completed', 409)
+        }
+
+        order.status = 'completed'
+        await order.save()
+
+        return true
     }
 
 }

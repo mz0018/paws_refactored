@@ -52,6 +52,7 @@ router.get(
 
 router.patch(
     '/order/:id/complete',
+    authorizeViaCookie,
     AdminController.markAsComplete
 )
 

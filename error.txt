@@ -1,0 +1,34 @@
+C:\Users\Admin\Desktop\paws_refactored\backend>node server.js
+[dotenv@17.3.1] injecting env (8) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+[dotenv@17.3.1] injecting env (0) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+MongoDB 200
+Running on PORT 5000
+Error: CastError: Cast to ObjectId failed for value "6a1e80b4cb2d45cb73ce201" (type string) at path "_id" for model "Order"
+    at SchemaObjectId.cast (C:\Users\Admin\Desktop\paws_refactored\backend\node_modules\mongoose\lib\schema\objectId.js:253:11)
+    at SchemaType.applySetters (C:\Users\Admin\Desktop\paws_refactored\backend\node_modules\mongoose\lib\schemaType.js:1287:12)
+    at SchemaType.castForQuery (C:\Users\Admin\Desktop\paws_refactored\backend\node_modules\mongoose\lib\schemaType.js:1713:17)
+    at cast (C:\Users\Admin\Desktop\paws_refactored\backend\node_modules\mongoose\lib\cast.js:386:32)
+    at Query.cast (C:\Users\Admin\Desktop\paws_refactored\backend\node_modules\mongoose\lib\query.js:5127:12)
+    at Query._castConditions (C:\Users\Admin\Desktop\paws_refactored\backend\node_modules\mongoose\lib\query.js:2376:10)
+    at model.Query._findOne (C:\Users\Admin\Desktop\paws_refactored\backend\node_modules\mongoose\lib\query.js:2716:8)
+    at model.Query.exec (C:\Users\Admin\Desktop\paws_refactored\backend\node_modules\mongoose\lib\query.js:4726:80)
+    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)
+    at async AdminService.markAsComplete (file:///C:/Users/Admin/Desktop/paws_refactored/backend/services/AdminService.js:224:23) {
+  stringValue: '"6a1e80b4cb2d45cb73ce201"',
+  messageFormat: undefined,
+  kind: 'ObjectId',
+  value: '6a1e80b4cb2d45cb73ce201',
+  path: '_id',
+  reason: BSONError: input must be a 24 character hex string, 12 byte Uint8Array, or an integer
+      at new ObjectId (C:\Users\Admin\Desktop\paws_refactored\backend\node_modules\bson\lib\bson.cjs:2636:23)
+      at castObjectId (C:\Users\Admin\Desktop\paws_refactored\backend\node_modules\mongoose\lib\cast\objectid.js:25:12)
+      at SchemaObjectId.cast (C:\Users\Admin\Desktop\paws_refactored\backend\node_modules\mongoose\lib\schema\objectId.js:251:12)
+      at SchemaType.applySetters (C:\Users\Admin\Desktop\paws_refactored\backend\node_modules\mongoose\lib\schemaType.js:1287:12)
+      at SchemaType.castForQuery (C:\Users\Admin\Desktop\paws_refactored\backend\node_modules\mongoose\lib\schemaType.js:1713:17)
+      at cast (C:\Users\Admin\Desktop\paws_refactored\backend\node_modules\mongoose\lib\cast.js:386:32)
+      at Query.cast (C:\Users\Admin\Desktop\paws_refactored\backend\node_modules\mongoose\lib\query.js:5127:12)
+      at Query._castConditions (C:\Users\Admin\Desktop\paws_refactored\backend\node_modules\mongoose\lib\query.js:2376:10)
+      at model.Query._findOne (C:\Users\Admin\Desktop\paws_refactored\backend\node_modules\mongoose\lib\query.js:2716:8)
+      at model.Query.exec (C:\Users\Admin\Desktop\paws_refactored\backend\node_modules\mongoose\lib\query.js:4726:80),
+  valueType: 'string'
+}
