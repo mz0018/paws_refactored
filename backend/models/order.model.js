@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import { type } from 'os'
 
 const orderModel = new mongoose.Schema({
     items: [{
@@ -8,7 +9,8 @@ const orderModel = new mongoose.Schema({
         subtotal: { type: Number, required: true },
         createdBy: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
     }],
-    status: { type: String, enum: ['pending', 'completed'], default: 'pending' }
+    status: { type: String, enum: ['pending', 'completed'], default: 'pending' },
+    completedAt: { type: Date, default: null }
 }, { timestamps: true })
 
 orderModel.index({ 'items.product': 1 })

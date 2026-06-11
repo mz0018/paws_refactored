@@ -1,5 +1,6 @@
 import { Modal } from '../../ui/form/Modal'
 import { Button } from '../../ui/form/Buttons'
+import { MarkCompletedUI } from '../../ui/form/MarkCompletedUI'
 import { useMarkAsComplete } from '../../hooks/useMarkAsComplete'
 
 type ViewOrderModalProps = {
@@ -9,6 +10,7 @@ type ViewOrderModalProps = {
         _id: string
         items: { product: { productName: string } | string; quantity: number; price: number; subtotal: number }[]
         createdAt: string
+        updatedAt: string
         status: string
     } | null
 }
@@ -70,28 +72,25 @@ export const ViewOrderModal = ({ isOpen, onClose, order }: ViewOrderModalProps) 
                 </div>
 
                 <div className="text-xs space-y-1 mb-3 capitalize">
-                    <p className="leading-snug">
-                        <span className="font-medium">Order ID:</span> {order._id}
-                    </p>
-
-                    <p className="leading-snug">
-                        <span className="font-medium">Date:</span>{" "}
-                        {new Date(order.createdAt).toLocaleDateString()}
-                    </p>
-
-                    <p className="leading-snug">
-                        <span className="font-medium">Status:</span> {order.status}
-                    </p>
+                    {order.status === 'completed' && (
+                        <MarkCompletedUI 
+                            orderId={order._id}
+                            dateOrdered={new Date(order.createdAt)} 
+                            dateCompleted={new Date(order.updatedAt)} 
+                        />
+                    )}
                 </div>
 
-                <Button 
-                    disabled={isLoading}
-                    onClick={() => handleMarkAsComplete()}
-                    className="bg-btn-black-bg hover:bg-btn-black-hover-header-bg text-white w-full transition-colors mb-2"
-                >
-                    {isLoading ? 'Loading...' : 'Mark as Complete'}
-                </Button>
-
+                {order.status == 'pending' && (
+                    <Button 
+                        disabled={isLoading}
+                        onClick={() => handleMarkAsComplete()}
+                        className="bg-btn-black-bg hover:bg-btn-black-hover-header-bg text-white w-full transition-colors mb-2"
+                    >
+                        {isLoading ? 'Loading...' : 'Mark as Complete'}
+                    </Button>
+                )}
+        
                 <Button onClick={onClose} className="text-text-body border border-gray-400 font-semibold bg-none w-full hover:bg-gray-50">
                     Close
                 </Button>

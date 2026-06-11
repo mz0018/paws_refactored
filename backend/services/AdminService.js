@@ -232,6 +232,7 @@ class AdminService {
         }
 
         order.status = 'completed'
+        order.completedAt = new Date()
         await order.save()
 
         return true
