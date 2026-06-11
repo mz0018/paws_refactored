@@ -214,6 +214,16 @@ class AdminService {
         return { orders, total, page, limit, totalPages: Math.ceil(total / limit) }
     }
 
+    async markAsComplete(req) {
+        const orderId = req.params.id
+
+        if (!orderId) {
+            throw new ErrorController('Order id not found', 401)
+        }
+
+        return { message: 'update 200' }
+    }
+
 }
 
 export default new AdminService()

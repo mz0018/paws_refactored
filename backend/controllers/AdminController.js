@@ -56,8 +56,8 @@ class AdminController {
 
     async markAsComplete(req, res, next) {
         try {
-            const orderId = req.params.id
-            res.status(200).json({ orderId })
+            const result = await AdminService.markAsComplete(req)
+            res.status(200).json(result)
         } catch (error) {
             console.error('Error:', error)
             next(error)
