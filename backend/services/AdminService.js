@@ -235,7 +235,7 @@ class AdminService {
         order.completedAt = new Date()
         await order.save()
 
-        return true
+        return order._id
     }
 
 }

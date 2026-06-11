@@ -26,7 +26,7 @@ export const useMarkAsComplete = (orderId: string) => {
             if (res.ok) {
                 setHasError({})
                 const data = await res.json()
-                alert(data.orderId)
+                console.table(data)
             } else {
                 alert('Error on backend')
             }
