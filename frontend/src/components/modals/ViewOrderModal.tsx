@@ -34,33 +34,69 @@ export const ViewOrderModal = ({
                 </h2>
 
                 <>
-                {isLoading ? (
-                    <Loader label='Loading Order' size='md' fullScreen={false} />
-                ) : (
-                    <div>
-                        <p><strong>ID:</strong> {orderData?._id}</p>
-                        <p><strong>Status:</strong> {orderData?.status}</p>
-                        <p>
-                            <strong>Created:</strong>{' '}
-                            {orderData?.createdAt}
-                        </p>
-                        <p>
-                            <strong>Completed:</strong>{' '}
-                            {orderData?.completedAt ?? 'Not completed'}
-                        </p>
+                    {isLoading ? (
+                        <Loader label='Loading Order' size='md' fullScreen={false} />
+                    ) : (
+                        <>
+                        {orderData?.status === 'pending' && (
+                            <div className="mx-auto max-w-md rounded-sm border border-gray-200 bg-white p-2 font-mono">                            
 
-                        <h3>Items</h3>
+                                <div>
+                                    <h3 className="mb-2 text-center font-bold tracking-wider">
+                                        ITEMS
+                                    </h3>
 
-                        {orderData?.items.map((item, index) => (
-                            <div key={index}>
-                                <p>Product: {item.product.productName}</p>
-                                <p>Quantity: {item.quantity}</p>
-                                <p>Subtotal: {item.subtotal}</p>
-                                <hr />
+                                    <div className="space-y-2">
+                                        {orderData?.items.map((item, index) => (
+                                            <div
+                                                key={index}
+                                                className="border-b border-gray-200 border-dashed pb-3 last:border-b-0"
+                                            >
+                                                <div className="flex justify-between">
+                                                    <span className="font-medium text-text-body">
+                                                        {item.product.productName}
+                                                    </span>
+                                                    <span>x{item.quantity}</span>
+                                                </div>
+
+                                                <div className="mt-1 flex justify-between text-sm text-text-body">
+                                                    <span>Subtotal</span>
+                                                    <span>{item.subtotal.toLocaleString('en-PH', {
+                                                        style: 'currency',
+                                                        currency: 'PHP'
+                                                    })}</span>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                <div className="my-4 border-t border-gray-200 border-dashed" />
+
+                                <div className="space-y-1 text-sm">
+                                    <div className="flex justify-between capitalize">
+                                        <span className="font-semibold">Status</span>
+                                        <span>{orderData?.status}</span>
+                                    </div>
+
+                                    <div className="flex justify-between gap-4">
+                                        <span className="font-semibold">Created</span>
+                                        <span className="text-right">
+                                            {orderData?.createdAt}
+                                        </span>
+                                    </div>
+
+                                    <div className="flex justify-between gap-4">
+                                        <span className="font-semibold">Completed</span>
+                                        <span className="text-right">
+                                            {orderData?.completedAt ?? 'Not completed'}
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
-                        ))}
-                    </div>
-                )}
+                        )}
+                        </>
+                    )}
                 </>
 
                 <div className="text-xs space-y-1 mb-3 capitalize">
