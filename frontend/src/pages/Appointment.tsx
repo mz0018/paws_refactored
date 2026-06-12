@@ -8,6 +8,7 @@ import { ClipLoader } from 'react-spinners'
 import { Send } from 'lucide-react'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
+import '../AppointmentDatePicker.css'
 
 const Appointment = () => {
 
@@ -37,7 +38,15 @@ const Appointment = () => {
                     onSubmit={handleSubmit}
                     className="w-full max-w-lg rounded-xl p-6 sm:p-8"
                 >
-                    
+                    <DatePicker
+                        selected={formData.selectedDate ? new Date(formData.selectedDate) : null}
+                        onChange={(date: Date | null) => handleDateChange(date)}
+                        showTimeSelect
+                        dateFormat="MMMM d, yyyy h:mm aa"
+                        placeholderText="Select a date and time"
+                        customInput={<Input label="Please select a specified date" error={hasErrors.selectedDate} />}
+                        inline
+                    />
 
                     <Input
                         type="text"
@@ -61,15 +70,6 @@ const Appointment = () => {
                         <option value="follow-up">Follow-up</option>
                         <option value="checkup">Checkup</option>
                     </Select>
-
-                    <DatePicker
-                        selected={formData.selectedDate ? new Date(formData.selectedDate) : null}
-                        onChange={(date: Date | null) => handleDateChange(date)}
-                        showTimeSelect
-                        dateFormat="MMMM d, yyyy h:mm aa"
-                        placeholderText="Select a date and time"
-                        customInput={<Input label="Please select a specified date" error={hasErrors.selectedDate} />}
-                    />
 
                     <ErrorText message={hasErrors.name || hasErrors.selectedDate || hasErrors.purpose} />
 
