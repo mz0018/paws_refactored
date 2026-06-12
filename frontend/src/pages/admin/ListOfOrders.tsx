@@ -74,11 +74,12 @@ const ListOfOrders = () => {
 
     return (
         <section className="w-full">
-            <div className="bg-white rounded-lg shadow-lg p-5">
-                <h1 className="text-2xl font-bold text-text-body mb-4">
+            <div className="bg-white p-5">
+                <h1 className="text-2xl font-bold text-text-body">
                     List of{' '}
                     <span className="text-btn-black-bg">Orders</span>
                 </h1>
+                <p className="mb-4 text-text-body tracking-wider">Manage all orders from a single dashboard.</p>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-4 mb-5">
                     {/* Search */}
