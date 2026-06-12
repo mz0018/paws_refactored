@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { toast } from 'sonner'
+import { CircleCheckBig } from 'lucide-react'
 
 export const useMarkAsComplete = (orderId: string) => {
 
@@ -13,6 +15,25 @@ export const useMarkAsComplete = (orderId: string) => {
         if (!orderId) {
             setHasError({ orderId: 'Order ID not found.' })
         }
+
+        toast.custom(() => (
+            <div className="flex items-center gap-4 bg-white shadow-lg rounded-lg p-4 border-l-4 border-btn-black-bg min-w-[300px]">
+                <CircleCheckBig
+                    size={24}
+                    className="text-btn-black-bg"
+                />
+
+                <div>
+                    <p className="font-semibold text-text-body">
+                        {orderId}
+                    </p>
+
+                    <p className="text-sm text-gray-500">
+                        Marked as complete
+                    </p>
+                </div>
+            </div>
+        ))
 
         setIsMarkLoading(true)
         try {

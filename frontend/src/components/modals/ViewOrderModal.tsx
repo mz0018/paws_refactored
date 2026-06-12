@@ -82,7 +82,7 @@ export const ViewOrderModal = ({
                                     <div className="flex justify-between gap-4">
                                         <span className="font-semibold">Created</span>
                                         <span className="text-right">
-                                            {orderData?.createdAt}
+                                            {new Date(orderData?.createdAt).toLocaleDateString()}
                                         </span>
                                     </div>
 
