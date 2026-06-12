@@ -3,8 +3,8 @@ import { useState, useEffect } from 'react'
 type OrderItems = {
     product: {
         _id: string
-        name: string
-        price: number
+        productName: string
+        productPrice: number
     }
     quantity: number
     subtotal: number
@@ -17,6 +17,7 @@ type OrderData = {
     status: string
     completedAt: string | null
     createdAt: string
+    updatedAt: string
 }
 
 type IdFromModalProps = {

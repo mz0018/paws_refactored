@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 export const useMarkAsComplete = (orderId: string) => {
 
-    const [isLoading, setIsLoading] = useState<boolean>(false)
+    const [isMarkLoading, setIsMarkLoading] = useState<boolean>(false)
     const [hasError, setHasError] = useState<{
         orderId?: string
         general?: string
@@ -14,7 +14,7 @@ export const useMarkAsComplete = (orderId: string) => {
             setHasError({ orderId: 'Order ID not found.' })
         }
 
-        setIsLoading(true)
+        setIsMarkLoading(true)
         try {
             const res = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/order/${orderId}/complete`,
                 {
@@ -35,9 +35,9 @@ export const useMarkAsComplete = (orderId: string) => {
             setHasError({ general: 'Something went wrong. Please try again later.' })
             console.error('Error updating status of order: ', error)
         } finally {
-            setIsLoading(false)
+            setIsMarkLoading(false)
         }
     }
 
-    return { handleMarkAsComplete, isLoading, hasError }
+    return { handleMarkAsComplete, isMarkLoading, hasError }
 }

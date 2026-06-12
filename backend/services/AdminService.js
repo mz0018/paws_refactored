@@ -215,7 +215,7 @@ class AdminService {
     }
 
     async getOrderById(orderId) {
-        const order = await Order.findById(orderId)
+        const order = await Order.findById(orderId).populate('items.product')
 
         if (!order) {
             throw new ErrorController('Order not found', 404)

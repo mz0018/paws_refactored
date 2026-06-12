@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react'
-
 import { Loader } from '../Loader'
 import { Modal } from '../../ui/form/Modal'
 import { Button } from '../../ui/form/Buttons'
+import { MarkCompletedUI } from '../../ui/form/MarkCompletedUI'
 import { useGetOrderById } from '../../hooks/useGetOrderById'
+import { useMarkAsComplete } from '../../hooks/useMarkAsComplete'
 
 
 type ViewOrderModalProps = {
@@ -18,17 +18,7 @@ export const ViewOrderModal = ({
     orderId,
 }: ViewOrderModalProps) => {
     const { isLoading, orderData } = useGetOrderById({ id_from_modal: orderId, isOpen })
-
-    const [readyToShow, setReadyToShow] = useState(false)
-
-    useEffect(() => {
-        if (!isLoading) {
-            const timer = setTimeout(() => setReadyToShow(true), 5000)
-            return () => clearTimeout(timer)
-        } else {
-            setReadyToShow(false)
-        }
-    }, [isLoading])
+    const { handleMarkAsComplete, isMarkLoading } = useMarkAsComplete(orderId)
 
     if (!orderId) return null
 
@@ -44,7 +34,7 @@ export const ViewOrderModal = ({
                 </h2>
 
                 <>
-                {isLoading || !readyToShow ? (
+                {isLoading ? (
                     <Loader label='Loading Order' size='md' fullScreen={false} />
                 ) : (
                     <div>
@@ -62,9 +52,8 @@ export const ViewOrderModal = ({
                         <h3>Items</h3>
 
                         {orderData?.items.map((item, index) => (
-                            <div key={item.product._id || index}>
-                                <p>Product: {item.product.name}</p>
-                                <p>Price: {item.product.price}</p>
+                            <div key={index}>
+                                <p>Product: {item.product.productName}</p>
                                 <p>Quantity: {item.quantity}</p>
                                 <p>Subtotal: {item.subtotal}</p>
                                 <hr />
@@ -73,6 +62,26 @@ export const ViewOrderModal = ({
                     </div>
                 )}
                 </>
+
+                <div className="text-xs space-y-1 mb-3 capitalize">
+                     {orderData?.status === 'completed' && (
+                        <MarkCompletedUI 
+                            orderId={orderData._id}
+                            dateOrdered={new Date(orderData.createdAt)} 
+                            dateCompleted={new Date(orderData.updatedAt)} 
+                        />
+                    )}
+                </div>
+
+                {orderData?.status == 'pending' && (
+                    <Button 
+                        disabled={isMarkLoading}
+                        onClick={() => handleMarkAsComplete()}
+                        className="bg-btn-black-bg hover:bg-btn-black-hover-header-bg text-white w-full transition-colors mb-2"
+                    >
+                        {isMarkLoading ? 'Loading...' : 'Mark as Complete'}
+                    </Button>
+                )}
 
                 <Button
                     onClick={onClose}
