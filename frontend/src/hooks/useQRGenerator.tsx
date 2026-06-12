@@ -5,7 +5,7 @@ export const useQRGenerator = () => {
 
     const [qrValue, setQrValue] = useState<string | null>(null)
 
-    const handleGenerate = (dataToConvert: any, orderMeta?: { orderId?: string; orderDate?: string }) => {
+    const handleGenerate = (dataToConvert: any, orderMeta: { orderId: string; orderDate?: string }) => {
         try {
             const receipt = dataToConvert.map((item: any) => ({
                 name: item.productName,
