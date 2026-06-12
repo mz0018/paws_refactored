@@ -196,19 +196,31 @@ class AdminService {
         return { message: 'Product updated successfully', product }
     }
 
-    async getOrderByUserId(user_id, limit = 10, page = 1) {
+    async getOrderByUserId(user_id, limit = 10, page = 1, search = '') {
         if (!user_id) {
             throw new ErrorController('Unauthorized access', 401)
         }
 
         const skip = (page - 1) * limit
+        const query = { 'items.createdBy': user_id }
+
+        if (search.trim()) {
+            query.$expr = {
+                $regexMatch: {
+                    input: { $toString: '$_id' },
+                    regex: search.trim(),
+                    options: 'i'
+                }
+            }
+        }
+
         const [orders, total] = await Promise.all([
-            Order.find({ 'items.createdBy': user_id })
+            Order.find(query)
                 .populate('items.product')
                 .sort({ createdAt: -1 })
                 .skip(skip)
                 .limit(limit),
-            Order.countDocuments({ 'items.createdBy': user_id })
+            Order.countDocuments(query)
         ])
 
         return { orders, total, page, limit, totalPages: Math.ceil(total / limit) }

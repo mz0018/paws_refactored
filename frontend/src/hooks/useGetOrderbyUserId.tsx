@@ -3,11 +3,12 @@ import { useQuery } from '@tanstack/react-query'
 type GetOrderParams = {
     limit?: number
     page?: number
+    search?: string
 }
 
 const fetchOrders = async (params: GetOrderParams) => {
     
-const query = new URLSearchParams()
+    const query = new URLSearchParams()
 
     if (params.limit) {
         query.set('limit', params.limit.toString())
@@ -15,6 +16,10 @@ const query = new URLSearchParams()
 
     if (params.page) {
         query.set('page', params.page.toString())
+    }
+
+    if (params.search) {
+        query.set('search', params.search)
     }
 
     const qs = query.toString()
@@ -34,10 +39,10 @@ const query = new URLSearchParams()
 
 }
 
-export const useGetOrderByUserId = (limit = 10, page = 1) => {
+export const useGetOrderByUserId = (limit = 10, page = 1, search = '') => {
     return useQuery({
-        queryKey: ['orders', page],
-        queryFn: () => fetchOrders({ limit, page }),
+        queryKey: ['orders', page, search],
+        queryFn: () => fetchOrders({ limit, page, search }),
         placeholderData: (previousData) => previousData,
         staleTime: 5 * 60 * 1000,
     })

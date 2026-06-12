@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { RefreshCcw, Search, Camera } from 'lucide-react'
 
 import { useGetOrderByUserId } from '../../hooks/useGetOrderbyUserId'
@@ -48,11 +48,8 @@ const TABLE_HEADERS = [
 
 const ListOfOrders = () => {
     const [page, setPage] = useState(1)
-    const { data, isLoading, isFetching, isError, refetch, error } =
-        useGetOrderByUserId(10, page)
 
     const isMobile = useInMobileDevice()
-    const orders: Order[] = data?.orders ?? []
 
     const [searchQuery, setSearchQuery] = useState('')
     const [filteredBy, setFilteredBy] = useState('')
@@ -64,7 +61,14 @@ const ListOfOrders = () => {
     const [selectedOrderId, setSelectedOrderId] = useState<string>('')
 
     const debouncedSearchQuery = useDebounce(searchQuery, 600)
+    const { data, isLoading, isFetching, isError, refetch, error } =
+        useGetOrderByUserId(10, page, debouncedSearchQuery)
+    const orders: Order[] = data?.orders ?? []
     const totalPages = data?.totalPages ?? 1
+
+    useEffect(() => {
+        setPage(1)
+    }, [debouncedSearchQuery])
 
     const filteredOrders = filteredBy
         ? orders.filter(order => order.status === filteredBy)
@@ -88,14 +92,6 @@ const ListOfOrders = () => {
                 return 0
         }
     })
-
-    const searchedOrders = debouncedSearchQuery.trim()
-        ? sortedOrders.filter(order =>
-              order._id
-                  .toLowerCase()
-                  .includes(debouncedSearchQuery.trim().toLowerCase())
-          )
-        : sortedOrders
 
     if (isLoading) {
         return <Loader label="Loading orders..." />
@@ -175,7 +171,7 @@ const ListOfOrders = () => {
                     </div>
                 </div>
 
-                {searchedOrders.length === 0 ? (
+                {sortedOrders.length === 0 ? (
                     <NotFound
                         label="No orders found"
                         childLabel="You haven't made any orders yet."
@@ -216,7 +212,7 @@ const ListOfOrders = () => {
                                         </td>
                                     </tr>
                                 ) : (
-                                    searchedOrders.map(order => (
+                                    sortedOrders.map(order => (
                                         <OrderTable
                                             key={order._id}
                                             order={order}
