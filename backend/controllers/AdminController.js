@@ -46,7 +46,12 @@ class AdminController {
         try {
             const limit = parseInt(req.query.limit) || 10
             const page = parseInt(req.query.page) || 1
-            const result = await AdminService.getOrderByUserId(req.user_id, limit, page, req.query.search || '')
+            const result = await AdminService.getOrderByUserId(
+                req.user_id, limit, page,
+                req.query.search || '',
+                req.query.status || '',
+                req.query.sort || ''
+            )
             res.status(200).json(result)
         } catch (error) {
             console.error('Error:', error)

@@ -62,36 +62,13 @@ const ListOfOrders = () => {
 
     const debouncedSearchQuery = useDebounce(searchQuery, 600)
     const { data, isLoading, isFetching, isError, refetch, error } =
-        useGetOrderByUserId(10, page, debouncedSearchQuery)
+        useGetOrderByUserId(10, page, debouncedSearchQuery, filteredBy, sortBy)
     const orders: Order[] = data?.orders ?? []
     const totalPages = data?.totalPages ?? 1
 
     useEffect(() => {
         setPage(1)
-    }, [debouncedSearchQuery])
-
-    const filteredOrders = filteredBy
-        ? orders.filter(order => order.status === filteredBy)
-        : orders
-
-    const sortedOrders = [...filteredOrders].sort((a, b) => {
-        switch (sortBy) {
-            case 'date_desc':
-                return (
-                    new Date(b.createdAt).getTime() -
-                    new Date(a.createdAt).getTime()
-                )
-
-            case 'date_asc':
-                return (
-                    new Date(a.createdAt).getTime() -
-                    new Date(b.createdAt).getTime()
-                )
-
-            default:
-                return 0
-        }
-    })
+    }, [debouncedSearchQuery, filteredBy, sortBy])
 
     if (isLoading) {
         return <Loader label="Loading orders..." />
@@ -171,7 +148,7 @@ const ListOfOrders = () => {
                     </div>
                 </div>
 
-                {sortedOrders.length === 0 ? (
+                {orders.length === 0 ? (
                     <NotFound
                         label="No orders found"
                         childLabel="You haven't made any orders yet."
@@ -212,7 +189,7 @@ const ListOfOrders = () => {
                                         </td>
                                     </tr>
                                 ) : (
-                                    sortedOrders.map(order => (
+                                    orders.map(order => (
                                         <OrderTable
                                             key={order._id}
                                             order={order}

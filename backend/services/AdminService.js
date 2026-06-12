@@ -196,7 +196,7 @@ class AdminService {
         return { message: 'Product updated successfully', product }
     }
 
-    async getOrderByUserId(user_id, limit = 10, page = 1, search = '') {
+    async getOrderByUserId(user_id, limit = 10, page = 1, search = '', status = '', sort = '') {
         if (!user_id) {
             throw new ErrorController('Unauthorized access', 401)
         }
@@ -214,10 +214,16 @@ class AdminService {
             }
         }
 
+        if (status) {
+            query.status = status
+        }
+
+        const sortOption = sort === 'date_asc' ? { createdAt: 1 } : { createdAt: -1 }
+
         const [orders, total] = await Promise.all([
             Order.find(query)
                 .populate('items.product')
-                .sort({ createdAt: -1 })
+                .sort(sortOption)
                 .skip(skip)
                 .limit(limit),
             Order.countDocuments(query)
