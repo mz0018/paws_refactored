@@ -50,6 +50,12 @@ router.get(
     AdminController.getOrderByUserId
 )
 
+router.get(
+    '/order/:id/view',
+    authorizeViaCookie,
+    AdminController.getOrderById
+)
+
 router.patch(
     '/order/:id/complete',
     authorizeViaCookie,

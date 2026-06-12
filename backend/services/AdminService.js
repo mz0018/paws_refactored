@@ -214,6 +214,16 @@ class AdminService {
         return { orders, total, page, limit, totalPages: Math.ceil(total / limit) }
     }
 
+    async getOrderById(orderId) {
+        const order = await Order.findById(orderId)
+
+        if (!order) {
+            throw new ErrorController('Order not found', 404)
+        }
+
+        return order
+    }
+
     async markAsComplete(req) {
         const orderId = req.params.id
 

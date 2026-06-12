@@ -48,7 +48,8 @@ const TABLE_HEADERS = [
 
 const ListOfOrders = () => {
     const [page, setPage] = useState(1)
-    const { data, isLoading, isFetching, isError, refetch, error } = useGetOrderByUserId(10, page)
+    const { data, isLoading, isFetching, isError, refetch, error } =
+        useGetOrderByUserId(10, page)
 
     const isMobile = useInMobileDevice()
     const orders: Order[] = data?.orders ?? []
@@ -58,7 +59,9 @@ const ListOfOrders = () => {
     const [sortBy, setSortBy] = useState('')
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [isScannerOpen, setIsScannerOpen] = useState(false)
-    const [selectedOrder, setSelectedOrder] = useState<Order | null>(null)
+
+    // Store only the order ID
+    const [selectedOrderId, setSelectedOrderId] = useState<string>('')
 
     const debouncedSearchQuery = useDebounce(searchQuery, 600)
     const totalPages = data?.totalPages ?? 1
@@ -99,7 +102,11 @@ const ListOfOrders = () => {
     }
 
     if (isError) {
-        return <Error label={(error as Error)?.message ?? 'Failed to load orders'} />
+        return (
+            <Error
+                label={(error as Error)?.message ?? 'Failed to load orders'}
+            />
+        )
     }
 
     return (
@@ -142,7 +149,11 @@ const ListOfOrders = () => {
                     {/* Actions */}
                     <div className="sm:col-span-2 lg:col-span-4 xl:col-span-5">
                         <div className="flex items-center justify-end gap-2">
-                            <PaginationUI page={page} totalPages={totalPages} onPageChange={setPage} />
+                            <PaginationUI
+                                page={page}
+                                totalPages={totalPages}
+                                onPageChange={setPage}
+                            />
 
                             <button
                                 title="Refresh List"
@@ -193,21 +204,28 @@ const ListOfOrders = () => {
                             <tbody>
                                 {isFetching && orders.length > 0 ? (
                                     <tr>
-                                        <td colSpan={TABLE_HEADERS.length} className="text-center  py-8">
-                                            <Loader label="Fetching Orders" size="sm" fullScreen={false} />
+                                        <td
+                                            colSpan={TABLE_HEADERS.length}
+                                            className="text-center py-8"
+                                        >
+                                            <Loader
+                                                label="Fetching Orders"
+                                                size="sm"
+                                                fullScreen={false}
+                                            />
                                         </td>
                                     </tr>
                                 ) : (
                                     searchedOrders.map(order => (
-                                    <OrderTable
-                                        key={order._id}
-                                        order={order}
-                                        onViewOrder={o => {
-                                            setSelectedOrder(o)
-                                            setIsModalOpen(true)
-                                        }}
-                                    />
-                                ))
+                                        <OrderTable
+                                            key={order._id}
+                                            order={order}
+                                            onViewOrder={o => {
+                                                setSelectedOrderId(o._id)
+                                                setIsModalOpen(true)
+                                            }}
+                                        />
+                                    ))
                                 )}
                             </tbody>
                         </table>
@@ -217,29 +235,18 @@ const ListOfOrders = () => {
 
             <ViewOrderModal
                 isOpen={isModalOpen}
-                order={selectedOrder}
+                orderId={selectedOrderId}
                 onClose={() => {
                     setIsModalOpen(false)
-                    setSelectedOrder(null)
+                    setSelectedOrderId('')
                 }}
             />
 
-            <ScannerModal 
+            <ScannerModal
                 isOpen={isScannerOpen}
                 onClose={() => setIsScannerOpen(false)}
-                onOrderScanned={(scanned) => {
-                    setSelectedOrder({
-                        _id: scanned.orderId,
-                        createdAt: scanned.orderDate,
-                        items: scanned.items.map(item => ({
-                            product: item.name,
-                            quantity: item.qty,
-                            price: item.price,
-                            subtotal: item.qty * item.price,
-                            createdBy: '',
-                        })),
-                        status: 'Pending',
-                    })
+                onOrderScanned={scanned => {
+                    setSelectedOrderId(scanned.orderId)
                     setIsModalOpen(true)
                 }}
             />

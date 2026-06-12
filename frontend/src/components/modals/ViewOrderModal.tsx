@@ -1,99 +1,83 @@
+import { useState, useEffect } from 'react'
+
+import { Loader } from '../Loader'
 import { Modal } from '../../ui/form/Modal'
 import { Button } from '../../ui/form/Buttons'
-import { MarkCompletedUI } from '../../ui/form/MarkCompletedUI'
-import { useMarkAsComplete } from '../../hooks/useMarkAsComplete'
+import { useGetOrderById } from '../../hooks/useGetOrderById'
+
 
 type ViewOrderModalProps = {
     isOpen: boolean
     onClose: () => void
-    order: {
-        _id: string
-        items: { product: { productName: string } | string; quantity: number; price: number; subtotal: number }[]
-        createdAt: string
-        updatedAt: string
-        status: string
-    } | null
+    orderId: string
 }
 
-export const ViewOrderModal = ({ isOpen, onClose, order }: ViewOrderModalProps) => {
+export const ViewOrderModal = ({
+    isOpen,
+    onClose,
+    orderId,
+}: ViewOrderModalProps) => {
+    const { isLoading, orderData } = useGetOrderById({ id_from_modal: orderId, isOpen })
 
-    const th = ['Product', 'Qty', 'Price', 'Subtotal']
+    const [readyToShow, setReadyToShow] = useState(false)
 
-    const { handleMarkAsComplete, isLoading } = useMarkAsComplete(order?._id as string)
+    useEffect(() => {
+        if (!isLoading) {
+            const timer = setTimeout(() => setReadyToShow(true), 5000)
+            return () => clearTimeout(timer)
+        } else {
+            setReadyToShow(false)
+        }
+    }, [isLoading])
 
-    if (!order) return null
+    if (!orderId) return null
 
     return (
-        <Modal isOpen={isOpen} onClose={onClose} closeOnBackdrop={false}>
+        <Modal
+            isOpen={isOpen}
+            onClose={onClose}
+            closeOnBackdrop={false}
+        >
             <div className="p-3 sm:p-4 text-text-body">
-
-                <h2 className="text-xl font-bold mb-2 text-footer-bg leading-tight">
-                Order <span className="text-btn-black-bg">Details</span>
+                <h2 className="text-xl font-bold mb-4 text-footer-bg leading-tight">
+                    Order <span className="text-btn-black-bg">Details</span>
                 </h2>
 
-                {order.status === 'pending' && (
-                    <div className="overflow-x-auto mb-2">
-                        <table className="w-full border-collapse border border-gray-200">
-                            <thead>
-                                <tr className="bg-gray-100">
-                                    {th.map((header, idx) => (
-                                        <th key={idx} className="p-2 text-left text-sm font-medium text-gray-700">
-                                            {header}
-                                        </th>
-                                    ))}
-                                </tr>
-                            </thead>
-                            <tbody className="divide-y divide-gray-200">
-                                {order.items.map((item, idx) => (
-                                    <tr key={idx}>
-                                        <td className=" p-1.5 sm:p-2 text-xs sm:text-sm">
-                                            {typeof item.product === 'string' ? item.product : item.product.productName}
-                                        </td>
-                                        <td className="p-1.5 sm:p-2 text-xs sm:text-sm flex items-center gap-1">
-                                            <span>{item.quantity}</span>
-                                            <span className="text-gray-500">×</span>
-                                        </td>
+                <>
+                {isLoading || !readyToShow ? (
+                    <Loader label='Loading Order' size='md' fullScreen={false} />
+                ) : (
+                    <div>
+                        <p><strong>ID:</strong> {orderData?._id}</p>
+                        <p><strong>Status:</strong> {orderData?.status}</p>
+                        <p>
+                            <strong>Created:</strong>{' '}
+                            {orderData?.createdAt}
+                        </p>
+                        <p>
+                            <strong>Completed:</strong>{' '}
+                            {orderData?.completedAt ?? 'Not completed'}
+                        </p>
 
-                                        <td className="p-1.5 sm:p-2 text-xs sm:text-sm">
-                                            {item.price.toLocaleString('en-PH', {
-                                                style: 'currency',
-                                                currency: 'PHP'
-                                            })}
-                                        </td>
-                                        <td className="p-1.5 sm:p-2 text-xs sm:text-sm">
-                                            {item.subtotal.toLocaleString('en-PH', {
-                                                style: 'currency',
-                                                currency: 'PHP'
-                                            })}
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
+                        <h3>Items</h3>
+
+                        {orderData?.items.map((item, index) => (
+                            <div key={item.product._id || index}>
+                                <p>Product: {item.product.name}</p>
+                                <p>Price: {item.product.price}</p>
+                                <p>Quantity: {item.quantity}</p>
+                                <p>Subtotal: {item.subtotal}</p>
+                                <hr />
+                            </div>
+                        ))}
                     </div>
                 )}
+                </>
 
-                <div className="text-xs space-y-1 mb-3 capitalize">
-                    {order.status === 'completed' && (
-                        <MarkCompletedUI 
-                            orderId={order._id}
-                            dateOrdered={new Date(order.createdAt)} 
-                            dateCompleted={new Date(order.updatedAt)} 
-                        />
-                    )}
-                </div>
-
-                {order.status == 'pending' && (
-                    <Button 
-                        disabled={isLoading}
-                        onClick={() => handleMarkAsComplete()}
-                        className="bg-btn-black-bg hover:bg-btn-black-hover-header-bg text-white w-full transition-colors mb-2"
-                    >
-                        {isLoading ? 'Loading...' : 'Mark as Complete'}
-                    </Button>
-                )}
-        
-                <Button onClick={onClose} className="text-text-body border border-gray-400 font-semibold bg-none w-full hover:bg-gray-50">
+                <Button
+                    onClick={onClose}
+                    className="text-text-body border border-gray-400 font-semibold bg-none w-full hover:bg-gray-50"
+                >
                     Close
                 </Button>
             </div>

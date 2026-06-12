@@ -54,6 +54,16 @@ class AdminController {
         }
     }
 
+    async getOrderById(req, res, next) {
+        try {
+            const result = await AdminService.getOrderById(req.params.id)
+            res.status(200).json(result)
+        } catch (error) {
+            console.error('Error:', error)
+            next(error)
+        }
+    }
+
     async markAsComplete(req, res, next) {
         try {
             const result = await AdminService.markAsComplete(req)
