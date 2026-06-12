@@ -219,6 +219,7 @@ const ListOfOrders = () => {
                 isOpen={isScannerOpen}
                 onClose={() => setIsScannerOpen(false)}
                 onOrderScanned={scanned => {
+                    alert(`ORDER ID: ${scanned.orderId}`)
                     setSelectedOrderId(scanned.orderId)
                     setIsModalOpen(true)
                 }}
