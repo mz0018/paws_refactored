@@ -42,7 +42,11 @@ export const ScannerModal = ({ isOpen, onClose, onOrderScanned }: ScannerModalPr
 
             try {
               const parsed = JSON.parse(decodedText) as ScannedOrder
-              onOrderScannedRef.current(parsed)
+              if (!parsed || typeof parsed.orderId !== 'string' || !parsed.orderId.trim()) {
+                alert('Invalid QR data: missing orderId')
+              }
+              const scanned = parsed as ScannedOrder
+              onOrderScannedRef.current(scanned)
               onClose()
             } catch {
               console.error('Invalid QR data')
