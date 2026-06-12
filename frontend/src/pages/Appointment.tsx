@@ -6,10 +6,12 @@ import { useAppointment } from '../hooks/useAppointment'
 import { ErrorText } from '../ui/form/ErrorText'
 import { ClipLoader } from 'react-spinners'
 import { Send } from 'lucide-react'
+import DatePicker from 'react-datepicker'
+import 'react-datepicker/dist/react-datepicker.css'
 
 const Appointment = () => {
 
-    const { formData, hasErrors, isLoading, handleChange, handleSubmit } = useAppointment()
+    const { formData, hasErrors, isLoading, handleChange, handleDateChange, handleSubmit } = useAppointment()
 
     return (
         <div className="min-h-dvh flex flex-col">
@@ -47,15 +49,6 @@ const Appointment = () => {
                         error={hasErrors.name}
                     />
 
-                    <Input
-                        type="datetime-local"
-                        name="selectedDate"
-                        label="Please select a specified date"
-                        value={formData.selectedDate}
-                        onChange={handleChange}
-                        error={hasErrors.selectedDate}
-                    />
-
                     <Select
                         name="purpose"
                         label="Purpose"
@@ -68,6 +61,15 @@ const Appointment = () => {
                         <option value="follow-up">Follow-up</option>
                         <option value="checkup">Checkup</option>
                     </Select>
+
+                    <DatePicker
+                        selected={formData.selectedDate ? new Date(formData.selectedDate) : null}
+                        onChange={(date: Date | null) => handleDateChange(date)}
+                        showTimeSelect
+                        dateFormat="MMMM d, yyyy h:mm aa"
+                        placeholderText="Select a date and time"
+                        customInput={<Input label="Please select a specified date" error={hasErrors.selectedDate} />}
+                    />
 
                     <ErrorText message={hasErrors.name || hasErrors.selectedDate || hasErrors.purpose} />
 

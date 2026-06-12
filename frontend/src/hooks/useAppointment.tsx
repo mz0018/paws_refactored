@@ -43,6 +43,18 @@ export const useAppointment = () => {
         }))
     }
 
+    const handleDateChange = (date: Date | null) => {
+        setFormData((prev) => ({
+            ...prev,
+            selectedDate: date ? date.toISOString() : ''
+        }))
+
+        setHasErrors((prev) => ({
+            ...prev,
+            selectedDate: ''
+        }))
+    }
+
     const resetForm = () => {
         setFormData({ name: '', purpose: '', selectedDate: '' })
         setHasErrors({})
@@ -74,5 +86,5 @@ export const useAppointment = () => {
         }
     }
 
-    return { formData, hasErrors, isLoading, handleChange, handleSubmit }
+    return { formData, hasErrors, isLoading, handleChange, handleDateChange, handleSubmit }
 }
