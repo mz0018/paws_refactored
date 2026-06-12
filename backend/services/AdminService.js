@@ -222,14 +222,22 @@ class AdminService {
 
         const [orders, total] = await Promise.all([
             Order.find(query)
-                .populate('items.product')
+                .select('_id createdAt status items.subtotal')
                 .sort(sortOption)
                 .skip(skip)
-                .limit(limit),
+                .limit(limit)
+                .lean(),
             Order.countDocuments(query)
         ])
 
-        return { orders, total, page, limit, totalPages: Math.ceil(total / limit) }
+        const onlyNeededData = orders.map(o => ({
+            _id: o._id,
+            createdAt: o.createdAt,
+            status: o.status,
+            totalAmount: o.items.reduce((sum, item) => sum + item.subtotal, 0)
+        }))
+
+        return { orders: onlyNeededData, total, page, limit, totalPages: Math.ceil(total / limit) }
     }
 
     async getOrderById(orderId) {

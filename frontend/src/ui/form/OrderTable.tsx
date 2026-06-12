@@ -1,19 +1,10 @@
 import { Button } from '../form/Buttons'
 import { SquareArrowOutUpRight } from 'lucide-react'
-
-interface OrderItem {
-    product: { productName: string } | string
-    quantity: number
-    price: number
-    subtotal: number
-    createdBy: string
-}
-
 interface Order {
     _id: string
-    items: OrderItem[]
     createdAt: string
     status: string
+    totalAmount: number
 }
 
 type OrderTableProps = {
@@ -22,8 +13,7 @@ type OrderTableProps = {
 }
 
 export const OrderTable = ({ order, onViewOrder }: OrderTableProps) => {
-    const totalQty = order.items.reduce((sum, item) => sum + item.quantity, 0)
-    const totalAmount = order.items.reduce((sum, item) => sum + item.subtotal, 0)
+    const totalAmount = order.totalAmount
 
     return (
         <tr className="border-b border-gray-200 hover:bg-gray-50 transition">
@@ -44,9 +34,6 @@ export const OrderTable = ({ order, onViewOrder }: OrderTableProps) => {
                 day: 'numeric',
                 })}
             </span>
-            </td>
-            <td className="hidden sm:table-cell px-3 py-2 text-sm text-gray-500 md:px-4 md:py-3">
-                {totalQty} pcs.
             </td>
             <td className="hidden sm:table-cell px-2 py-2 text-xs sm:px-3 sm:py-2 sm:text-sm md:px-4 md:py-3 text-btn-black-bg font-semibold">
                 {totalAmount.toLocaleString('en-PH', {

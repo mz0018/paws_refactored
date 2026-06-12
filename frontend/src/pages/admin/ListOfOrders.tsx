@@ -22,25 +22,16 @@ import { PaginationUI } from '../../ui/form/PaginationUI'
 import { ORDER_CATEGORIES } from '../../mocks/orderCategories'
 import { ORDER_SORT_OPTIONS } from '../../mocks/orderSortOptions'
 
-interface OrderItem {
-    product: { productName: string } | string
-    quantity: number
-    price: number
-    subtotal: number
-    createdBy: string
-}
-
 interface Order {
     _id: string
-    items: OrderItem[]
     createdAt: string
     status: string
+    totalAmount: number
 }
 
 const TABLE_HEADERS = [
     'Order ID',
     'Date',
-    'Quantity',
     'Total',
     'Status',
     'Actions'
@@ -57,7 +48,6 @@ const ListOfOrders = () => {
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [isScannerOpen, setIsScannerOpen] = useState(false)
 
-    // Store only the order ID
     const [selectedOrderId, setSelectedOrderId] = useState<string>('')
 
     const debouncedSearchQuery = useDebounce(searchQuery, 600)
@@ -162,7 +152,6 @@ const ListOfOrders = () => {
                                         <th
                                             key={idx}
                                             className={`text-left px-2 py-2 text-xs sm:px-3 sm:py-2 sm:text-sm md:px-4 md:py-3 font-medium text-text-body capitalize ${
-                                                header === 'Quantity' ||
                                                 header === 'Total'
                                                     ? 'hidden sm:table-cell'
                                                     : ''
