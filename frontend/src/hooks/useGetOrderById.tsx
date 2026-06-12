@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useQuery } from '@tanstack/react-query'
 
 type OrderItems = {
     product: {
@@ -22,49 +22,29 @@ type OrderData = {
 
 type IdFromModalProps = {
     id_from_modal: string
-    isOpen: boolean
 }
 
-export const useGetOrderById = ({ id_from_modal, isOpen }:IdFromModalProps ) => {
+const fetchOrderById = async (id: string): Promise<OrderData> => {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/order/${id}/view`, {
+        method: 'GET',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'include'
+    })
 
-    const [orderData, setOrderData] = useState<OrderData | null>(null)
-    const [isLoading, setIsLoading] = useState<boolean>(false)
-
-    const handleFetch = async () => {
-        if (!id_from_modal) {
-            setOrderData(null)
-            setIsLoading(false)
-        }
-        setIsLoading(true)
-        try {
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/order/${id_from_modal}/view`, {
-                method: 'GET',
-                headers: { 'Content-Type': 'application/json' },
-                credentials: 'include'
-            })
-            
-            if (!response.ok) {
-                throw new Error('Failed to fetch this order')
-            }
-
-            const data = await response.json()
-
-            setOrderData(data)
-
-        } catch (error) {
-            console.error('Something went wrong', error)
-        } finally {
-            setIsLoading(false)
-        }
+    if (!response.ok) {
+        throw new Error('Failed to fetch this order')
     }
 
-    useEffect(() => {
-        if (isOpen && id_from_modal) {
-            handleFetch()
-        } else {
-            setOrderData(null)
-        }
-    }, [id_from_modal, isOpen])
-    
-    return { isLoading, orderData }
+    return response.json()
+}
+
+export const useGetOrderById = ({ id_from_modal }: IdFromModalProps) => {
+    const { data: orderData, isLoading } = useQuery({
+        queryKey: ['order', id_from_modal],
+        queryFn: () => fetchOrderById(id_from_modal),
+        enabled: !!id_from_modal,
+        staleTime: Infinity,
+    })
+
+    return { isLoading, orderData: orderData ?? null }
 }

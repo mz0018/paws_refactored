@@ -17,7 +17,7 @@ export const ViewOrderModal = ({
     onClose,
     orderId,
 }: ViewOrderModalProps) => {
-    const { isLoading, orderData } = useGetOrderById({ id_from_modal: orderId, isOpen })
+    const { isLoading, orderData } = useGetOrderById({ id_from_modal: orderId })
     const { handleMarkAsComplete, isMarkLoading } = useMarkAsComplete(orderId)
 
     if (!orderId) return null

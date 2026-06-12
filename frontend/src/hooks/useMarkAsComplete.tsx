@@ -1,8 +1,11 @@
 import { useState } from 'react'
+import { useQueryClient } from '@tanstack/react-query'
 import { toast } from 'sonner'
 import { CircleCheckBig } from 'lucide-react'
 
 export const useMarkAsComplete = (orderId: string) => {
+
+    const queryClient = useQueryClient()
 
     const [isMarkLoading, setIsMarkLoading] = useState<boolean>(false)
     const [hasError, setHasError] = useState<{
@@ -48,6 +51,7 @@ export const useMarkAsComplete = (orderId: string) => {
                 setHasError({})
                 const data = await res.json()
                 console.table(data)
+                queryClient.invalidateQueries({ queryKey: ['order', orderId] })
             } else {
                 alert('Error on backend')
             }
