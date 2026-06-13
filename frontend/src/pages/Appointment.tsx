@@ -15,7 +15,7 @@ const Appointment = () => {
     const { formData, hasErrors, isLoading, handleChange, handleDateChange, handleSubmit } = useAppointment()
 
     return (
-        <div className="min-h-dvh flex flex-col">
+        <div className="flex flex-col">
 
             <div className="hidden md:flex relative min-h-[300px] w-full items-center justify-center bg-[url('/img/appointment_bg.webp')] bg-cover bg-center bg-no-repeat rounded-b-md">
 
@@ -34,11 +34,8 @@ const Appointment = () => {
             </div>
 
             <div className="flex flex-1 items-center justify-center px-4 py-8 sm:px-6 lg:px-8">
-                <Form
-                    onSubmit={handleSubmit}
-                    className="w-full max-w-lg rounded-xl p-6 sm:p-8"
-                >
-                    <DatePicker
+
+                <DatePicker
                         selected={formData.selectedDate ? new Date(formData.selectedDate) : null}
                         onChange={(date: Date | null) => handleDateChange(date)}
                         showTimeSelect
@@ -47,6 +44,11 @@ const Appointment = () => {
                         customInput={<Input label="Please select a specified date" error={hasErrors.selectedDate} />}
                         inline
                     />
+
+                <Form
+                    onSubmit={handleSubmit}
+                    className="w-full max-w-lg rounded-xl p-6 sm:p-8"
+                >
 
                     <Input
                         type="text"
