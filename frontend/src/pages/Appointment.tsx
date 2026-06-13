@@ -33,23 +33,28 @@ const Appointment = () => {
 
             </div>
 
-            <div className="flex flex-1 items-center justify-center px-4 py-8 sm:px-6 lg:px-8">
-
-                <DatePicker
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start px-4 py-8 sm:px-6 lg:px-8">
+                <div className="flex justify-center">
+                    <DatePicker
                         selected={formData.selectedDate ? new Date(formData.selectedDate) : null}
                         onChange={(date: Date | null) => handleDateChange(date)}
                         showTimeSelect
                         dateFormat="MMMM d, yyyy h:mm aa"
                         placeholderText="Select a date and time"
-                        customInput={<Input label="Please select a specified date" error={hasErrors.selectedDate} />}
+                        customInput={
+                            <Input
+                                label="Please select a specified date"
+                                error={hasErrors.selectedDate}
+                            />
+                        }
                         inline
                     />
+                </div>
 
                 <Form
                     onSubmit={handleSubmit}
                     className="w-full max-w-lg rounded-xl p-6 sm:p-8"
                 >
-
                     <Input
                         type="text"
                         name="name"
@@ -73,7 +78,13 @@ const Appointment = () => {
                         <option value="checkup">Checkup</option>
                     </Select>
 
-                    <ErrorText message={hasErrors.name || hasErrors.selectedDate || hasErrors.purpose} />
+                    <ErrorText
+                        message={
+                            hasErrors.name ||
+                            hasErrors.selectedDate ||
+                            hasErrors.purpose
+                        }
+                    />
 
                     <Button
                         type="submit"

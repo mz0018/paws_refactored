@@ -14,3 +14,10 @@
 .react-datepicker__time-list::-webkit-scrollbar {
   width: 8px;
 }
+
+@media (max-width: 640px) {
+    .react-datepicker {
+      transform: scale(clamp(0.8, 2vw, 1));
+      transform-origin: top center;
+  }
+}
