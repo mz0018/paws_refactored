@@ -33,7 +33,7 @@ const Appointment = () => {
 
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start px-4 py-8 sm:px-6 lg:px-8">
+            <div className="grid grid-cols-1 gap-8 items-start px-4 py-8 sm:px-6 lg:px-8">
                 <div className="flex justify-center">
                     <DatePicker
                         selected={formData.selectedDate ? new Date(formData.selectedDate) : null}
@@ -53,7 +53,7 @@ const Appointment = () => {
 
                 <Form
                     onSubmit={handleSubmit}
-                    className="w-full max-w-lg rounded-xl p-6 sm:p-8"
+                    className="w-full max-w-lg mx-auto rounded-xl p-6 sm:p-8"
                 >
                     <Input
                         type="text"
