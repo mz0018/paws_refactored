@@ -75,9 +75,17 @@ export const useAppointment = () => {
         }
 
         try {
-            console.log(formData)
-            console.log('Sent 200')
-            resetForm()
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/appointment/save`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData)
+            })
+        
+            if (res.ok) {
+                const data = await res.json()
+                console.log(data)
+                resetForm()
+            }
         } catch (err) {
             setHasErrors({ general: 'Something went wrong' })
             console.error(err)

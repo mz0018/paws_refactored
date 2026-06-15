@@ -3,6 +3,8 @@ import ClientController from '../controllers/ClientController.js'
 import { cacheHeaders } from '../middleware/cacheHeaders.js'
 import { productFetchLimiter } from '../middleware/productFetchLimiter.js'
 import { placeOrderRateLimiter } from '../middleware/placeOrderLimiter.js'
+import { appointmentRateLimiter } from '../middleware/appointmentLimiter.js'
+
 const router = express.Router()
 const getProductUpdateAt = (data) => data.updatedAt
 router.get(
@@ -15,6 +17,12 @@ router.post(
     '/save-order',
     placeOrderRateLimiter,
     ClientController.saveClientOrder
+)
+
+router.post(
+    '/appointment/save',
+    appointmentRateLimiter,
+    ClientController.saveAppointment,
 )
 
 export default router

@@ -19,6 +19,15 @@ class ClientController {
             next(error)
         }
     }
+
+    async saveAppointment(req, res, next) {
+        try {
+            const result = await ClientService.saveAppointment(req.body)
+            res.status(200).json(result)
+        } catch (error) {
+            next(error)
+        }
+    }
     
 }
 

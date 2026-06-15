@@ -100,5 +100,8 @@ class ClientService {
         }
     }    
 
+    async saveAppointment(appointment) {
+        console.log('from services: ', appointment)
+    }
 }
 export default new ClientService()
