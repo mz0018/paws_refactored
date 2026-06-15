@@ -1,6 +1,7 @@
 import mongoose from 'mongoose'
 import Order from '../models/order.model.js'
 import Product from '../models/product.model.js'
+import Appointment from '../models/appointment.model.js'
 import ErrorController from '../controllers/ErrorController.js'
 import { getSortOptions, getSortDetails } from '../utils/sortOptions.js'
 class ClientService {
@@ -100,8 +101,47 @@ class ClientService {
         }
     }    
 
-    async saveAppointment(appointment) {
-        console.log('from services: ', appointment)
+    async saveAppointment(data) {
+
+        if (!data.name) {
+            throw new ErrorController('Client name is required', 400);
+        }
+
+        if (!data.purpose) {
+            throw new ErrorController('Client purpose is required', 400);
+        }
+
+        if (!data.selectedDate) {
+            throw new ErrorController('Selected date and time is required', 400);
+        }
+
+        const dateObj = new Date(data.selectedDate);
+
+        if (isNaN(dateObj.getTime())) {
+            throw new ErrorController('Invalid appointment date', 400);
+        }
+
+        const appointmentData = {
+            name: data.name,
+            purpose: data.purpose,
+            selectedDate: dateObj,
+            selectedTime: dateObj.toISOString().split('T')[1].slice(0, 5)
+        };
+
+        const existingAppointment = await Appointment.findOne({
+            selectedDate: dateObj,
+            selectedTime: appointmentData.selectedTime
+        })
+
+        if (existingAppointment) {
+            throw new ErrorController('this time slot is already booked for the selected date', 409)
+        }
+
+        const newAppointment = new Appointment(appointmentData);
+
+        await newAppointment.save();
+
+        return true;
     }
 }
 export default new ClientService()
