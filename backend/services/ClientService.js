@@ -143,5 +143,24 @@ class ClientService {
 
         return true;
     }
+
+    async getBookedSlots(limitDays = 90) {
+        const start = new Date()
+        start.setHours(0, 0, 0, 0)
+
+        const end = new Date(start)
+        end.setDate(end.getDate() + limitDays)
+
+        const appointments = await Appointment.find(
+            { selectedDate: {$gte: start, $lte: end } },
+            'selectedDate selectedTime',
+            { lean: true }
+        )
+
+        return appointments.map(a => ({
+            date: a.selectedDate.toISOString().split('T')[0],
+            time: a.selectedTime
+        }))
+    }
 }
 export default new ClientService()

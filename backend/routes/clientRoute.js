@@ -25,4 +25,10 @@ router.post(
     ClientController.saveAppointment,
 )
 
+router.get(
+    '/appointment/booked-slots',
+    appointmentRateLimiter,
+    ClientController.getBookedSlots
+)
+
 export default router

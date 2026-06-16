@@ -12,7 +12,7 @@ import '../AppointmentDatePicker.css'
 
 const Appointment = () => {
 
-    const { formData, hasErrors, isLoading, handleChange, handleDateChange, handleSubmit } = useAppointment()
+    const { formData, hasErrors, isLoading, filterTime, isRateLimited, handleChange, handleDateChange, handleSubmit } = useAppointment()
 
     return (
         <div className="flex flex-col">
@@ -39,6 +39,7 @@ const Appointment = () => {
                         selected={formData.selectedDate ? new Date(formData.selectedDate) : null}
                         onChange={(date: Date | null) => handleDateChange(date)}
                         showTimeSelect
+                        filterTime={filterTime}
                         dateFormat="MMMM d, yyyy h:mm aa"
                         placeholderText="Select a date and time"
                         customInput={
@@ -89,7 +90,7 @@ const Appointment = () => {
                     <Button
                         type="submit"
                         className="font-semibold tracking-wide mt-2 flex w-full items-center justify-center gap-2 bg-btn-black-bg hover:bg-btn-black-hover-header-bg py-3 text-white transition"
-                        disabled={isLoading}
+                        disabled={isLoading || isRateLimited}
                     >
                         {isLoading ? (
                             <ClipLoader size={18} color="white" />

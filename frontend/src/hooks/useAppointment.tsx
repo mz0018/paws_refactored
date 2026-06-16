@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 import { AppointmentValidator } from '../utils/AppointmentValidator'
+import { useQuery } from '@tanstack/react-query'
 
 type AppointmentFormData = {
     name: string
@@ -14,10 +15,25 @@ type AppointmentErrors = {
     general?: string
 }
 
+type BookedSlot = { 
+    date: string; 
+    time: string;
+}
+
+const fetchBookedSlots = async (): Promise<BookedSlot[]> => {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/appointment/booked-slots`)
+
+    if (!res.ok) {
+        return []
+    }
+
+    return res.json()
+}
+
 export const useAppointment = () => {
 
-    const [isLoading, setIsLoading] = useState(false)
-
+    const [isLoading, setIsLoading] = useState<boolean>(false)
+    const [isRateLimited, setIsRateLimited] = useState<boolean>(false)
     const [hasErrors, setHasErrors] =
         useState<AppointmentErrors>({})
 
@@ -27,6 +43,31 @@ export const useAppointment = () => {
             purpose: '',
             selectedDate: ''
         })
+
+    const { data: bookedSlots = [] } = useQuery({
+        queryKey: ['booked-slots'],
+        queryFn: fetchBookedSlots,
+        staleTime: 5 * 60 * 1000,
+        refetchOnWindowFocus: true,
+    })
+
+    const bookedTimesSet = useMemo(() => {
+        const set = new Set<string>()
+        for (const slot of bookedSlots) {
+            set.add(`${slot.date} ${slot.time}`)
+        }
+        return set
+    }, [bookedSlots])
+
+    const filterTime = useCallback((time: Date) => {
+        const y = time.getFullYear()
+        const m = String(time.getMonth() + 1).padStart(2, '0')
+        const d = String(time.getDate()).padStart(2, '0')
+        const hh = String(time.getHours()).padStart(2, '0')
+        const mm = String(time.getMinutes()).padStart(2, '0')
+        const key = `${y}-${m}-${d} ${hh}:${mm}`
+        return !bookedTimesSet.has(key)
+    }, [bookedTimesSet])
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
 
@@ -82,9 +123,14 @@ export const useAppointment = () => {
             })
         
             if (res.ok) {
-                const data = await res.json()
-                console.log(data)
                 resetForm()
+            } else {
+                if (res.status === 429) {
+                    setIsRateLimited(true)
+                    setHasErrors({
+                        general: 'You’ve reached your limit of 1 appointment attempts for today. Please try again tomorrow.'
+                    })
+                }
             }
         } catch (err) {
             setHasErrors({ general: 'Something went wrong' })
@@ -94,5 +140,5 @@ export const useAppointment = () => {
         }
     }
 
-    return { formData, hasErrors, isLoading, handleChange, handleDateChange, handleSubmit }
+    return { formData, hasErrors, isLoading, filterTime, isRateLimited, handleChange, handleDateChange, handleSubmit }
 }

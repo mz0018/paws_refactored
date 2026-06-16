@@ -89,6 +89,17 @@
     border-bottom-color: #FFFFFF !important;
 }
 
+.react-datepicker__time-list-item--disabled {
+    color: #cbd5e1 !important;
+    cursor: not-allowed !important;
+    text-decoration: line-through;
+    opacity: 0.5;
+}
+
+.react-datepicker__time-list-item--disabled:hover {
+    background: transparent !important;
+}
+
 /* Mobile responsiveness preserved */
 @media (max-width: 640px) {
     .react-datepicker {
@@ -141,4 +152,5 @@
         height: 30px !important;
         line-height: 30px !important;
     }
+
 }

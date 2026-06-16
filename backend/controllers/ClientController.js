@@ -28,6 +28,15 @@ class ClientController {
             next(error)
         }
     }
+
+    async getBookedSlots(req, res, next) {
+        try {
+            const slots = await ClientService.getBookedSlots()
+            res.status(200).json(slots)
+        } catch (error) {
+            next(error)
+        }
+    }
     
 }
 
