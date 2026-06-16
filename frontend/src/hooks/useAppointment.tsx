@@ -1,6 +1,9 @@
+import { AlarmClockCheck } from 'lucide-react'
+import { useQuery } from '@tanstack/react-query'
 import { useCallback, useMemo, useState } from 'react'
 import { AppointmentValidator } from '../utils/AppointmentValidator'
-import { useQuery } from '@tanstack/react-query'
+
+import { toast } from 'sonner'
 
 type AppointmentFormData = {
     name: string
@@ -123,6 +126,24 @@ export const useAppointment = () => {
             })
         
             if (res.ok) {
+                toast.custom(() => (
+                    <div className="flex items-center gap-4 bg-white shadow-lg rounded-lg p-4 border-l-4 border-btn-black-bg min-w-[300px]">
+                        <AlarmClockCheck
+                            size={24}
+                            className="text-btn-black-bg"
+                        />
+
+                        <div>
+                            <p className="font-semibold text-text-body">
+                                Appointment Scheduled
+                            </p>
+
+                            <p className="text-sm text-gray-500">
+                                Your appointment has been successfully booked.
+                            </p>
+                        </div>
+                    </div>
+                ))
                 resetForm()
             } else {
                 if (res.status === 429) {
