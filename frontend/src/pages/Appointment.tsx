@@ -83,7 +83,8 @@ const Appointment = () => {
                         message={
                             hasErrors.name ||
                             hasErrors.selectedDate ||
-                            hasErrors.purpose
+                            hasErrors.purpose ||
+                            hasErrors.general
                         }
                     />
 

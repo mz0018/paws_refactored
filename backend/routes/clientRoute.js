@@ -27,7 +27,6 @@ router.post(
 
 router.get(
     '/appointment/booked-slots',
-    appointmentRateLimiter,
     ClientController.getBookedSlots
 )
 
