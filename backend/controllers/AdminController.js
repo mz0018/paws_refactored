@@ -81,7 +81,7 @@ class AdminController {
 
     async getAppointments(req, res, next) {
         try {
-            const result = await AdminService.getAppointments()
+            const result = await AdminService.getAppointments(req.query.date)
             res.status(200).json(result)
         } catch (error) {
             console.error('Error:', error)

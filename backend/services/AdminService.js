@@ -274,8 +274,17 @@ class AdminService {
         return order._id
     }
 
-    async getAppointments() {
-        const appointments = await Appointment.find().sort({ selectedDate: -1, createdAt: -1 }).lean()
+    async getAppointments(date) {
+        const start = new Date(date || Date.now())
+        start.setHours(0, 0, 0, 0)
+
+        const end = new Date(start)
+        end.setDate(end.getDate() + 1)
+
+        const appointments = await Appointment.find({
+            selectedDate: { $gte: start, $lt: end }
+        }).sort({ selectedTime: 1 }).lean()
+
         return {
             appointments
         }
