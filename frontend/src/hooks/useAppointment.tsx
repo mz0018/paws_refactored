@@ -9,6 +9,7 @@ type AppointmentFormData = {
     name: string
     purpose: string
     selectedDate: string
+    selectedTime: string
 }
 
 type AppointmentErrors = {
@@ -44,7 +45,8 @@ export const useAppointment = () => {
         useState<AppointmentFormData>({
             name: '',
             purpose: '',
-            selectedDate: ''
+            selectedDate: '',
+            selectedTime: ''
         })
 
     const { data: bookedSlots = [] } = useQuery({
@@ -88,19 +90,30 @@ export const useAppointment = () => {
     }
 
     const handleDateChange = (date: Date | null) => {
-        setFormData((prev) => ({
-            ...prev,
-            selectedDate: date ? date.toISOString() : ''
-        }))
+        if (date) {
+             const y = date.getFullYear()
+             const mo = String(date.getMonth() + 1).padStart(2, '0')
+             const d = String(date.getDate()).padStart(2, '0')
+             const h = String(date.getHours()).padStart(2, '0')
+             const mi = String(date.getMinutes()).padStart(2, '0')
 
-        setHasErrors((prev) => ({
-            ...prev,
-            selectedDate: ''
-        }))
+             setFormData(prev => ({
+                ...prev,
+                selectedDate: `${y}-${mo}-${d}`,
+                selectedTime: `${h}:${mi}`
+             }))
+        } else {
+            setFormData(prev => ({
+                ...prev,
+                selectedDate: '',
+                selectedTime: ''
+            }))
+        }
+        setHasErrors(prev => ({ ...prev, selectedDate: '' }))
     }
 
     const resetForm = () => {
-        setFormData({ name: '', purpose: '', selectedDate: '' })
+        setFormData({ name: '', purpose: '', selectedDate: '', selectedTime: '' })
         setHasErrors({})
     }
 

@@ -2,6 +2,7 @@ type AppointmentFormData = {
     name: string
     purpose: string
     selectedDate: string
+    selectedTime: string
 }
 
 export const AppointmentValidator = (formData: AppointmentFormData) => {
@@ -17,11 +18,15 @@ export const AppointmentValidator = (formData: AppointmentFormData) => {
     if (!formData.selectedDate.trim()) {
         errors.selectedDate = 'Date is required'
     } else {
-        const selectedDate = new Date(formData.selectedDate)
-        const currentDate = new Date()
+        const today = new Date()
+        const todayStr = [
+            today.getFullYear(),
+            String(today.getMonth() + 1).padStart(2, '0'),
+            String(today.getDate()).padStart(2, '0')
+        ].join('-')
 
-        if (selectedDate < currentDate) {
-            errors.selectedDate = 'Please select a future date and time'
+        if (formData.selectedDate < todayStr) {
+            errors.selectedDate = 'Please select a future date'
         }
     }
 

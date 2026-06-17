@@ -36,7 +36,13 @@ const Appointment = () => {
             <div className="grid grid-cols-1 gap-8 items-start px-4 py-8 sm:px-6 lg:px-8">
                 <div className="flex justify-center">
                     <DatePicker
-                        selected={formData.selectedDate ? new Date(formData.selectedDate) : null}
+                        selected={
+                            formData.selectedDate && formData.selectedTime
+                                ? new Date(`${formData.selectedDate}T${formData.selectedTime}`)
+                                : formData.selectedDate
+                                    ? new Date(formData.selectedDate)
+                                    : null
+                        }
                         onChange={(date: Date | null) => handleDateChange(date)}
                         showTimeSelect
                         filterTime={filterTime}

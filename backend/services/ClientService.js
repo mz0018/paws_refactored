@@ -121,11 +121,15 @@ class ClientService {
             throw new ErrorController('Invalid appointment date', 400);
         }
 
+        if (!data.selectedTime) {
+            throw new ErrorController('Selected time is required', 400);
+        }
+
         const appointmentData = {
             name: data.name,
             purpose: data.purpose,
             selectedDate: dateObj,
-            selectedTime: dateObj.toISOString().split('T')[1].slice(0, 5)
+            selectedTime: data.selectedTime
         };
 
         const existingAppointment = await Appointment.findOne({
