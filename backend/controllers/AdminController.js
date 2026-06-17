@@ -79,6 +79,16 @@ class AdminController {
         }
     }
 
+    async getAppointments(req, res, next) {
+        try {
+            const result = await AdminService.getAppointments()
+            res.status(200).json(result)
+        } catch (error) {
+            console.error('Error:', error)
+            next(error)
+        }
+    }
+
 }
 
 export default new AdminController()

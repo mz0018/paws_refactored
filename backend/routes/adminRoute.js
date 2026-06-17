@@ -62,4 +62,9 @@ router.patch(
     AdminController.markAsComplete
 )
 
+router.get(
+    '/appointments',
+    authorizeViaCookie,
+    AdminController.getAppointments
+)
 export default router

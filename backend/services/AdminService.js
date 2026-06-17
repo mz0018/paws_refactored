@@ -1,6 +1,7 @@
 import mongoose from 'mongoose'
 import Order from '../models/order.model.js'
 import Product from '../models/product.model.js'
+import Appointment from '../models/appointment.model.js'
 
 import R2Service from '../services/R2Service.js'
 import ErrorController from '../controllers/ErrorController.js'
@@ -10,7 +11,6 @@ import { getSortOptions, getSortDetails } from '../utils/sortOptions.js'
 
 class AdminService {
 
-    //authorizeViaCookie handles the user_id checker!
 
     async addProduct(product_data, user_id, product_images) {
 
@@ -272,6 +272,13 @@ class AdminService {
         await order.save()
 
         return order._id
+    }
+
+    async getAppointments() {
+        const appointments = await Appointment.find().sort({ selectedDate: -1, createdAt: -1 }).lean()
+        return {
+            appointments
+        }
     }
 
 }
