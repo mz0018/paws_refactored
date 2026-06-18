@@ -274,12 +274,16 @@ class AdminService {
         return order._id
     }
 
-    async getAppointments(date) {
-        const start = new Date(date || Date.now())
+    async getAppointments(month, year) {
+        const now = new Date()
+        const m = month !== undefined ? parseInt(month) - 1 : now.getMonth()
+        const y = year !== undefined ? parseInt(year) : now.getFullYear()
+
+        const start = new Date(y, m, 1)
         start.setHours(0, 0, 0, 0)
 
-        const end = new Date(start)
-        end.setDate(end.getDate() + 1)
+        const end = new Date(y, m + 1, 1)
+        end.setHours(0, 0, 0, 0)
 
         const appointments = await Appointment.find({
             selectedDate: { $gte: start, $lt: end }

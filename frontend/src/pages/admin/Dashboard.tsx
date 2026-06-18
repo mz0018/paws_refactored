@@ -1,3 +1,5 @@
+import { useState } from 'react'
+import { Select } from '../../ui/form/Select'
 import { RefreshCcw } from 'lucide-react'
 import { useGetAppointments } from '../../hooks/useGetAppointments'
 import { Loader } from '../../components/Loader'
@@ -9,7 +11,11 @@ const TABLE_HEADERS = ['Name', 'Purpose', 'Date', 'Time', 'Actions']
 
 const Dashboard = () => {
 
-    const { data: appointments = [], isLoading, isError, error, refetch } = useGetAppointments()
+    const now = new Date()
+    const [selectedMonth, setSelectedMonth] = useState(now.getMonth() + 1)
+    const [selectedYear, setSelectedYear] = useState(now.getFullYear())
+
+    const { data: appointments = [], isLoading, isError, error, refetch } = useGetAppointments(selectedMonth, selectedYear)
 
     if (isLoading) return <Loader label="Loading appointments..." />
 
@@ -24,9 +30,30 @@ const Dashboard = () => {
                     Appointment{' '}
                     <span className="text-btn-black-bg">List</span>
                 </h1>
-                <p className="mb-4 text-text-body tracking-wider">
-                    Showing today's active appointments.
-                </p>
+
+                <Select
+                    value={selectedMonth}
+                    onChange={e => setSelectedMonth(Number(e.target.value))}
+                    label="Month"
+                >
+                    {Array.from({ length: 12 }, (_, i) => (
+                        <option key={i + 2} value={i + 1}>
+                            {new Date(0, i).toLocaleDateString('default', { month: 'long' })}
+                        </option>
+                    ))}
+                </Select>
+
+                <Select
+                    value={selectedYear}
+                    onChange={e => setSelectedYear(Number(e.target.value))}
+                    label="Year"
+                >
+                    {Array.from({ length: 7 }, (_, i) => now.getFullYear() - 3 + i).map(y => (
+                        <option key={y} value={y}>
+                            {y}
+                        </option>
+                    ))}
+                </Select>
 
                 <div className="flex items-center justify-end mb-4">
                     <button
@@ -41,7 +68,7 @@ const Dashboard = () => {
                 {appointments.length === 0 ? (
                     <NotFound
                         label="No appointments found"
-                        childLabel="No appointments have been made yet."
+                        childLabel={`There are no appointments scheduled for ${new Date(0, selectedMonth - 1).toLocaleDateString('default', { month: 'long' })} ${selectedYear}`}
                     />
                 ) : (
                     <div className="overflow-x-auto">

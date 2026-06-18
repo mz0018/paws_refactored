@@ -8,8 +8,23 @@ type AppointmentProps = {
     selectedTime: string
 }
 
-const fetchAppointments = async (): Promise<AppointmentProps[]> => {
-    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/appointments/`, {
+type GetAppointmentParams = {
+    month?: number
+    year?: number
+}
+
+const fetchAppointments = async ({ month, year }: GetAppointmentParams): Promise<AppointmentProps[]> => {
+
+    const params = new URLSearchParams()
+    if (month) {
+        params.set('month', String(month))
+    }
+
+    if (year) {
+        params.set('year', String(year))
+    }
+
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/appointments/?${params}`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include'
@@ -23,10 +38,10 @@ const fetchAppointments = async (): Promise<AppointmentProps[]> => {
     return data.appointments
 }
 
-export const useGetAppointments = () => {
+export const useGetAppointments = (month?: number, year?: number) => {
     return useQuery({
-        queryKey: ['appointments'],
-        queryFn: fetchAppointments,
+        queryKey: ['appointments', month, year],
+        queryFn: () => fetchAppointments({ month, year }),
         staleTime: 5 * 60 * 1000,
     })
 }
