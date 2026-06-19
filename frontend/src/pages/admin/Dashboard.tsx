@@ -17,7 +17,7 @@ const Dashboard = () => {
     const [selectedYear, setSelectedYear] = useState(now.getFullYear())
     const [page, setPage] = useState(1)
 
-    const { data, isLoading, isError, error, refetch } = useGetAppointments(selectedMonth, selectedYear, page, 10)
+    const { data, isLoading, isFetching, isError, error, refetch } = useGetAppointments(selectedMonth, selectedYear, page, 10)
     const appointments = data?.appointments ?? []
     const totalPages = data?.totalPages ?? 1
 
@@ -116,42 +116,57 @@ const Dashboard = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {appointments.map(appoint => (
-                                    <tr key={appoint._id} className="border-b border-gray-200 hover:bg-gray-50 transition">
-                                        <td className="px-2 py-2 text-xs sm:px-3 sm:py-2 sm:text-sm md:px-4 md:py-3 text-gray-500 capitalize">
-                                            {appoint.name}
-                                        </td>
-                                        <td className="px-2 py-2 text-xs sm:px-3 sm:py-2 sm:text-sm md:px-4 md:py-3 text-gray-500">
-                                            {appoint.purpose}
-                                        </td>
-                                        <td className="px-2 py-2 text-xs sm:px-3 sm:py-2 sm:text-sm md:px-4 md:py-3 text-gray-500">
-                                            {new Date(appoint.selectedDate).toLocaleDateString("en-US", {
-                                                weekday: "short",
-                                                year: "numeric",
-                                                month: "long",
-                                                day: "numeric",
-                                            })}
-                                        </td>
-                                        <td className="px-2 py-2 text-xs sm:px-3 sm:py-2 sm:text-sm md:px-4 md:py-3 text-gray-500">
-                                            {new Date(`1970-01-01T${appoint.selectedTime}`).toLocaleTimeString("en-US", {
-                                                hour: "numeric",
-                                                minute: "2-digit",
-                                                hour12: true,
-                                            })}
-                                        </td>
-                                        <td className="px-2 py-2 text-xs sm:px-3 sm:py-2 sm:text-sm md:px-4 md:py-3 text-gray-500">
-                                            <div className="flex gap-2">
-                                                <Button className="bg-btn-black-bg text-white">
-                                                    Mark as done
-                                                </Button>
-
-                                                <Button className="bg-btn-black-bg text-white">
-                                                    Schedule Follow-up
-                                                </Button>
-                                            </div>
+                                {isFetching && appointments.length > 0 ? (
+                                    <tr>
+                                        <td
+                                            colSpan={TABLE_HEADERS.length}
+                                            className="text-center py-8"
+                                        >
+                                            <Loader
+                                                label="Fetching appointments..."
+                                                size="sm"
+                                                fullScreen={false}
+                                            />
                                         </td>
                                     </tr>
-                                ))}
+                                ) : (
+                                    appointments.map(appoint => (
+                                        <tr key={appoint._id} className="border-b border-gray-200 hover:bg-gray-50 transition">
+                                            <td className="px-2 py-2 text-xs sm:px-3 sm:py-2 sm:text-sm md:px-4 md:py-3 text-gray-500 capitalize">
+                                                {appoint.name}
+                                            </td>
+                                            <td className="px-2 py-2 text-xs sm:px-3 sm:py-2 sm:text-sm md:px-4 md:py-3 text-gray-500">
+                                                {appoint.purpose}
+                                            </td>
+                                            <td className="px-2 py-2 text-xs sm:px-3 sm:py-2 sm:text-sm md:px-4 md:py-3 text-gray-500">
+                                                {new Date(appoint.selectedDate).toLocaleDateString("en-US", {
+                                                    weekday: "short",
+                                                    year: "numeric",
+                                                    month: "long",
+                                                    day: "numeric",
+                                                })}
+                                            </td>
+                                            <td className="px-2 py-2 text-xs sm:px-3 sm:py-2 sm:text-sm md:px-4 md:py-3 text-gray-500">
+                                                {new Date(`1970-01-01T${appoint.selectedTime}`).toLocaleTimeString("en-US", {
+                                                    hour: "numeric",
+                                                    minute: "2-digit",
+                                                    hour12: true,
+                                                })}
+                                            </td>
+                                            <td className="px-2 py-2 text-xs sm:px-3 sm:py-2 sm:text-sm md:px-4 md:py-3 text-gray-500">
+                                                <div className="flex gap-2">
+                                                    <Button className="bg-btn-black-bg text-white">
+                                                        Mark as done
+                                                    </Button>
+
+                                                    <Button className="bg-btn-black-bg text-white">
+                                                        Schedule Follow-up
+                                                    </Button>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    ))
+                                )}
                             </tbody>
                         </table>
                     </div>
