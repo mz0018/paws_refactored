@@ -31,38 +31,54 @@ const Dashboard = () => {
                     <span className="text-btn-black-bg">List</span>
                 </h1>
 
-                <Select
-                    value={selectedMonth}
-                    onChange={e => setSelectedMonth(Number(e.target.value))}
-                    label="Month"
-                >
-                    {Array.from({ length: 12 }, (_, i) => (
-                        <option key={i + 2} value={i + 1}>
-                            {new Date(0, i).toLocaleDateString('default', { month: 'long' })}
-                        </option>
-                    ))}
-                </Select>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-4 mb-4 items-end">
+                    {/* Month */}
+                    <div className="lg:col-span-4">
+                        <Select
+                            value={selectedMonth}
+                            onChange={e => setSelectedMonth(Number(e.target.value))}
+                            label="Month"
+                        >
+                            {Array.from({ length: 12 }, (_, i) => (
+                                <option key={i + 1} value={i + 1}>
+                                    {new Date(0, i).toLocaleDateString('default', {
+                                        month: 'long',
+                                    })}
+                                </option>
+                            ))}
+                        </Select>
+                    </div>
 
-                <Select
-                    value={selectedYear}
-                    onChange={e => setSelectedYear(Number(e.target.value))}
-                    label="Year"
-                >
-                    {Array.from({ length: 7 }, (_, i) => now.getFullYear() - 3 + i).map(y => (
-                        <option key={y} value={y}>
-                            {y}
-                        </option>
-                    ))}
-                </Select>
+                    {/* Year */}
+                    <div className="lg:col-span-4">
+                        <Select
+                            value={selectedYear}
+                            onChange={e => setSelectedYear(Number(e.target.value))}
+                            label="Year"
+                        >
+                            {Array.from(
+                                { length: 7 },
+                                (_, i) => now.getFullYear() - 3 + i
+                            ).map(y => (
+                                <option key={y} value={y}>
+                                    {y}
+                                </option>
+                            ))}
+                        </Select>
+                    </div>
 
-                <div className="flex items-center justify-end mb-4">
-                    <button
-                        title="Refresh List"
-                        onClick={() => refetch()}
-                        className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-surface-muted/10 text-gray-400 hover:text-btn-black-bg transition-colors cursor-pointer shrink-0"
-                    >
-                        <RefreshCcw size={16} />
-                    </button>
+                    {/* Refresh */}
+                    <div className="lg:col-span-4">
+                        <div className="flex lg:justify-start">
+                            <button
+                                title="Refresh List"
+                                onClick={() => refetch()}
+                                className="border border-gray-200 shadow-sm w-[46px] h-[46px] flex items-center justify-center rounded-full hover:bg-surface-muted/10 text-gray-400 hover:text-btn-black-bg transition-colors"
+                            >
+                                <RefreshCcw size={16} />
+                            </button>
+                        </div>
+                    </div>
                 </div>
 
                 {appointments.length === 0 ? (

@@ -122,7 +122,7 @@ const ListOfOrders = () => {
                             <button
                                 title="Refresh List"
                                 onClick={() => refetch()}
-                                className="w-8 h-8 flex items-center justify-center rounded-full hover:bg-surface-muted/10 text-gray-400 hover:text-btn-black-bg transition-colors cursor-pointer shrink-0"
+                                className="border border-gray-200 shadow-sm w-[46px] h-[46px] flex items-center justify-center rounded-full hover:bg-surface-muted/10 text-gray-400 hover:text-btn-black-bg transition-colors"
                             >
                                 <RefreshCcw size={16} />
                             </button>
