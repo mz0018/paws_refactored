@@ -1,12 +1,14 @@
 import { useState, useEffect } from 'react'
 import { Select } from '../../ui/form/Select'
-import { RefreshCcw } from 'lucide-react'
-import { useGetAppointments } from '../../hooks/useGetAppointments'
+import { CircleCheckBig, RefreshCcw } from 'lucide-react'
 import { Loader } from '../../components/Loader'
 import { NotFound } from '../../components/NotFound'
 import { Error } from '../../components/Error'
 import { Button } from '../../ui/form/Buttons'
 import { PaginationUI } from '../../ui/form/PaginationUI'
+import { useGetAppointments } from '../../hooks/useGetAppointments'
+import { useUpdateAppointment } from '../../hooks/useUpdateAppointment'
+
 
 const TABLE_HEADERS = ['Name', 'Purpose', 'Date', 'Time', 'Actions']
 
@@ -17,7 +19,9 @@ const Dashboard = () => {
     const [selectedYear, setSelectedYear] = useState(now.getFullYear())
     const [page, setPage] = useState(1)
 
+    const { handleUpdateAppointment } = useUpdateAppointment()
     const { data, isLoading, isFetching, isError, error, refetch } = useGetAppointments(selectedMonth, selectedYear, page, 10)
+
     const appointments = data?.appointments ?? []
     const totalPages = data?.totalPages ?? 1
 
@@ -132,13 +136,13 @@ const Dashboard = () => {
                                 ) : (
                                     appointments.map(appoint => (
                                         <tr key={appoint._id} className="border-b border-gray-200 hover:bg-gray-50 transition">
-                                            <td className="px-2 py-2 text-xs sm:px-3 sm:py-2 sm:text-sm md:px-4 md:py-3 text-gray-500 capitalize">
+                                            <td className="px-2 py-2 text-xs sm:px-3 sm:py-2 sm:text-sm md:px-4 md:py-3 text-gray-500 capitalize whitespace-nowrap">
                                                 {appoint.name}
                                             </td>
-                                            <td className="px-2 py-2 text-xs sm:px-3 sm:py-2 sm:text-sm md:px-4 md:py-3 text-gray-500">
+                                            <td className="px-2 py-2 text-xs sm:px-3 sm:py-2 sm:text-sm md:px-4 md:py-3 text-gray-500 whitespace-nowrap">
                                                 {appoint.purpose}
                                             </td>
-                                            <td className="px-2 py-2 text-xs sm:px-3 sm:py-2 sm:text-sm md:px-4 md:py-3 text-gray-500">
+                                            <td className="px-2 py-2 text-xs sm:px-3 sm:py-2 sm:text-sm md:px-4 md:py-3 text-gray-500 whitespace-nowrap">
                                                 {new Date(appoint.selectedDate).toLocaleDateString("en-US", {
                                                     weekday: "short",
                                                     year: "numeric",
@@ -146,7 +150,7 @@ const Dashboard = () => {
                                                     day: "numeric",
                                                 })}
                                             </td>
-                                            <td className="px-2 py-2 text-xs sm:px-3 sm:py-2 sm:text-sm md:px-4 md:py-3 text-gray-500">
+                                            <td className="px-2 py-2 text-xs sm:px-3 sm:py-2 sm:text-sm md:px-4 md:py-3 text-gray-500 whitespace-nowrap">
                                                 {new Date(`1970-01-01T${appoint.selectedTime}`).toLocaleTimeString("en-US", {
                                                     hour: "numeric",
                                                     minute: "2-digit",
@@ -155,12 +159,18 @@ const Dashboard = () => {
                                             </td>
                                             <td className="px-2 py-2 text-xs sm:px-3 sm:py-2 sm:text-sm md:px-4 md:py-3 text-gray-500">
                                                 <div className="flex gap-2">
-                                                    <Button className="bg-btn-black-bg text-white">
-                                                        Mark as done
-                                                    </Button>
-
-                                                    <Button className="bg-btn-black-bg text-white">
+                                                    <Button 
+                                                        onClick={() => handleUpdateAppointment('follow-up')}
+                                                        className="border border-btn-black-bg font-semibold text-btn-black-bg hover:bg-btn-black-bg/10 transition whitespace-nowrap"
+                                                    >
                                                         Schedule Follow-up
+                                                    </Button>
+                                                    <Button 
+                                                        onClick={() => handleUpdateAppointment('mark-done')}
+                                                        className="bg-btn-black-bg hover:bg-btn-black-hover-header-bg text-white transition-colors font-semibold whitespace-nowrap"
+                                                    >
+                                                        <CircleCheckBig />
+                                                        Mark as done
                                                     </Button>
                                                 </div>
                                             </td>
