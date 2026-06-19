@@ -10,11 +10,12 @@ interface SortByProps {
     value: string
     options?: readonly SortOption[]
     placeholder?: string
+    label?: string
 }
 
-export const SortBy = ({ onChange, value, options, placeholder }: SortByProps) => {
+export const SortBy = ({ onChange, value, options, placeholder, label }: SortByProps) => {
     return (
-        <Select value={value} onChange={onChange}>
+        <Select label={label} value={value} onChange={onChange}>
             <option value="">{placeholder || 'Default'}</option>
             {options?.map(opt => (
                 <option key={opt.value} value={opt.value}>

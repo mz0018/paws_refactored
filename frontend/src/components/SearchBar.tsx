@@ -6,13 +6,15 @@ interface SearchBarProps {
     value: string
     placeholder?: string
     icon?: React.ReactNode
+    label?: string
 }
 
 export const SearchBar = ({ 
     onChange, 
     value, 
     placeholder = 'Search...', 
-    icon 
+    icon,
+    label 
 }: SearchBarProps) => {
 
     return (
@@ -23,7 +25,8 @@ export const SearchBar = ({
                 </div>
             )}
 
-            <Input 
+            <Input
+                label={label} 
                 type='text'
                 placeholder={placeholder}
                 value={value} 

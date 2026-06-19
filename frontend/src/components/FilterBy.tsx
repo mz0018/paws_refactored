@@ -4,11 +4,13 @@ interface FilterByProps {
     value: string
     options?: readonly string[]
     placeholder?: string
+    label?: string
 }
 
-export const FilterBy = ({ onChange, value, options, placeholder }: FilterByProps) => {
+export const FilterBy = ({ onChange, value, options, placeholder, label }: FilterByProps) => {
     return (
         <Select
+            label={label}
             value={value}
             onChange={onChange}
             className="p-2 border rounded-sm capitalize"

@@ -81,10 +81,11 @@ const ListOfOrders = () => {
                 </h1>
                 <p className="mb-4 text-text-body tracking-wider">Manage all orders from a single dashboard.</p>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-4 mb-5">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-4 mb-5 items-end">
                     {/* Search */}
                     <div className="sm:col-span-2 lg:col-span-4 xl:col-span-3 min-w-0">
                         <SearchBar
+                            label="Search"
                             value={searchQuery}
                             onChange={e => setSearchQuery(e.target.value)}
                             icon={<Search size={16} />}
@@ -95,6 +96,7 @@ const ListOfOrders = () => {
                     {/* Filter */}
                     <div className="lg:col-span-2 min-w-0">
                         <FilterBy
+                            label="Filter by"
                             value={filteredBy}
                             onChange={e => setFilteredBy(e.target.value)}
                             options={ORDER_CATEGORIES}
@@ -104,6 +106,7 @@ const ListOfOrders = () => {
                     {/* Sort */}
                     <div className="lg:col-span-2 min-w-0">
                         <SortBy
+                            label="Sort by"
                             value={sortBy}
                             onChange={e => setSortBy(e.target.value)}
                             options={ORDER_SORT_OPTIONS}
