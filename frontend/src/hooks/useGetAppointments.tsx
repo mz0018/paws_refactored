@@ -11,20 +11,26 @@ type AppointmentProps = {
 type GetAppointmentParams = {
     month?: number
     year?: number
+    limit?: number
+    page?: number
 }
 
-const fetchAppointments = async ({ month, year }: GetAppointmentParams): Promise<AppointmentProps[]> => {
+type AppointmentsResponse = {
+    appointments: AppointmentProps[]
+    total: number
+    page: number
+    limit: number
+    totalPages: number
+}
 
-    const params = new URLSearchParams()
-    if (month) {
-        params.set('month', String(month))
-    }
+const fetchAppointments = async (params: GetAppointmentParams): Promise<AppointmentsResponse> => {
+    const paramsObj = new URLSearchParams()
+    if (params.month) paramsObj.set('month', String(params.month))
+    if (params.year) paramsObj.set('year', String(params.year))
+    if (params.limit) paramsObj.set('limit', String(params.limit))
+    if (params.page) paramsObj.set('page', String(params.page))
 
-    if (year) {
-        params.set('year', String(year))
-    }
-
-    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/appointments/?${params}`, {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/appointments/?${paramsObj}`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include'
@@ -34,14 +40,14 @@ const fetchAppointments = async ({ month, year }: GetAppointmentParams): Promise
         throw new Error('Failed to fetch appointments')
     }
 
-    const data = await res.json()
-    return data.appointments
+    return res.json()
 }
 
-export const useGetAppointments = (month?: number, year?: number) => {
+export const useGetAppointments = (month?: number, year?: number, page = 1, limit = 10) => {
     return useQuery({
-        queryKey: ['appointments', month, year],
-        queryFn: () => fetchAppointments({ month, year }),
+        queryKey: ['appointments', month, year, page],
+        queryFn: () => fetchAppointments({ month, year, page, limit }),
+        placeholderData: (previousData) => previousData,
         staleTime: 5 * 60 * 1000,
     })
 }

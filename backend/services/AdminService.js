@@ -274,7 +274,7 @@ class AdminService {
         return order._id
     }
 
-    async getAppointments(month, year) {
+    async getAppointments(month, year, limit = 10, page = 1) {
         const now = new Date()
         const m = month !== undefined ? parseInt(month) - 1 : now.getMonth()
         const y = year !== undefined ? parseInt(year) : now.getFullYear()
@@ -285,12 +285,27 @@ class AdminService {
         const end = new Date(y, m + 1, 1)
         end.setHours(0, 0, 0, 0)
 
-        const appointments = await Appointment.find({
+        const query = {
             selectedDate: { $gte: start, $lt: end }
-        }).sort({ selectedTime: 1 }).lean()
+        }
+
+        const skip = (page - 1) * limit
+
+        const [appointments, total] = await Promise.all([
+            Appointment.find(query)
+                .sort({ selectedTime: 1 })
+                .skip(skip)
+                .limit(limit)
+                .lean(),
+            Appointment.countDocuments(query)
+        ])
 
         return {
-            appointments
+            appointments,
+            total,
+            page,
+            limit,
+            totalPages: Math.ceil(total / limit)
         }
     }
 

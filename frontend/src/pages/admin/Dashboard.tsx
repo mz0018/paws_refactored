@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Select } from '../../ui/form/Select'
 import { RefreshCcw } from 'lucide-react'
 import { useGetAppointments } from '../../hooks/useGetAppointments'
@@ -6,6 +6,7 @@ import { Loader } from '../../components/Loader'
 import { NotFound } from '../../components/NotFound'
 import { Error } from '../../components/Error'
 import { Button } from '../../ui/form/Buttons'
+import { PaginationUI } from '../../ui/form/PaginationUI'
 
 const TABLE_HEADERS = ['Name', 'Purpose', 'Date', 'Time', 'Actions']
 
@@ -14,8 +15,15 @@ const Dashboard = () => {
     const now = new Date()
     const [selectedMonth, setSelectedMonth] = useState(now.getMonth() + 1)
     const [selectedYear, setSelectedYear] = useState(now.getFullYear())
+    const [page, setPage] = useState(1)
 
-    const { data: appointments = [], isLoading, isError, error, refetch } = useGetAppointments(selectedMonth, selectedYear)
+    const { data, isLoading, isError, error, refetch } = useGetAppointments(selectedMonth, selectedYear, page, 10)
+    const appointments = data?.appointments ?? []
+    const totalPages = data?.totalPages ?? 1
+
+    useEffect(() => {
+        setPage(1)
+    }, [selectedMonth, selectedYear])
 
     if (isLoading) return <Loader label="Loading appointments..." />
 
@@ -67,9 +75,15 @@ const Dashboard = () => {
                         </Select>
                     </div>
 
-                    {/* Refresh */}
+                    {/* Refresh + Pagination */}
                     <div className="lg:col-span-4">
-                        <div className="flex lg:justify-start">
+                        <div className="flex items-center gap-2 lg:justify-start">
+                            <PaginationUI
+                                page={page}
+                                totalPages={totalPages}
+                                onPageChange={setPage}
+                            />
+
                             <button
                                 title="Refresh List"
                                 onClick={() => refetch()}
