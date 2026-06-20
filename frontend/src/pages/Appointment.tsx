@@ -6,13 +6,17 @@ import { useAppointment } from '../hooks/useAppointment'
 import { ErrorText } from '../ui/form/ErrorText'
 import { ClipLoader } from 'react-spinners'
 import { Send } from 'lucide-react'
-import DatePicker from 'react-datepicker'
-import 'react-datepicker/dist/react-datepicker.css'
-import '../AppointmentDatePicker.css'
+import AppointmentCalendar from '../components/AppointmentCalendar'
 
 const Appointment = () => {
 
     const { formData, hasErrors, isLoading, filterTime, isRateLimited, handleChange, handleDateChange, handleSubmit } = useAppointment()
+
+    const handleTimeSelect = (time: string) => {
+        handleChange({
+            target: { name: 'selectedTime', value: time }
+        } as React.ChangeEvent<HTMLInputElement>)
+    }
 
     return (
         <div className="flex flex-col">
@@ -35,26 +39,13 @@ const Appointment = () => {
 
             <div className="grid grid-cols-1 gap-8 items-start px-4 py-8 sm:px-6 lg:px-8">
                 <div className="flex justify-center">
-                    <DatePicker
-                        selected={
-                            formData.selectedDate && formData.selectedTime
-                                ? new Date(`${formData.selectedDate}T${formData.selectedTime}`)
-                                : formData.selectedDate
-                                    ? new Date(formData.selectedDate)
-                                    : null
-                        }
-                        onChange={(date: Date | null) => handleDateChange(date)}
-                        showTimeSelect
+                    <AppointmentCalendar
+                        selectedDate={formData.selectedDate}
+                        selectedTime={formData.selectedTime}
+                        onDateChange={handleDateChange}
+                        onTimeSelect={handleTimeSelect}
                         filterTime={filterTime}
-                        dateFormat="MMMM d, yyyy h:mm aa"
-                        placeholderText="Select a date and time"
-                        customInput={
-                            <Input
-                                label="Please select a specified date"
-                                error={hasErrors.selectedDate}
-                            />
-                        }
-                        inline
+                        error={hasErrors.selectedDate}
                     />
                 </div>
 

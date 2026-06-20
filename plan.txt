@@ -1,0 +1,41 @@
+updater my appointment date picker
+
+Requirements:
+
+* Do NOT use react-datepicker.
+* Do NOT use day-picker.
+* Do NOT use MUI date picker.
+* Do NOT use any calendar UI library.
+* Create the calendar grid manually responsive in all screen sizes.
+* Use only date-fns for date calculations and formatting.
+* Keep the existing project architecture and hooks.
+* Reuse existing components such as Button, Input, Select, ErrorText, and Form where applicable.
+* Maintain compatibility with the existing useAppointment hook.
+* Support:
+
+  * month navigation
+  * previous/next month buttons
+  * selecting a single date
+  * selecting a time slot
+  * disabling unavailable dates
+  * highlighting today's date
+  * highlighting the selected date
+  * responsive mobile layout
+  * keyboard accessibility
+* Use Tailwind CSS only for styling.
+* The design should be clean, modern, production-ready, and consistent with the application's green theme.
+* Avoid inline styles.
+* Avoid custom CSS files unless absolutely necessary.
+* Produce complete component code and explain the folder structure.
+
+Important constraints:
+
+* Keep useAppointment unchanged.
+* Keep all existing form validation logic.
+* Keep existing API calls.
+* Keep TypeScript strict mode compatibility.
+* Replace only the DatePicker implementation.
+* Do not modify Input, Select, Button, Form, or ErrorText components.
+* Return a new AppointmentCalendar component that can be dropped into the existing Appointment page.
+
+*DONT CHANGE ANYHTING ON BACKEND!
