@@ -274,7 +274,7 @@ class AdminService {
         return order._id
     }
 
-    async getAppointments(month, year, limit = 10, page = 1) {
+    async getAppointments(month, year, limit = 10, page = 1, status) {
         const now = new Date()
         const m = month !== undefined ? parseInt(month) - 1 : now.getMonth()
         const y = year !== undefined ? parseInt(year) : now.getFullYear()
@@ -288,6 +288,8 @@ class AdminService {
         const query = {
             selectedDate: { $gte: start, $lt: end }
         }
+
+        if (status) query.status = status
 
         const skip = (page - 1) * limit
 

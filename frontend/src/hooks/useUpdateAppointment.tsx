@@ -1,8 +1,10 @@
 import { useState } from 'react'
+import { useQueryClient } from '@tanstack/react-query'
 
 type AppointmentStatus = 'mark-done' | 'follow-up'
 
 export const useUpdateAppointment = () => {
+    const queryClient = useQueryClient()
     const [statusLoading, setStatusLoading] = useState(false)
 
     const updateStatus = async (appointmentId: string, status: AppointmentStatus): Promise<boolean> => {
@@ -31,6 +33,20 @@ export const useUpdateAppointment = () => {
         const success = await updateStatus(appointmentId, status)
 
         if (!success) return
+
+        queryClient.setQueriesData(
+            { queryKey: ['appointments'] },
+            (oldData: any) => {
+                if (!oldData) return oldData
+                return {
+                    ...oldData,
+                    appointments: oldData.appointments.filter(
+                        (appointment: any) => appointment._id !== appointmentId
+                    ),
+                    total: oldData.total - 1,
+                }
+            }
+        )
 
     }
 

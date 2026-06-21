@@ -20,7 +20,7 @@ const Dashboard = () => {
     const [page, setPage] = useState(1)
 
     const { handleUpdateAppointment } = useUpdateAppointment()
-    const { data, isLoading, isFetching, isError, error, refetch } = useGetAppointments(selectedMonth, selectedYear, page, 10)
+    const { data, isLoading, isFetching, isError, error, refetch } = useGetAppointments(selectedMonth, selectedYear, page, 10, 'pending')
 
     const appointments = data?.appointments ?? []
     const totalPages = data?.totalPages ?? 1
