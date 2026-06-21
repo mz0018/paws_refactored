@@ -13,9 +13,10 @@ type Props = {
   item: NavItem
   collapsed: boolean
   setCollapsed: React.Dispatch<React.SetStateAction<boolean>>
+  onLinkClick?: () => void
 }
 
-export const DropdownHelper = ({ item, collapsed, setCollapsed }: Props) => {
+export const DropdownHelper = ({ item, collapsed, setCollapsed, onLinkClick }: Props) => {
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
@@ -54,6 +55,7 @@ export const DropdownHelper = ({ item, collapsed, setCollapsed }: Props) => {
                 if (window.innerWidth < 768) {
                   setCollapsed(true);
                 }
+                onLinkClick?.();
               }}
               className={({ isActive }) =>
                 `block px-4 py-2 rounded text-sm ${

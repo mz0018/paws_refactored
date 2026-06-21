@@ -27,7 +27,6 @@ export const Header = memo(({ activeSection }: HeaderProps = {}) => {
       },
       {
         name: 'Feature',
-        icon: <ChevronDown size={18} />,
         children: [
           { name: 'Appointment', path: '/appointment' },
           { name: 'Products', path: '/product-overview' },

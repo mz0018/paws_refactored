@@ -76,6 +76,7 @@ const SidebarUI = ({ navLinks, isClientMode = true, onLinkClick }: SidebarUIProp
               item={item}
               collapsed={collapsed}
               setCollapsed={setCollapsed}
+              onLinkClick={onLinkClick}
             />
           ) : item.path?.includes('#') ? (
             <a
