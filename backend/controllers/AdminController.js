@@ -1,5 +1,6 @@
 import { parse } from 'dotenv'
 import AdminService from '../services/AdminService.js'
+import { stat } from 'fs'
 
 class AdminController {
 
@@ -85,6 +86,19 @@ class AdminController {
             const page = parseInt(req.query.page) || 1
             const { month, year } = req.query
             const result = await AdminService.getAppointments(month, year, limit, page)
+            res.status(200).json(result)
+        } catch (error) {
+            console.error('Error:', error)
+            next(error)
+        }
+    }
+
+    async updateStatusAppointment(req, res, next) {
+        try {
+            const id = req.params.id
+            const status = req.params.status
+            
+            const result = await AdminService.updateAppointmentStatus(id, status)
             res.status(200).json(result)
         } catch (error) {
             console.error('Error:', error)

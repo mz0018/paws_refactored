@@ -67,4 +67,11 @@ router.get(
     authorizeViaCookie,
     AdminController.getAppointments
 )
+
+router.patch(
+    '/appointment/:status/:id',
+    authorizeViaCookie,
+    AdminController.updateStatusAppointment
+
+)
 export default router

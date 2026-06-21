@@ -160,13 +160,13 @@ const Dashboard = () => {
                                             <td className="px-2 py-2 text-xs sm:px-3 sm:py-2 sm:text-sm md:px-4 md:py-3 text-gray-500">
                                                 <div className="flex gap-2">
                                                     <Button 
-                                                        onClick={() => handleUpdateAppointment('follow-up')}
+                                                        onClick={() => handleUpdateAppointment(appoint._id, 'follow-up')}
                                                         className="border border-btn-black-bg font-semibold text-btn-black-bg hover:bg-btn-black-bg/10 transition whitespace-nowrap"
                                                     >
                                                         Schedule Follow-up
                                                     </Button>
                                                     <Button 
-                                                        onClick={() => handleUpdateAppointment('mark-done')}
+                                                        onClick={() => handleUpdateAppointment(appoint._id, 'mark-done')}
                                                         className="bg-btn-black-bg hover:bg-btn-black-hover-header-bg text-white transition-colors font-semibold whitespace-nowrap"
                                                     >
                                                         <CircleCheckBig />

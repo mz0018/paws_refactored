@@ -309,6 +309,32 @@ class AdminService {
         }
     }
 
+    async updateAppointmentStatus(id, status) {
+        const validStatuses = ['mark-done', 'follow-up']
+
+        if (!validStatuses.includes(status)) {
+            throw new ErrorController.apply('Invalid status update', 400)
+        }
+
+        const appointment = await Appointment.findById(id)
+        if (!appointment) {
+            throw new ErrorController('Appointment not found', 404)
+        }
+
+        if (status === 'mark-done') {
+            if (appointment.status === 'completed') {
+                throw new ErrorController('Appointment is already completed', 409)
+            }
+
+            appointment.status = 'completed'
+            appointment.completedAt = new Date()
+        } else if (status === 'follow-up') {
+            appointment.status = 'follow-up'
+        }
+
+        await appointment.save()
+        return { message: 'Appointment status updated', id}
+    }
 }
 
 export default new AdminService()

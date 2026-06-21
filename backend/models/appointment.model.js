@@ -5,7 +5,7 @@ const appointmentModel = new mongoose.Schema({
     selectedTime: { type: String, required: true },
     name: { type: String, required: true },
     purpose: { type: String, required: true },
-    status: { type: String, enum: ['pending', 'completed'], default: 'pending'},
+    status: { type: String, enum: ['pending', 'completed', 'follow-up'], default: 'pending'},
     completedAt: { type: Date, default: null }
 }, { timestamps: true })
 
