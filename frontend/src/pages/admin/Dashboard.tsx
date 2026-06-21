@@ -42,6 +42,9 @@ const Dashboard = () => {
                     Appointment{' '}
                     <span className="text-btn-black-bg">List</span>
                 </h1>
+                <p className="mb-4 text-text-body tracking-wider">
+                    Track active appointments in a centralized table and update their status to completed or follow-up as needed.
+                </p>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-4 mb-4 items-end">
                     {/* Month */}

@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { toast } from 'sonner'
+import { CircleCheckBig } from 'lucide-react'
 import { useQueryClient } from '@tanstack/react-query'
 
 type AppointmentStatus = 'mark-done' | 'follow-up'
@@ -8,6 +10,25 @@ export const useUpdateAppointment = () => {
     const [statusLoading, setStatusLoading] = useState(false)
 
     const updateStatus = async (appointmentId: string, status: AppointmentStatus): Promise<boolean> => {
+        toast.custom(() => (
+            <div className="flex items-center gap-4 bg-white shadow-lg rounded-lg p-4 border-l-4 border-btn-black-bg min-w-[300px]">
+                <CircleCheckBig
+                    size={24}
+                    className="text-btn-black-bg"
+                />
+
+                <div>
+                    <p className="font-semibold text-text-body">
+                        {appointmentId}
+                    </p>
+
+                    <p className="text-sm text-gray-500">
+                        Marked as {status}
+                    </p>
+                </div>
+            </div>
+        ))
+
         setStatusLoading(true)
 
         try {
