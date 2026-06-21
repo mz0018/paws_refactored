@@ -56,7 +56,7 @@ export const Header = memo(({ activeSection }: HeaderProps = {}) => {
             <img
               src="/img/paws.png"
               alt="Logo"
-              className="h-24 w-auto"
+              className="h-16 w-auto"
             />
           </div>
 

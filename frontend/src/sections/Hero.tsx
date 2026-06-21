@@ -23,7 +23,7 @@ export const Hero = () => {
                     </h1>
 
                     <p className="mt-8 line-clamp-2 text-base leading-7 tracking-wide text-text-body sm:text-lg">
-                    Connect pet owners with trusted veterinary care, rescue support, and essential pet services.
+                        Connecting pet owners with veterinary care, rescue support, and pet resources.
                     </p>
 
                     <div className="block md:hidden">

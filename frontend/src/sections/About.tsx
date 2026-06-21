@@ -17,17 +17,15 @@ export const About = () => {
           </p>
 
           <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-8">
-            Trusted Veterinary Care & Services
+            Pet Care Made Simple
           </h2>
 
           <p className="text-lg text-text-body leading-relaxed mb-6">
-            We are committed to providing reliable veterinary care, trusted products,
-            and convenient services that support the health and well-being of animals.
+            Find veterinary services, adoption resources, rescue support, and pet care information—all in one place.
           </p>
 
           <p className="text-lg text-text-body leading-relaxed">
-            From appointment scheduling to veterinary essentials, our goal is to make
-            animal care more accessible, simple, and dependable for every pet owner.
+            Helping pet owners access the resources they need for happier, healthier pets.
           </p>
         </div>
       </section>
