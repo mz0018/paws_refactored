@@ -8,8 +8,15 @@ const SidebarUI = lazy(() => import('../ui/SidebarUI'))
 const AdminLayout = () => {
 
   const navLinks = [
-    { name: 'Appointments', path: '/admin/dashboard', icon: <LayoutDashboard size={18} /> },
-    { name: 'Orders', path: '/admin/orders', icon: <BringToFront size={18} /> },
+    { 
+      name: 'Appointments',
+      icon: <LayoutDashboard size={18} />,
+      children: [
+        { name: 'Appointment Overview', path: '/admin/dashboard' },
+        { name: 'Follow-Up Checkups', path: '/admin/dashboard/follow-up' },
+        { name: 'Logs', path: '/admin/dashboard/logs' }
+      ]
+    },
     {
       name: 'Products',
       icon: <Package size={18} />,
@@ -18,6 +25,7 @@ const AdminLayout = () => {
         { name: 'Add new product', path: '/admin/products/add' },
       ]
     },
+    { name: 'Orders', path: '/admin/orders', icon: <BringToFront size={18} /> },
     { name: 'Settings', path: '/admin/settings', icon: <Settings size={18} /> }
   ]
 
