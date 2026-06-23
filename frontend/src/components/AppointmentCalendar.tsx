@@ -119,7 +119,7 @@ const AppointmentCalendar = ({
   const nextMonth = () => setCurrentMonth((prev) => addMonths(prev, 1))
 
   return (
-    <div className="w-full max-w-md mx-auto">
+    <div className="w-full max-w-md mx-auto bg-white rounded-md p-5 shadow-sm">
       <div className="flex items-center justify-between mb-4">
         <button
           type="button"
