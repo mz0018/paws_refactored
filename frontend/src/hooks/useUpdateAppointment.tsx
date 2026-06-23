@@ -9,7 +9,11 @@ export const useUpdateAppointment = () => {
     const queryClient = useQueryClient()
     const [statusLoading, setStatusLoading] = useState(false)
 
-    const updateStatus = async (appointmentId: string, status: AppointmentStatus): Promise<boolean> => {
+    const updateStatus = async (
+        appointmentId: string,
+        status: AppointmentStatus,
+        reason?: string
+    ): Promise<boolean> => {
         toast.custom(() => (
             <div className="flex items-center gap-4 bg-white shadow-lg rounded-lg p-4 border-l-4 border-btn-black-bg min-w-[300px]">
                 <CircleCheckBig
@@ -34,7 +38,9 @@ export const useUpdateAppointment = () => {
         try {
             const response = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/appointment/${status}/${appointmentId}`, {
                 method: 'PATCH',
-                credentials: 'include'
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: reason ? JSON.stringify({ followUpReason: reason }) : undefined
             })
 
             if (!response.ok) {
@@ -50,8 +56,12 @@ export const useUpdateAppointment = () => {
         }
     }
 
-    const handleUpdateAppointment = async (appointmentId: string, status: AppointmentStatus) => {
-        const success = await updateStatus(appointmentId, status)
+    const handleUpdateAppointment = async (
+        appointmentId: string,
+        status: AppointmentStatus,
+        reason?: string
+    ) => {
+        const success = await updateStatus(appointmentId, status, reason)
 
         if (!success) return
 

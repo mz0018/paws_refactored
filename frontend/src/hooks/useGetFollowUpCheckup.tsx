@@ -6,6 +6,7 @@ type FollowUpCheckupProps = {
     purpose: string
     selectedDate: string
     selectedTime: string
+    followUpReason?: string | null
 }
 
 type FollowUpResponse = {

@@ -6,7 +6,7 @@ import { Error } from '../../components/Error'
 import { PaginationUI } from '../../ui/form/PaginationUI'
 import { useGetFollowUpCheckup } from '../../hooks/useGetFollowUpCheckup'
 
-const TABLE_HEADERS = ['Name', 'Purpose', 'Date', 'Time', 'Actions']
+const TABLE_HEADERS = ['Name', 'Purpose', 'Date', 'Time', 'Reason']
 
 const FollowUpCheckup = () => {
     const [page, setPage] = useState(1)
@@ -21,6 +21,8 @@ const FollowUpCheckup = () => {
     if (isError) {
         return <Error label={(error as Error)?.message ?? 'Failed to load follow-up checkups'} />
     }
+
+    console.log(appointments)
 
     return (
         <section className="w-full">
@@ -106,9 +108,9 @@ const FollowUpCheckup = () => {
                                                     hour12: true,
                                                 })}
                                             </td>
-                                            <td className="px-2 py-2 text-xs sm:px-3 sm:py-2 sm:text-sm md:px-4 md:py-3 text-gray-500 whitespace-nowrap">
-                                                <span className="inline-block text-xs font-medium px-2.5 py-0.5 rounded-full">
-                                                    button Mark as done and Follow up checkup again
+                                            <td className="px-2 py-2 text-xs sm:px-3 sm:py-2 sm:text-sm md:px-4 md:py-3 text-gray-500 max-w-[200px]">
+                                                <span className="line-clamp-2">
+                                                    {appoint.followUpReason || '—'}
                                                 </span>
                                             </td>
                                         </tr>

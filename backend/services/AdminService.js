@@ -333,11 +333,11 @@ class AdminService {
         }
     }
 
-    async updateAppointmentStatus(id, status) {
+    async updateAppointmentStatus(id, status, followUpReason) {
         const validStatuses = ['mark-done', 'follow-up']
 
         if (!validStatuses.includes(status)) {
-            throw new ErrorController.apply('Invalid status update', 400)
+            throw new ErrorController('Invalid status update', 400)
         }
 
         const appointment = await Appointment.findById(id)
@@ -354,6 +354,9 @@ class AdminService {
             appointment.completedAt = new Date()
         } else if (status === 'follow-up') {
             appointment.status = 'follow-up'
+            if (followUpReason) {
+                appointment.followUpReason = followUpReason
+            }
         }
 
         await appointment.save()

@@ -6,7 +6,8 @@ const appointmentModel = new mongoose.Schema({
     name: { type: String, required: true },
     purpose: { type: String, required: true },
     status: { type: String, enum: ['pending', 'completed', 'follow-up'], default: 'pending'},
-    completedAt: { type: Date, default: null }
+    completedAt: { type: Date, default: null },
+    followUpReason: { type: String, default: null }
 }, { timestamps: true })
 
 export default mongoose.model('Appointment', appointmentModel)

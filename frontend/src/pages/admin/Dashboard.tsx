@@ -8,7 +8,15 @@ import { Button } from '../../ui/form/Buttons'
 import { PaginationUI } from '../../ui/form/PaginationUI'
 import { useGetAppointments } from '../../hooks/useGetAppointments'
 import { useUpdateAppointment } from '../../hooks/useUpdateAppointment'
+import { FollowUpModal } from '../../components/modals/FollowUpModal'
 
+type AppointmentProps = {
+    _id: string
+    name: string
+    purpose: string
+    selectedDate: string
+    selectedTime: string
+}
 
 const TABLE_HEADERS = ['Name', 'Purpose', 'Date', 'Time', 'Actions']
 
@@ -18,8 +26,9 @@ const Dashboard = () => {
     const [selectedMonth, setSelectedMonth] = useState(now.getMonth() + 1)
     const [selectedYear, setSelectedYear] = useState(now.getFullYear())
     const [page, setPage] = useState(1)
+    const [selectedAppointment, setSelectedAppointment] = useState<AppointmentProps | null>(null)
 
-    const { handleUpdateAppointment } = useUpdateAppointment()
+    const { handleUpdateAppointment, statusLoading } = useUpdateAppointment()
     const { data, isLoading, isFetching, isError, error, refetch } = useGetAppointments(selectedMonth, selectedYear, page, 10, 'pending')
 
     const appointments = data?.appointments ?? []
@@ -28,6 +37,11 @@ const Dashboard = () => {
     useEffect(() => {
         setPage(1)
     }, [selectedMonth, selectedYear])
+
+    const handleFollowUpSubmit = async (appointmentId: string, reason: string) => {
+        await handleUpdateAppointment(appointmentId, 'follow-up', reason)
+        setSelectedAppointment(null)
+    }
 
     if (isLoading) return <Loader label="Loading appointments..." />
 
@@ -163,7 +177,7 @@ const Dashboard = () => {
                                             <td className="px-2 py-2 text-xs sm:px-3 sm:py-2 sm:text-sm md:px-4 md:py-3 text-gray-500">
                                                 <div className="flex gap-2">
                                                     <Button 
-                                                        onClick={() => handleUpdateAppointment(appoint._id, 'follow-up')}
+                                                        onClick={() => setSelectedAppointment(appoint)}
                                                         className="border border-btn-black-bg font-semibold text-btn-black-bg hover:bg-btn-black-bg/10 transition whitespace-nowrap"
                                                     >
                                                         Schedule Follow-up
@@ -185,6 +199,14 @@ const Dashboard = () => {
                     </div>
                 )}
             </div>
+
+            <FollowUpModal
+                isOpen={!!selectedAppointment}
+                onClose={() => setSelectedAppointment(null)}
+                appointment={selectedAppointment}
+                onSubmit={handleFollowUpSubmit}
+                isLoading={statusLoading}
+            />
         </section>
     )
 }
