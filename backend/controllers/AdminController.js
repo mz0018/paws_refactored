@@ -106,6 +106,18 @@ class AdminController {
         }
     }
 
+    async getFollowUpCheckups(req, res, next) {
+        try {
+            const limit = parseInt(req.query.limit) || 10
+            const page = parseInt(req.query.page) || 1
+            const result = await AdminService.getFollowUpCheckups(limit, page)
+            res.status(200).json(result)
+        } catch (error) {
+            console.error('Error:', error)
+            next(error)
+        }
+    }
+
 }
 
 export default new AdminController()

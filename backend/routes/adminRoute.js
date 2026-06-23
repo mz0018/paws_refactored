@@ -74,4 +74,11 @@ router.patch(
     AdminController.updateStatusAppointment
 
 )
+
+router.get(
+    '/follow-up-checkups',
+    authorizeViaCookie,
+    AdminController.getFollowUpCheckups
+)
+
 export default router

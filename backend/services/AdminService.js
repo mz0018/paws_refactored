@@ -311,6 +311,28 @@ class AdminService {
         }
     }
 
+    async getFollowUpCheckups(limit = 10, page = 1) {
+        const skip = (page - 1) * limit
+        const query = { status: 'follow-up' }
+
+        const [appointments, total] = await Promise.all([
+            Appointment.find(query)
+                .sort({ updatedAt: -1 })
+                .skip(skip)
+                .limit(limit)
+                .lean(),
+            Appointment.countDocuments(query)
+        ])
+
+        return {
+            appointments,
+            total,
+            page,
+            limit,
+            totalPages: Math.ceil(total / limit)
+        }
+    }
+
     async updateAppointmentStatus(id, status) {
         const validStatuses = ['mark-done', 'follow-up']
 
