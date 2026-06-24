@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { RefreshCcw, SquareArrowOutUpRight, CircleCheckBig } from 'lucide-react'
+import { useState, useEffect } from 'react'
+import { RefreshCcw, SquareArrowOutUpRight, CircleCheckBig, Search } from 'lucide-react'
 import { Loader } from '../../components/Loader'
 import { NotFound } from '../../components/NotFound'
 import { Error } from '../../components/Error'
@@ -9,6 +9,8 @@ import { ViewAppointmentModal } from '../../components/modals/ViewAppointmentMod
 
 import { useGetFollowUpCheckup } from '../../hooks/useGetFollowUpCheckup'
 import { useUpdateAppointment } from '../../hooks/useUpdateAppointment'
+import { SearchBar } from '../../components/SearchBar'
+import { useDebounce } from '../../hooks/useDebounce'
 
 type FollowUpCheckUpProps = {
     _id: string
@@ -18,9 +20,15 @@ const TABLE_HEADERS = ['Name', 'Purpose', 'Actions']
 
 const FollowUpCheckup = () => {
     const [page, setPage] = useState(1)
+    const [searchQuery, setSearchQuery] = useState('')
+    const debouncedSearch = useDebounce(searchQuery, 300)
     const [selectedAppointment, setSelectedAppointment] = useState<FollowUpCheckUpProps | null>(null)
-    const { data, isLoading, isFetching, isError, error, refetch } = useGetFollowUpCheckup(page)
-    const { handleUpdateAppointment, statusLoading } = useUpdateAppointment()
+    const { data, isLoading, isFetching, isError, error, refetch } = useGetFollowUpCheckup(page, debouncedSearch)
+    const { handleUpdateAppointment } = useUpdateAppointment()
+
+    useEffect(() => {
+        setPage(1)
+    }, [debouncedSearch])
 
     const appointments = data?.appointments ?? []
     const totalPages = data?.totalPages ?? 1
@@ -41,20 +49,32 @@ const FollowUpCheckup = () => {
                     View and manage appointments scheduled for follow-up checkups.
                 </p>
 
-                <div className="flex items-center justify-between mb-4">
-                    <PaginationUI
-                        page={page}
-                        totalPages={totalPages}
-                        onPageChange={setPage}
-                    />
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-4 mb-5 items-end">
+                    <div className="sm:col-span-2 lg:col-span-4 xl:col-span-3 min-w-0">
+                        <SearchBar
+                            label="Search"
+                            value={searchQuery}
+                            onChange={e => setSearchQuery(e.target.value)}
+                            icon={<Search size={16} />}
+                            placeholder="Search by name or purpose"
+                        />
+                    </div>
 
-                    <button
-                        title="Refresh List"
-                        onClick={() => refetch()}
-                        className="border border-gray-200 shadow-sm w-[46px] h-[46px] flex items-center justify-center rounded-full hover:bg-surface-muted/10 text-gray-400 hover:text-btn-black-bg transition-colors"
-                    >
-                        <RefreshCcw size={16} />
-                    </button>
+                    <div className="lg:col-span-8 flex items-center justify-end gap-2">
+                        <PaginationUI
+                            page={page}
+                            totalPages={totalPages}
+                            onPageChange={setPage}
+                        />
+
+                        <button
+                            title="Refresh List"
+                            onClick={() => refetch()}
+                            className="border border-gray-200 shadow-sm w-[46px] h-[46px] flex items-center justify-center rounded-full hover:bg-surface-muted/10 text-gray-400 hover:text-btn-black-bg transition-colors"
+                        >
+                            <RefreshCcw size={16} />
+                        </button>
+                    </div>
                 </div>
 
                 {appointments.length === 0 ? (

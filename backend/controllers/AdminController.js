@@ -111,7 +111,7 @@ class AdminController {
         try {
             const limit = parseInt(req.query.limit) || 10
             const page = parseInt(req.query.page) || 1
-            const result = await AdminService.getFollowUpCheckups(limit, page)
+            const result = await AdminService.getFollowUpCheckups(limit, page, req.query.search || '')
             res.status(200).json(result)
         } catch (error) {
             console.error('Error:', error)

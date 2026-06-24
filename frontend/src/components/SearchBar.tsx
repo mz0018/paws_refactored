@@ -1,5 +1,4 @@
 import { Input } from '../ui/form/Input'
-import React from 'react'
 
 interface SearchBarProps {
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
@@ -16,23 +15,15 @@ export const SearchBar = ({
     icon,
     label 
 }: SearchBarProps) => {
-
     return (
-        <div className="relative w-full">
-            {icon && (
-                <div className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
-                    {icon}
-                </div>
-            )}
-
-            <Input
-                label={label} 
-                type='text'
-                placeholder={placeholder}
-                value={value} 
-                onChange={onChange}
-                className={`w-full ${icon ? 'pr-8' : ''} placeholder:text-text-body`}
-            />
-        </div>
+        <Input
+            label={label} 
+            type='text'
+            placeholder={placeholder}
+            value={value} 
+            onChange={onChange}
+            className="w-full placeholder:text-text-body"
+            rightIcon={icon}
+        />
     ) 
 }

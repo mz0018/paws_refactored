@@ -17,10 +17,11 @@ type FollowUpResponse = {
     totalPages: number
 }
 
-const fetchFollowUpCheckups = async (page: number, limit: number): Promise<FollowUpResponse> => {
+const fetchFollowUpCheckups = async (page: number, limit: number, search: string): Promise<FollowUpResponse> => {
     const params = new URLSearchParams()
     params.set('page', String(page))
     params.set('limit', String(limit))
+    if (search) params.set('search', search)
 
     const res = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/follow-up-checkups?${params}`, {
         method: 'GET',
@@ -35,10 +36,10 @@ const fetchFollowUpCheckups = async (page: number, limit: number): Promise<Follo
     return res.json()
 }
 
-export const useGetFollowUpCheckup = (page = 1, limit = 10) => {
+export const useGetFollowUpCheckup = (page = 1, search = '', limit = 10) => {
     return useQuery({
-        queryKey: ['follow-up-checkups', page],
-        queryFn: () => fetchFollowUpCheckups(page, limit),
+        queryKey: ['follow-up-checkups', page, search],
+        queryFn: () => fetchFollowUpCheckups(page, limit, search),
         placeholderData: (previousData) => previousData,
         staleTime: 5 * 60 * 1000,
     })

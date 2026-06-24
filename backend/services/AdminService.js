@@ -311,9 +311,16 @@ class AdminService {
         }
     }
 
-    async getFollowUpCheckups(limit = 10, page = 1) {
+    async getFollowUpCheckups(limit = 10, page = 1, search = '') {
         const skip = (page - 1) * limit
         const query = { status: 'follow-up' }
+
+        if (search?.trim()) {
+            query.$or = [
+                { name: { $regex: search.trim(), $options: 'i' } },
+                { purpose: { $regex: search.trim(), $options: 'i' } }
+            ]
+        }
 
         const [appointments, total] = await Promise.all([
             Appointment.find(query)
