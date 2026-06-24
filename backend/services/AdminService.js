@@ -317,12 +317,15 @@ class AdminService {
 
         const [appointments, total] = await Promise.all([
             Appointment.find(query)
+                .select('name purpose')
                 .sort({ updatedAt: -1 })
                 .skip(skip)
                 .limit(limit)
                 .lean(),
             Appointment.countDocuments(query)
         ])
+
+        console.log(appointments)
 
         return {
             appointments,

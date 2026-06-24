@@ -1,12 +1,13 @@
 import { useState } from 'react'
-import { RefreshCcw } from 'lucide-react'
+import { RefreshCcw, SquareArrowOutUpRight, CircleCheckBig } from 'lucide-react'
 import { Loader } from '../../components/Loader'
 import { NotFound } from '../../components/NotFound'
 import { Error } from '../../components/Error'
+import { Button } from '../../ui/form/Buttons'
 import { PaginationUI } from '../../ui/form/PaginationUI'
 import { useGetFollowUpCheckup } from '../../hooks/useGetFollowUpCheckup'
 
-const TABLE_HEADERS = ['Name', 'Purpose', 'Date', 'Time', 'Reason']
+const TABLE_HEADERS = ['Name', 'Purpose', 'Actions']
 
 const FollowUpCheckup = () => {
     const [page, setPage] = useState(1)
@@ -21,8 +22,6 @@ const FollowUpCheckup = () => {
     if (isError) {
         return <Error label={(error as Error)?.message ?? 'Failed to load follow-up checkups'} />
     }
-
-    console.log(appointments)
 
     return (
         <section className="w-full">
@@ -90,28 +89,24 @@ const FollowUpCheckup = () => {
                                             <td className="px-2 py-2 text-xs sm:px-3 sm:py-2 sm:text-sm md:px-4 md:py-3 text-gray-500 capitalize whitespace-nowrap">
                                                 {appoint.name}
                                             </td>
-                                            <td className="px-2 py-2 text-xs sm:px-3 sm:py-2 sm:text-sm md:px-4 md:py-3 text-gray-500 whitespace-nowrap">
+                                            <td className="capitalize px-2 py-2 text-xs sm:px-3 sm:py-2 sm:text-sm md:px-4 md:py-3 text-gray-500 whitespace-nowrap">
                                                 {appoint.purpose}
                                             </td>
-                                            <td className="px-2 py-2 text-xs sm:px-3 sm:py-2 sm:text-sm md:px-4 md:py-3 text-gray-500 whitespace-nowrap">
-                                                {new Date(appoint.selectedDate).toLocaleDateString("en-US", {
-                                                    weekday: "short",
-                                                    year: "numeric",
-                                                    month: "long",
-                                                    day: "numeric",
-                                                })}
-                                            </td>
-                                            <td className="px-2 py-2 text-xs sm:px-3 sm:py-2 sm:text-sm md:px-4 md:py-3 text-gray-500 whitespace-nowrap">
-                                                {new Date(`1970-01-01T${appoint.selectedTime}`).toLocaleTimeString("en-US", {
-                                                    hour: "numeric",
-                                                    minute: "2-digit",
-                                                    hour12: true,
-                                                })}
-                                            </td>
-                                            <td className="px-2 py-2 text-xs sm:px-3 sm:py-2 sm:text-sm md:px-4 md:py-3 text-gray-500 max-w-[200px]">
-                                                <span className="line-clamp-2">
-                                                    {appoint.followUpReason || '—'}
-                                                </span>
+                                            <td className="px-2 py-2 text-xs sm:px-3 sm:py-2 sm:text-sm md:px-4 md:py-3 text-gray-500">
+                                                <div className="flex gap-2">
+                                                    <Button
+                                                        className="border border-btn-black-bg font-semibold text-btn-black-bg hover:bg-btn-black-bg/10 transition whitespace-nowrap"
+                                                    >
+                                                        <SquareArrowOutUpRight />
+                                                        View Appointment
+                                                    </Button>
+                                                    <Button
+                                                        className="text-xs sm:text-sm  cursor-pointer p-4 rounded-sm tracking-wide flex items-center justify-center gap-2 bg-btn-black-bg hover:bg-btn-black-hover-header-bg text-white transition-colors font-semibold whitespace-nowrap"
+                                                    >
+                                                        <CircleCheckBig />
+                                                        Mark As Done
+                                                    </Button>
+                                                </div>
                                             </td>
                                         </tr>
                                     ))
