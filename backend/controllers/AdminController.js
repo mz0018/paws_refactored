@@ -119,6 +119,15 @@ class AdminController {
         }
     }
 
+    async getAppointmentById(req, res, next) {
+        try {
+            const result = await AdminService.getAppointmentById(req.params.id)
+            res.status(200).json(result)
+        } catch (error) {
+            next(error)
+        }
+    }
+
 }
 
 export default new AdminController()

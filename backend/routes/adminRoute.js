@@ -81,4 +81,10 @@ router.get(
     AdminController.getFollowUpCheckups
 )
 
+router.get(
+    '/appointment/:id',
+    authorizeViaCookie,
+    AdminController.getAppointmentById
+)
+
 export default router

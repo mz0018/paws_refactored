@@ -12,8 +12,6 @@ import { useUpdateAppointment } from '../../hooks/useUpdateAppointment'
 
 type FollowUpCheckUpProps = {
     _id: string
-    name: string
-    purpose: string
 }
 
 const TABLE_HEADERS = ['Name', 'Purpose', 'Actions']
@@ -105,7 +103,7 @@ const FollowUpCheckup = () => {
                                             <td className="px-2 py-2 text-xs sm:px-3 sm:py-2 sm:text-sm md:px-4 md:py-3 text-gray-500">
                                                 <div className="flex gap-2">
                                                     <Button
-                                                        onClick={() => setSelectedAppointment(appoint)}
+                                                        onClick={() => setSelectedAppointment({ _id: appoint._id })}
                                                         className="border border-btn-black-bg font-semibold text-btn-black-bg hover:bg-btn-black-bg/10 transition whitespace-nowrap"
                                                     >
                                                         <SquareArrowOutUpRight />
@@ -113,7 +111,7 @@ const FollowUpCheckup = () => {
                                                     </Button>
                                                     <Button
                                                         onClick={() => handleUpdateAppointment(appoint._id, 'mark-done')}
-                                                        className="text-xs sm:text-sm  cursor-pointer p-4 rounded-sm tracking-wide flex items-center justify-center gap-2 bg-btn-black-bg hover:bg-btn-black-hover-header-bg text-white transition-colors font-semibold whitespace-nowrap"
+                                                        className="bg-btn-black-bg hover:bg-btn-black-hover-header-bg text-white transition-colors font-semibold whitespace-nowrap"
                                                     >
                                                         <CircleCheckBig />
                                                         Mark As Done
@@ -131,7 +129,7 @@ const FollowUpCheckup = () => {
             <ViewAppointmentModal
                 isOpen={!!selectedAppointment}
                 onClose={() => setSelectedAppointment(null)}
-                appointment={selectedAppointment}
+                appointmentId={selectedAppointment?._id ?? null}
             />
         </section>
     )

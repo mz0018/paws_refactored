@@ -334,6 +334,16 @@ class AdminService {
         }
     }
 
+    async getAppointmentById(id) {
+        const appointment = await Appointment.findById(id).lean()
+
+        if (!appointment) {
+            throw new ErrorController('Appointment not found', 404)
+        }
+
+        return appointment
+    }
+
     async updateAppointmentStatus(id, status, followUpReason) {
         const validStatuses = ['mark-done', 'follow-up']
 
