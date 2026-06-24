@@ -46,7 +46,7 @@ export const FollowUpModal = ({
                     Schedule <span className="text-btn-black-bg">Follow-Up</span>
                 </h2>
 
-                <div className="space-y-3 mb-4 text-sm">
+                {/* <div className="space-y-3 mb-4 text-sm">
                     <div>
                         <span className="font-semibold">Name: </span>
                         <span className="text-gray-600">{appointment.name}</span>
@@ -76,6 +76,30 @@ export const FollowUpModal = ({
                             })}
                         </span>
                     </div>
+                </div> */}
+
+                <div className="mb-4">
+                    <p>
+                        <span className="font-semibold capitalize">Client:</span> {appointment.name}
+                    </p>
+
+                    <p>
+                        <span className="font-semibold capitalize">Purpose:</span> {appointment.purpose}
+                    </p>
+
+                    <p>
+                        <span className="font-semibold">Scheduled:</span>{" "}
+                        {new Date(appointment.selectedDate).toLocaleDateString("en-US", {
+                                weekday: "short",
+                                year: "numeric",
+                                month: "long",
+                                day: "numeric",
+                            })} at {new Date(`1970-01-01T${appointment.selectedTime}`).toLocaleTimeString("en-US", {
+                                hour: "numeric",
+                                minute: "2-digit",
+                                hour12: true,
+                            })} 
+                    </p>
                 </div>
 
                 <div className="mb-4">

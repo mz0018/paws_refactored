@@ -41,7 +41,7 @@ export const ViewAppointmentModal = ({ isOpen, onClose, appointmentId }: ViewApp
                             <span className="text-gray-600 capitalize">{appointment.purpose}</span>
                         </div>
                         <div>
-                            <span className="font-semibold">Date: </span>
+                            <span className="font-semibold">Date Scheduled: </span>
                             <span className="text-gray-600">
                                 {new Date(appointment.selectedDate).toLocaleDateString("en-US", {
                                     weekday: "short", year: "numeric", month: "long", day: "numeric"
@@ -49,7 +49,7 @@ export const ViewAppointmentModal = ({ isOpen, onClose, appointmentId }: ViewApp
                             </span>
                         </div>
                         <div>
-                            <span className="font-semibold">Time: </span>
+                            <span className="font-semibold">Time Scheduled: </span>
                             <span className="text-gray-600">
                                 {new Date(`1970-01-01T${appointment.selectedTime}`).toLocaleTimeString("en-US", {
                                     hour: "numeric", minute: "2-digit", hour12: true
@@ -69,12 +69,21 @@ export const ViewAppointmentModal = ({ isOpen, onClose, appointmentId }: ViewApp
                     </div>
                 )}
 
-                <Button
-                    onClick={onClose}
-                    className="text-text-body border border-gray-400 font-semibold bg-none w-full hover:bg-gray-50"
-                >
-                    Close
-                </Button>
+                <div className="flex gap-2">
+                    <Button
+                        onClick={onClose}
+                        className="text-text-body border border-gray-400 font-semibold bg-none w-full hover:bg-gray-50"
+                    >
+                        Close
+                    </Button>
+
+                    <Button
+                        onClick={onClose}
+                        className="w-full text-xs sm:text-sm  cursor-pointer p-4 rounded-sm tracking-wide flex items-center justify-center gap-2 bg-btn-black-bg hover:bg-btn-black-hover-header-bg text-white transition-colors font-semibold whitespace-nowrap"
+                    >
+                        Follow up
+                    </Button>
+                </div>
             </div>
         </Modal>
     )
