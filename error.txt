@@ -1,0 +1,93 @@
+
+C:\Users\Admin\Desktop\paws_refactored\backend>node server.js
+[dotenv@17.3.1] injecting env (8) from .env -- tip: 🛠️  run anywhere with `dotenvx run -- yourcommand`
+[dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+MongoDB 200
+Running on PORT 5000
+Error: TypeError: Cannot read properties of undefined (reading 'followUpReason')
+    at updateStatusAppointment (file:///C:/Users/Admin/Desktop/paws_refactored/backend/controllers/AdminController.js:100:45)
+    at Layer.handleRequest (C:\Users\Admin\Desktop\paws_refactored\backend\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\Admin\Desktop\paws_refactored\backend\node_modules\router\lib\route.js:157:13)
+    at authorizeViaCookie (file:///C:/Users/Admin/Desktop/paws_refactored/backend/middleware/authorizeViaCookie.js:21:9)
+    at Layer.handleRequest (C:\Users\Admin\Desktop\paws_refactored\backend\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\Admin\Desktop\paws_refactored\backend\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (C:\Users\Admin\Desktop\paws_refactored\backend\node_modules\router\lib\route.js:117:3)
+    at handle (C:\Users\Admin\Desktop\paws_refactored\backend\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (C:\Users\Admin\Desktop\paws_refactored\backend\node_modules\router\lib\layer.js:152:17)
+    at C:\Users\Admin\Desktop\paws_refactored\backend\node_modules\router\index.js:295:15
+Error: TypeError: Cannot read properties of undefined (reading 'followUpReason')
+    at updateStatusAppointment (file:///C:/Users/Admin/Desktop/paws_refactored/backend/controllers/AdminController.js:100:45)
+    at Layer.handleRequest (C:\Users\Admin\Desktop\paws_refactored\backend\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\Admin\Desktop\paws_refactored\backend\node_modules\router\lib\route.js:157:13)
+    at authorizeViaCookie (file:///C:/Users/Admin/Desktop/paws_refactored/backend/middleware/authorizeViaCookie.js:21:9)
+    at Layer.handleRequest (C:\Users\Admin\Desktop\paws_refactored\backend\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\Admin\Desktop\paws_refactored\backend\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (C:\Users\Admin\Desktop\paws_refactored\backend\node_modules\router\lib\route.js:117:3)
+    at handle (C:\Users\Admin\Desktop\paws_refactored\backend\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (C:\Users\Admin\Desktop\paws_refactored\backend\node_modules\router\lib\layer.js:152:17)
+    at C:\Users\Admin\Desktop\paws_refactored\backend\node_modules\router\index.js:295:15
+Error: TypeError: Cannot read properties of undefined (reading 'followUpReason')
+    at updateStatusAppointment (file:///C:/Users/Admin/Desktop/paws_refactored/backend/controllers/AdminController.js:100:45)
+    at Layer.handleRequest (C:\Users\Admin\Desktop\paws_refactored\backend\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\Admin\Desktop\paws_refactored\backend\node_modules\router\lib\route.js:157:13)
+    at authorizeViaCookie (file:///C:/Users/Admin/Desktop/paws_refactored/backend/middleware/authorizeViaCookie.js:21:9)
+    at Layer.handleRequest (C:\Users\Admin\Desktop\paws_refactored\backend\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\Admin\Desktop\paws_refactored\backend\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (C:\Users\Admin\Desktop\paws_refactored\backend\node_modules\router\lib\route.js:117:3)
+    at handle (C:\Users\Admin\Desktop\paws_refactored\backend\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (C:\Users\Admin\Desktop\paws_refactored\backend\node_modules\router\lib\layer.js:152:17)
+    at C:\Users\Admin\Desktop\paws_refactored\backend\node_modules\router\index.js:295:15
+Error: TypeError: Cannot read properties of undefined (reading 'followUpReason')
+    at updateStatusAppointment (file:///C:/Users/Admin/Desktop/paws_refactored/backend/controllers/AdminController.js:100:45)
+    at Layer.handleRequest (C:\Users\Admin\Desktop\paws_refactored\backend\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\Admin\Desktop\paws_refactored\backend\node_modules\router\lib\route.js:157:13)
+    at authorizeViaCookie (file:///C:/Users/Admin/Desktop/paws_refactored/backend/middleware/authorizeViaCookie.js:21:9)
+    at Layer.handleRequest (C:\Users\Admin\Desktop\paws_refactored\backend\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\Admin\Desktop\paws_refactored\backend\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (C:\Users\Admin\Desktop\paws_refactored\backend\node_modules\router\lib\route.js:117:3)
+    at handle (C:\Users\Admin\Desktop\paws_refactored\backend\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (C:\Users\Admin\Desktop\paws_refactored\backend\node_modules\router\lib\layer.js:152:17)
+    at C:\Users\Admin\Desktop\paws_refactored\backend\node_modules\router\index.js:295:15
+
+
+Microsoft Windows [Version 10.0.22621.4317]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\Admin\Desktop\paws_refactored\backend>node server.js
+[dotenv@17.3.1] injecting env (8) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+[dotenv@17.3.1] injecting env (0) from .env -- tip: ⚙️  write to custom object with { processEnv: myObject }
+MongoDB 200
+Running on PORT 5000
+Error: TypeError: Cannot read properties of undefined (reading 'followUpReason')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    at updateStatusAppointment (file:///C:/Users/Admin/Desktop/paws_refactored/backend/controllers/AdminController.js:100:45)
+    at Layer.handleRequest (C:\Users\Admin\Desktop\paws_refactored\backend\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\Admin\Desktop\paws_refactored\backend\node_modules\router\lib\route.js:157:13)
+    at authorizeViaCookie (file:///C:/Users/Admin/Desktop/paws_refactored/backend/middleware/authorizeViaCookie.js:21:9)
+    at Layer.handleRequest (C:\Users\Admin\Desktop\paws_refactored\backend\node_modules\router\lib\layer.js:152:17)
+    at next (C:\Users\Admin\Desktop\paws_refactored\backend\node_modules\router\lib\route.js:157:13)
+    at Route.dispatch (C:\Users\Admin\Desktop\paws_refactored\backend\node_modules\router\lib\route.js:117:3)
+    at handle (C:\Users\Admin\Desktop\paws_refactored\backend\node_modules\router\index.js:435:11)
+    at Layer.handleRequest (C:\Users\Admin\Desktop\paws_refactored\backend\node_modules\router\lib\layer.js:152:17)
+    at C:\Users\Admin\Desktop\paws_refactored\backend\node_modules\router\index.js:295:15
+
+
+
+
+
+

@@ -65,18 +65,25 @@ export const useUpdateAppointment = () => {
 
         if (!success) return
 
+        const removeFromCache = (oldData: any) => {
+            if (!oldData) return oldData
+            return {
+                ...oldData,
+                appointments: oldData.appointments.filter(
+                    (appointment: any) => appointment._id !== appointmentId
+                ),
+                total: oldData.total - 1,
+            }
+        }
+
         queryClient.setQueriesData(
             { queryKey: ['appointments'] },
-            (oldData: any) => {
-                if (!oldData) return oldData
-                return {
-                    ...oldData,
-                    appointments: oldData.appointments.filter(
-                        (appointment: any) => appointment._id !== appointmentId
-                    ),
-                    total: oldData.total - 1,
-                }
-            }
+            removeFromCache
+        )
+
+        queryClient.setQueriesData(
+            { queryKey: ['follow-up-checkups'] },
+            removeFromCache
         )
 
     }

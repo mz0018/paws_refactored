@@ -97,7 +97,7 @@ class AdminController {
         try {
             const id = req.params.id
             const status = req.params.status
-            const followUpReason = req.body.followUpReason
+            const followUpReason = req.body?.followUpReason
             
             const result = await AdminService.updateAppointmentStatus(id, status, followUpReason)
             res.status(200).json(result)
