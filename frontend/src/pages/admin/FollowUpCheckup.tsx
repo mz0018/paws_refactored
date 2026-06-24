@@ -5,14 +5,24 @@ import { NotFound } from '../../components/NotFound'
 import { Error } from '../../components/Error'
 import { Button } from '../../ui/form/Buttons'
 import { PaginationUI } from '../../ui/form/PaginationUI'
+import { ViewAppointmentModal } from '../../components/modals/ViewAppointmentModal'
+
 import { useGetFollowUpCheckup } from '../../hooks/useGetFollowUpCheckup'
+import { useUpdateAppointment } from '../../hooks/useUpdateAppointment'
+
+type FollowUpCheckUpProps = {
+    _id: string
+    name: string
+    purpose: string
+}
 
 const TABLE_HEADERS = ['Name', 'Purpose', 'Actions']
 
 const FollowUpCheckup = () => {
     const [page, setPage] = useState(1)
-
+    const [selectedAppointment, setSelectedAppointment] = useState<FollowUpCheckUpProps | null>(null)
     const { data, isLoading, isFetching, isError, error, refetch } = useGetFollowUpCheckup(page)
+    const { handleUpdateAppointment, statusLoading } = useUpdateAppointment()
 
     const appointments = data?.appointments ?? []
     const totalPages = data?.totalPages ?? 1
@@ -95,12 +105,14 @@ const FollowUpCheckup = () => {
                                             <td className="px-2 py-2 text-xs sm:px-3 sm:py-2 sm:text-sm md:px-4 md:py-3 text-gray-500">
                                                 <div className="flex gap-2">
                                                     <Button
+                                                        onClick={() => setSelectedAppointment(appoint)}
                                                         className="border border-btn-black-bg font-semibold text-btn-black-bg hover:bg-btn-black-bg/10 transition whitespace-nowrap"
                                                     >
                                                         <SquareArrowOutUpRight />
                                                         View Appointment
                                                     </Button>
                                                     <Button
+                                                        onClick={() => handleUpdateAppointment(appoint._id, 'mark-done')}
                                                         className="text-xs sm:text-sm  cursor-pointer p-4 rounded-sm tracking-wide flex items-center justify-center gap-2 bg-btn-black-bg hover:bg-btn-black-hover-header-bg text-white transition-colors font-semibold whitespace-nowrap"
                                                     >
                                                         <CircleCheckBig />
@@ -116,6 +128,11 @@ const FollowUpCheckup = () => {
                     </div>
                 )}
             </div>
+            <ViewAppointmentModal
+                isOpen={!!selectedAppointment}
+                onClose={() => setSelectedAppointment(null)}
+                appointment={selectedAppointment}
+            />
         </section>
     )
 }

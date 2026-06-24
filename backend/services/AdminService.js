@@ -325,8 +325,6 @@ class AdminService {
             Appointment.countDocuments(query)
         ])
 
-        console.log(appointments)
-
         return {
             appointments,
             total,
