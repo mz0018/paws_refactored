@@ -24,15 +24,18 @@ const AppointmentLogs = () => {
     return (
         <section className="w-full">
             <div className="bg-white p-5">
-                <h1 className="text-2xl font-bold text-text-body">
-                    Appointment <span className="text-btn-black-bg">Activity Logs</span>
-                </h1>
-                <p className="mb-4 text-text-body tracking-wider">
-                    Track all changes and updates made to appointments.
-                </p>
+                <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-4 mb-5">
+                    <div>
+                        <h1 className="text-2xl font-bold text-text-body">
+                            Appointment <span className="text-btn-black-bg">Activity Logs</span>
+                        </h1>
 
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-4 mb-5 items-end">
-                    <div className="lg:col-span-8 flex items-center justify-end gap-2">
+                        <p className="mt-1 text-text-body tracking-wider">
+                            Track all changes and updates made to appointments.
+                        </p>
+                    </div>
+
+                    <div className="flex items-center gap-2 lg:self-end">
                         <PaginationUI
                             page={page}
                             totalPages={totalPages}
