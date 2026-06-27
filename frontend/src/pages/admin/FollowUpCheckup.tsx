@@ -16,7 +16,7 @@ type FollowUpCheckUpProps = {
     _id: string
 }
 
-const TABLE_HEADERS = ['Name', 'Purpose', 'Actions']
+const TABLE_HEADERS = ['Client Name', 'Purpose', 'Actions']
 
 const FollowUpCheckup = () => {
     const [page, setPage] = useState(1)
@@ -61,7 +61,7 @@ const FollowUpCheckup = () => {
                             value={searchQuery}
                             onChange={e => setSearchQuery(e.target.value)}
                             icon={<Search size={16} />}
-                            placeholder="Search by name or purpose"
+                            placeholder="Search by client name"
                         />
                     </div>
 

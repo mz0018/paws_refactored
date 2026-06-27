@@ -72,10 +72,23 @@ export const ViewAppointmentModal = ({ isOpen, onClose, appointmentId, onSubmitF
                             <span className="font-semibold">Status: </span>
                             <span className="text-gray-600 capitalize">{appointment.status}</span>
                         </div>
-                        {appointment.followUpReason && appointment.followUpReason && (
+                        {appointment.followUpReason && appointment.followUpReason?.length > 0 && (
                             <div>
-                                <span className="font-semibold">Follow-Up Reason: </span>
-                                <span className="text-gray-600">{appointment.followUpReason.join(', ')}</span>
+                                <span className="font-semibold block mb-2">Follow-Up History</span>
+
+                                <div className="space-y-2">
+                                    {appointment.followUpReason.map((reason, index) => (
+                                        <div
+                                            key={index}
+                                            className="rounded-md border border-gray-200 bg-gray-50 p-3"
+                                        >
+                                            <div className="text-xs font-medium text-gray-500 mb-1">
+                                                Follow-Up #{index + 1}
+                                            </div>
+                                            <p className="text-gray-700">{reason}</p>
+                                        </div>
+                                    ))}
+                                </div>
                             </div>
                         )}
                     </div>
