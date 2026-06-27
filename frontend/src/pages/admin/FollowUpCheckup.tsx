@@ -24,7 +24,12 @@ const FollowUpCheckup = () => {
     const debouncedSearch = useDebounce(searchQuery, 300)
     const [selectedAppointment, setSelectedAppointment] = useState<FollowUpCheckUpProps | null>(null)
     const { data, isLoading, isFetching, isError, error, refetch } = useGetFollowUpCheckup(page, debouncedSearch)
-    const { handleUpdateAppointment } = useUpdateAppointment()
+    const { handleUpdateAppointment, statusLoading } = useUpdateAppointment()
+
+    const handleFollowUpSubmit = async (appointmentId: string, reason: string,) => {
+        await handleUpdateAppointment(appointmentId, 'follow-up', reason)
+        setSelectedAppointment(null)
+    }
 
     useEffect(() => {
         setPage(1)
@@ -150,6 +155,8 @@ const FollowUpCheckup = () => {
                 isOpen={!!selectedAppointment}
                 onClose={() => setSelectedAppointment(null)}
                 appointmentId={selectedAppointment?._id ?? null}
+                onSubmitFollowUp={handleFollowUpSubmit}
+                isFollowUpLoading={statusLoading}
             />
         </section>
     )

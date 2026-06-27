@@ -1,19 +1,31 @@
+import { useState } from 'react'
 import { Modal } from '../../ui/form/Modal'
 import { Button } from '../../ui/form/Buttons'
 import { Loader } from '../Loader'
 import { Error } from '../Error'
+import { FollowUpModal } from './FollowUpModal'
 import { useGetDetailedAppointment } from '../../hooks/useGetDetailedAppointment'
 
 type ViewAppointmentModalProps = {
     isOpen: boolean
     onClose: () => void
     appointmentId: string | null
+    onSubmitFollowUp: (appointmentId: string, reason: string) => Promise<void>
+    isFollowUpLoading?: boolean
 }
 
-export const ViewAppointmentModal = ({ isOpen, onClose, appointmentId }: ViewAppointmentModalProps) => {
+export const ViewAppointmentModal = ({ isOpen, onClose, appointmentId, onSubmitFollowUp, isFollowUpLoading }: ViewAppointmentModalProps) => {
+    const [showFollowUp, setShowFollowUp] = useState<boolean>(false)
     const { data: appointment, isLoading, isError, error } = useGetDetailedAppointment(appointmentId)
 
+    const handleFollowUpSubmit = async (id: string, reason: string) => {
+        await onSubmitFollowUp(id, reason)
+        setShowFollowUp(false)
+        onClose()
+    }
+
     return (
+        <>
         <Modal isOpen={isOpen} onClose={onClose} closeOnBackdrop={false}>
             <div className="p-3 sm:p-4 text-text-body">
                 <h2 className="text-xl font-bold mb-4 text-footer-bg leading-tight">
@@ -63,7 +75,7 @@ export const ViewAppointmentModal = ({ isOpen, onClose, appointmentId }: ViewApp
                         {appointment.followUpReason && appointment.followUpReason && (
                             <div>
                                 <span className="font-semibold">Follow-Up Reason: </span>
-                                <span className="text-gray-600">{appointment.followUpReason}</span>
+                                <span className="text-gray-600">{appointment.followUpReason.join(', ')}</span>
                             </div>
                         )}
                     </div>
@@ -78,7 +90,7 @@ export const ViewAppointmentModal = ({ isOpen, onClose, appointmentId }: ViewApp
                     </Button>
 
                     <Button
-                        onClick={onClose}
+                        onClick={() => setShowFollowUp(true)}
                         className="w-full text-xs sm:text-sm  cursor-pointer p-4 rounded-sm tracking-wide flex items-center justify-center gap-2 bg-btn-black-bg hover:bg-btn-black-hover-header-bg text-white transition-colors font-semibold whitespace-nowrap"
                     >
                         Follow up
@@ -86,5 +98,16 @@ export const ViewAppointmentModal = ({ isOpen, onClose, appointmentId }: ViewApp
                 </div>
             </div>
         </Modal>
+
+        {appointment && (
+            <FollowUpModal
+                isOpen={showFollowUp}
+                onClose={() => setShowFollowUp(false)}
+                appointment={appointment}
+                onSubmit={handleFollowUpSubmit}
+                isLoading={isFollowUpLoading}
+            />
+        )}
+        </>
     )
 }

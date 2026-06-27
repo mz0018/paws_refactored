@@ -81,10 +81,9 @@ export const useUpdateAppointment = () => {
             removeFromCache
         )
 
-        queryClient.setQueriesData(
-            { queryKey: ['follow-up-checkups'] },
-            removeFromCache
-        )
+        queryClient.invalidateQueries({ queryKey: ['follow-up-checkups'] })
+
+        queryClient.invalidateQueries({ queryKey: ['appointment', appointmentId] })
 
     }
 
