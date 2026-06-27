@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { Form } from '../../ui/form/Form'
 import { Input } from '../../ui/form/Input'
 import { Button } from '../../ui/form/Buttons'
@@ -8,13 +8,17 @@ import { Textarea } from '../../ui/form/Textarea'
 import { ProductImages } from '../../ui/form/ProductImages'
 import { useAddProduct } from '../../hooks/useAddProduct'
 import { ClipLoader } from 'react-spinners'
-import { Upload, UploadCloud, Image, Send, Save } from 'lucide-react'
-import { useRef } from 'react'
+import {
+    Upload,
+    UploadCloud,
+    Image,
+    Send,
+    Save
+} from 'lucide-react'
 
 import { PRODUCT_CATEGORIES } from '../../mocks/categories'
 
 const AddProducts = () => {
-
     const fileRef = useRef<HTMLInputElement | null>(null)
 
     const {
@@ -30,211 +34,296 @@ const AddProducts = () => {
     } = useAddProduct()
 
     const isDisabled =
-    isLoading || (conflictName !== '' && productName.trim() === conflictName.trim())
+        isLoading ||
+        (conflictName !== '' &&
+            productName.trim() === conflictName.trim())
 
     useEffect(() => {
         if (hasError) {
-          document.getElementById('form-add-error')?.scrollIntoView({
-            behavior: 'smooth',
-            block: 'center'
-        })
+            document.getElementById('form-add-error')?.scrollIntoView({
+                behavior: 'smooth',
+                block: 'center'
+            })
         }
-      }, [hasError])
+    }, [hasError])
 
     return (
-        <>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+        <section className="w-full">
+            <div className="bg-white p-6">
+                {/* Header */}
+                <div className="mb-8">
+                    <h1 className="text-2xl font-bold text-text-body">
+                        Add{' '}
+                        <span className="text-btn-black-bg">
+                            Product
+                        </span>
+                    </h1>
 
-                {/* LEFT SIDE */}
-                <div className="space-y-6">
+                    <p className="mt-1 text-text-body tracking-wide">
+                        Create a new product and publish it to your
+                        inventory.
+                    </p>
+                </div>
 
-                    <div className="
-                        border-3 border-gray-300 border-dashed rounded-lg 
-                        min-h-[440px] flex flex-col justify-center items-center 
-                        text-center p-6 overflow-hidden
-                    ">
+                <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+                    {/* LEFT SIDE */}
+                    <div className="lg:col-span-5 space-y-6">
+                        <div className="border border-gray-200 rounded-xl p-6">
+                            <div
+                                className="
+                                    border-2 border-dashed border-gray-300
+                                    rounded-xl
+                                    min-h-[360px]
+                                    flex flex-col
+                                    justify-center
+                                    items-center
+                                    text-center
+                                    p-6
+                                "
+                            >
+                                <UploadCloud className="w-14 h-14 text-gray-400 mb-5" />
 
-                        <UploadCloud className="mb-4 w-12 h-12 text-gray-400" />
+                                <h3 className="text-lg font-semibold text-text-body">
+                                    Upload Product Images
+                                </h3>
 
-                        <p className="font-semibold text-gray-500 mb-3 break-words max-w-full">
-                            Drag & Drop Images Here
-                        </p>
+                                <p className="text-sm text-gray-500 mt-2 max-w-xs">
+                                    Drag and drop images here or
+                                    browse your device to upload
+                                    product photos.
+                                </p>
 
-                        <p className="text-gray-400 text-sm mb-4">
-                            or
-                        </p>
+                                <Input
+                                    ref={fileRef}
+                                    type="file"
+                                    accept="image/*"
+                                    multiple
+                                    onChange={handleFileChange}
+                                    className="hidden"
+                                    error={hasError.productImages}
+                                />
 
-                        <Input
-                            ref={fileRef}
-                            type="file"
-                            accept="image/*"
-                            onChange={handleFileChange}
-                            multiple
-                            className="hidden"
-                            error={hasError.productImages}
-                        />
+                                <Button
+                                    type="button"
+                                    onClick={() =>
+                                        fileRef.current?.click()
+                                    }
+                                    className="mt-6 flex items-center gap-2"
+                                >
+                                    <Upload className="w-4 h-4" />
+                                    Upload Images
+                                </Button>
+                            </div>
+                        </div>
 
-                        <Button
-                            type="button"
-                            onClick={() => fileRef.current?.click()}
-                        >
-                            <Upload className="mr-2" />
-                            Upload Images
-                        </Button>
-                    </div>
+                        {/* Images */}
+                        <div>
+                            <div className="flex items-center justify-between mb-3">
+                                <h3 className="font-semibold text-text-body">
+                                    Images
+                                </h3>
 
-                    {/* Thumbnails */}
-                    <div>
-                        <p className="font-semibold text-sm text-gray-500 mb-2">
-                            Thumbnails:
-                        </p>
+                                <span className="text-sm text-gray-500">
+                                    {files.length}/5
+                                </span>
+                            </div>
 
-                        <div className="grid grid-cols-5 gap-3">
-                            {Array.from({ length: 5 }).map((_, index) => {
-                                const item = files[index]
+                            <div className="grid grid-cols-5 gap-3">
+                                {Array.from({ length: 5 }).map(
+                                    (_, index) => {
+                                        const item = files[index]
 
-                                return (
-                                    <div key={index} className="relative overflow-hidden">
-
-                                        {item ? (
-                                            <>
-                                                <div className="w-full aspect-square overflow-hidden rounded-sm">
-                                                    <ProductImages
-                                                        src={item.preview}
-                                                        alt={item.file.name}
-                                                        className="w-full h-full object-cover"
-                                                    />
-                                                </div>
-
-                                                <button
-                                                    type="button"
-                                                    onClick={() => handleRemoveFile(item)}
-                                                    className="absolute top-1 right-1 bg-red-500 text-white text-xs px-2 py-1 rounded z-10"
-                                                >
-                                                    ✕
-                                                </button>
-                                            </>
-                                        ) : (
+                                        return (
                                             <div
-                                                className="
-                                                    border border-gray-300 rounded-sm w-full aspect-square 
-                                                    flex flex-col items-center justify-center text-gray-400
-                                                    overflow-hidden
-                                                "
+                                                key={index}
+                                                className="relative"
                                             >
-                                                <Image className="w-6 h-6 mb-1" />
+                                                {item ? (
+                                                    <>
+                                                        <div className="aspect-square rounded-lg overflow-hidden border border-gray-200">
+                                                            <ProductImages
+                                                                src={
+                                                                    item.preview
+                                                                }
+                                                                alt={
+                                                                    item
+                                                                        .file
+                                                                        .name
+                                                                }
+                                                                className="w-full h-full object-cover"
+                                                            />
+                                                        </div>
+
+                                                        <button
+                                                            type="button"
+                                                            onClick={() =>
+                                                                handleRemoveFile(
+                                                                    item
+                                                                )
+                                                            }
+                                                            className="absolute top-1 right-1 bg-red-500 hover:bg-red-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs transition-colors"
+                                                        >
+                                                            ✕
+                                                        </button>
+                                                    </>
+                                                ) : (
+                                                    <div className="aspect-square rounded-lg border border-dashed border-gray-300 flex items-center justify-center text-gray-400">
+                                                        <Image className="w-6 h-6" />
+                                                    </div>
+                                                )}
                                             </div>
-                                        )}
-                                    </div>
-                                )
-                            })}
+                                        )
+                                    }
+                                )}
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                {/* RIGHT SIDE */}
-                <div className="md:border-l md:border-gray-300 md:pl-6">
-                    <Form onSubmit={handleSubmit} className="space-y-4">
-
-                        <Input
-                            type="text"
-                            name="productName"
-                            label="Product name"
-                            placeholder="e.g. Ibuprofen 200mg Capsule"
-                            error={hasError.productName}
-                            onChange={(e) => setProductName(e.target.value)}
-                        />
-
-                        <Textarea
-                            name="productDescription"
-                            label="Description"
-                            placeholder="e.g. Describe dosage, usage, and important medical information"
-                            error={hasError.productDescription}
-                            className="
-                                min-h-[120px]
-                                max-h-[200px]
-                                overflow-y-auto
-                                resize-none
-                            "
-                        />
-
-                        <Input
-                            type="number"
-                            name="productPrice"
-                            label="Price"
-                            placeholder="₱0.00"
-                            error={hasError.productPrice}
-                            className="max-w-xs w-full"
-                        />
-
-                        <Select
-                            name="productCategory"
-                            label="Category"
-                            error={hasError.productCategory}
-                            className="max-w-xs w-full"
+                    {/* RIGHT SIDE */}
+                    <div className="lg:col-span-7">
+                        <Form
+                            onSubmit={handleSubmit}
+                            className="space-y-8"
                         >
-                            <option value="">Select Category</option>
-                            {PRODUCT_CATEGORIES.map(category => (
-                                <option key={category} value={category}>
-                                    {category}
-                                </option>
-                            ))}
-                        </Select>
+                            {/* Product Information */}
+                            <div>
+                                <h3 className="text-lg font-semibold text-text-body mb-5">
+                                    Product Information
+                                </h3>
 
-                        <Input
-                            type="number"
-                            name="stock"
-                            label="Stock quantity"
-                            placeholder="Stock Quantity"
-                            error={hasError.stock}
-                            className="max-w-xs w-full"
-                        />
+                                <div className="space-y-6">
+                                    <Input
+                                        type="text"
+                                        name="productName"
+                                        label="Product name"
+                                        placeholder="e.g. Ibuprofen 200mg Capsule"
+                                        error={
+                                            hasError.productName
+                                        }
+                                        onChange={(e) =>
+                                            setProductName(
+                                                e.target.value
+                                            )
+                                        }
+                                    />
 
-                        <ErrorText
-                            id='form-add-error'
-                            message={
-                                hasError.productName ||
-                                hasError.productCategory ||
-                                hasError.productDescription ||
-                                hasError.productPrice ||
-                                hasError.stock ||
-                                hasError.productImages ||
-                                hasError.general
-                            }
-                        />
+                                    <Textarea
+                                        name="productDescription"
+                                        label="Description"
+                                        placeholder="Describe dosage, usage, and important medical information."
+                                        error={
+                                            hasError.productDescription
+                                        }
+                                        className="
+                                            min-h-[140px]
+                                            max-h-[220px]
+                                            resize-none
+                                            overflow-y-auto
+                                        "
+                                    />
+                                </div>
+                            </div>
 
-                        <div className="flex justify-end gap-3">
+                            {/* Inventory */}
+                            <div>
+                                <h3 className="text-lg font-semibold text-text-body mb-5">
+                                    Inventory
+                                </h3>
 
-                            <Button
-                                type="button"
-                                className="bg-gray-200 text-black flex items-center gap-x-2"
-                            >
-                                <Save className="w-4 h-4" />
-                                Save
-                            </Button>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <Input
+                                        type="number"
+                                        name="productPrice"
+                                        label="Price"
+                                        placeholder="₱0.00"
+                                        error={
+                                            hasError.productPrice
+                                        }
+                                    />
 
-                            <Button
-                                type="submit"
-                                disabled={isDisabled}
-                                className="flex items-center gap-x-2"
-                            >
-                                {isLoading ? (
-                                    <ClipLoader size={20} color="white" />
-                                ) : (
-                                    <>
-                                        <Send className="w-4 h-4" />
-                                        <span>Publish</span>
-                                    </>
-                                )}
-                            </Button>
+                                    <Select
+                                        name="productCategory"
+                                        label="Category"
+                                        error={
+                                            hasError.productCategory
+                                        }
+                                    >
+                                        <option value="">
+                                            Select Category
+                                        </option>
 
-                        </div>
+                                        {PRODUCT_CATEGORIES.map(
+                                            (category) => (
+                                                <option
+                                                    key={category}
+                                                    value={
+                                                        category
+                                                    }
+                                                >
+                                                    {category}
+                                                </option>
+                                            )
+                                        )}
+                                    </Select>
+                                </div>
 
-                    </Form>
+                                <div className="mt-6">
+                                    <Input
+                                        type="number"
+                                        name="stock"
+                                        label="Stock Quantity"
+                                        placeholder="Enter stock quantity"
+                                        error={hasError.stock}
+                                    />
+                                </div>
+                            </div>
+
+                            <ErrorText
+                                id="form-add-error"
+                                message={
+                                    hasError.productName ||
+                                    hasError.productCategory ||
+                                    hasError.productDescription ||
+                                    hasError.productPrice ||
+                                    hasError.stock ||
+                                    hasError.productImages ||
+                                    hasError.general
+                                }
+                            />
+
+                            {/* Buttons */}
+                            <div className="flex justify-end gap-3 pt-2">
+                                <Button
+                                    type="button"
+                                    className="bg-gray-100 hover:bg-gray-200 text-text-body flex items-center gap-2"
+                                >
+                                    <Save className="w-4 h-4" />
+                                    Save Draft
+                                </Button>
+
+                                <Button
+                                    type="submit"
+                                    disabled={isDisabled}
+                                    className="flex items-center gap-2"
+                                >
+                                    {isLoading ? (
+                                        <ClipLoader
+                                            size={20}
+                                            color="white"
+                                        />
+                                    ) : (
+                                        <>
+                                            <Send className="w-4 h-4" />
+                                            Publish Product
+                                        </>
+                                    )}
+                                </Button>
+                            </div>
+                        </Form>
+                    </div>
                 </div>
-
             </div>
-        </>
+        </section>
     )
 }
 
