@@ -60,7 +60,7 @@ export const ViewAppointmentModal = ({ isOpen, onClose, appointmentId }: ViewApp
                             <span className="font-semibold">Status: </span>
                             <span className="text-gray-600 capitalize">{appointment.status}</span>
                         </div>
-                        {appointment.followUpReason && (
+                        {appointment.followUpReason && appointment.followUpReason && (
                             <div>
                                 <span className="font-semibold">Follow-Up Reason: </span>
                                 <span className="text-gray-600">{appointment.followUpReason}</span>

@@ -373,7 +373,7 @@ class AdminService {
         } else if (status === 'follow-up') {
             appointment.status = 'follow-up'
             if (followUpReason) {
-                appointment.followUpReason = followUpReason
+                appointment.followUpReason.push(followUpReason)
             }
         }
 

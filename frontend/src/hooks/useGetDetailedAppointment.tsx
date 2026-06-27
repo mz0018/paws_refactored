@@ -7,7 +7,7 @@ export type DetailedAppointment = {
     selectedDate: string
     selectedTime: string
     status: string
-    followUpReason?: string | null
+    followUpReason?: string[] | null
     completedAt?: string | null
 }
 
