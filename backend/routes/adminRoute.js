@@ -82,6 +82,12 @@ router.get(
 )
 
 router.get(
+    '/appointment-logs',
+    authorizeViaCookie,
+    AdminController.getAppointmentLogs
+)
+
+router.get(
     '/appointment/:id',
     authorizeViaCookie,
     AdminController.getAppointmentById

@@ -2,6 +2,7 @@ import mongoose from 'mongoose'
 import Order from '../models/order.model.js'
 import Product from '../models/product.model.js'
 import Appointment from '../models/appointment.model.js'
+import AppointmentLog from '../models/appointmentLog.model.js'
 
 import R2Service from '../services/R2Service.js'
 import ErrorController from '../controllers/ErrorController.js'
@@ -351,7 +352,7 @@ class AdminService {
         return appointment
     }
 
-    async updateAppointmentStatus(id, status, followUpReason) {
+    async updateAppointmentStatus(id, status, followUpReason, performedBy = null) {
         const validStatuses = ['mark-done', 'follow-up']
 
         if (!validStatuses.includes(status)) {
@@ -362,6 +363,8 @@ class AdminService {
         if (!appointment) {
             throw new ErrorController('Appointment not found', 404)
         }
+
+        const previousStatus = appointment.status
 
         if (status === 'mark-done') {
             if (appointment.status === 'completed') {
@@ -378,7 +381,40 @@ class AdminService {
         }
 
         await appointment.save()
+
+        await AppointmentLog.create({
+            appointmentId: appointment._id,
+            action: status === 'mark-done' ? 'completed' : 'follow-up_added',
+            previousStatus,
+            newStatus: appointment.status,
+            followUpReason: status === 'follow-up' ? followUpReason : undefined,
+            performedBy
+        })
+
         return { message: 'Appointment status updated', id}
+    }
+
+    async getAppointmentLogs(limit = 10, page = 1) {
+        const skip = (page - 1) * limit
+
+        const [logs, total] = await Promise.all([
+            AppointmentLog.find()
+                .populate('appointmentId', 'name purpose selectedDate selectedTime')
+                .populate('performedBy', 'userName')
+                .sort({ createdAt: -1 })
+                .skip(skip)
+                .limit(limit)
+                .lean(),
+            AppointmentLog.countDocuments()
+        ])
+
+        return {
+            logs,
+            total,
+            page,
+            limit,
+            totalPages: Math.ceil(total / limit)
+        }
     }
 }
 

@@ -2,6 +2,7 @@ import mongoose from 'mongoose'
 import Order from '../models/order.model.js'
 import Product from '../models/product.model.js'
 import Appointment from '../models/appointment.model.js'
+import AppointmentLog from '../models/appointmentLog.model.js'
 import ErrorController from '../controllers/ErrorController.js'
 import { getSortOptions, getSortDetails } from '../utils/sortOptions.js'
 class ClientService {
@@ -144,6 +145,12 @@ class ClientService {
         const newAppointment = new Appointment(appointmentData);
 
         await newAppointment.save();
+
+        await AppointmentLog.create({
+            appointmentId: newAppointment._id,
+            action: 'created',
+            newStatus: 'pending'
+        })
 
         return true;
     }

@@ -99,10 +99,21 @@ class AdminController {
             const status = req.params.status
             const followUpReason = req.body?.followUpReason
             
-            const result = await AdminService.updateAppointmentStatus(id, status, followUpReason)
+            const result = await AdminService.updateAppointmentStatus(id, status, followUpReason, req.user_id)
             res.status(200).json(result)
         } catch (error) {
             console.error('Error:', error)
+            next(error)
+        }
+    }
+
+    async getAppointmentLogs(req, res, next) {
+        try {
+            const limit = parseInt(req.query.limit) || 10
+            const page = parseInt(req.query.page) || 1
+            const result = await AdminService.getAppointmentLogs(limit, page)
+            res.status(200).json(result)
+        } catch (error) {
             next(error)
         }
     }
