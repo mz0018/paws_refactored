@@ -295,7 +295,7 @@ const AddProducts = () => {
                             <div className="flex justify-end gap-3 pt-2">
                                 <Button
                                     type="button"
-                                    className="bg-gray-100 hover:bg-gray-200 text-text-body flex items-center gap-2"
+                                    className="text-xs sm:text-sm  cursor-pointer p-4 rounded-sm tracking-wide flex items-center justify-center gap-2 w-full border border-btn-black-bg font-semibold text-btn-black-bg hover:bg-btn-black-bg/10 transition"
                                 >
                                     <Save className="w-4 h-4" />
                                     Save Draft
@@ -304,7 +304,7 @@ const AddProducts = () => {
                                 <Button
                                     type="submit"
                                     disabled={isDisabled}
-                                    className="flex items-center gap-2"
+                                    className="text-xs sm:text-sm  cursor-pointer p-4 rounded-sm tracking-wide flex items-center justify-center gap-2 w-full text-white font-semibold bg-btn-black-bg hover:bg-btn-black-hover-header-bg transition"
                                 >
                                     {isLoading ? (
                                         <ClipLoader

@@ -27,12 +27,24 @@ const ViewProducts = () => {
     if (isError) return <p>{error?.message}</p>
 
     return (
-        <div className="bg-white p-4 shadow-lg">
-            <h1 className="text-2xl font-bold text-text-body mb-4">List of <span className="text-btn-black-bg">Products</span></h1>
+        <div className="">
+            <div className="mb-8">
+                <h1 className="text-2xl font-bold text-text-body">
+                    List of{' '}
+                    <span className="text-btn-black-bg">
+                        Product
+                    </span>
+                </h1>
+
+                <p className="mt-1 text-text-body tracking-wide">
+                    Manage all your products here.
+                </p>
+            </div>
             <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-5">
     
                 <div className="col-span-2 md:col-span-2 lg:col-span-1">
                     <SearchBar
+                        label="Search"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
                         placeholder="Search product by name"
@@ -41,6 +53,7 @@ const ViewProducts = () => {
                 </div>
 
                 <FilterBy 
+                    label="Filter by"
                     onChange={(e) => setFilteredBy(e.target.value)}
                     value={filteredBy} 
                     options={PRODUCT_CATEGORIES}
@@ -48,6 +61,7 @@ const ViewProducts = () => {
                 />
 
                 <SortBy 
+                    label="Sort by"
                     onChange={(e) => setSortBy(e.target.value)}
                     value={sortBy}
                     options={SORT_OPTIONS}
