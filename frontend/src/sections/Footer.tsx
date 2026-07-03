@@ -25,25 +25,13 @@ export const Footer = () => {
                 & Pet Management System
               </h2>
 
-              <p className="text-gray-300 mt-4 max-w-xl">
-                Pro Animal Welfare System helps veterinary clinics manage
-                appointments, upload pet care products, and streamline animal
-                healthcare services in one platform.
+              <p className="mt-4 max-w-xl text-gray-300">
+                Pro Animal Welfare System makes it easy to book veterinary appointments,
+                browse pet care products, and access quality healthcare services for your pets
+                in one convenient platform.
               </p>
             </div>
 
-            <div className="md:text-right">
-              <h3 className="text-2xl font-medium mb-4">
-                Get In Touch!
-              </h3>
-
-              <div className="w-full max-w-md md:ml-auto border border-gray-500 rounded-full overflow-hidden">
-                <Input
-                  placeholder="Enter your email"
-                  className="w-full bg-transparent border-none px-5 py-3 text-white placeholder:text-gray-400"
-                />
-              </div>
-            </div>
           </div>
 
           <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-10 mt-16">
@@ -55,7 +43,7 @@ export const Footer = () => {
 
               <div className="space-y-3 text-gray-200">
                 <p>proanimalw@gmail.com</p>
-                <p>1800-3232-8686</p>
+                <p>+639 38736 4065</p>
               </div>
             </div>
 

@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { ClientCartModal } from '../components/modals/ClientCartModal'
 import { Suspense, lazy, useState, useMemo, memo } from 'react'
-import { Menu, X, House, Info, MousePointer2, ShoppingCart, ChevronDown } from 'lucide-react'
+import { Menu, X, House, Info, ShoppingCart, ChevronDown, LogIn } from 'lucide-react'
 
 type HeaderProps = {
   activeSection?: string
@@ -147,10 +147,10 @@ export const Header = memo(({ activeSection }: HeaderProps = {}) => {
           <div className="hidden md:block">
             <Link
               to="/signin"
-              className="flex items-center justify-center gap-2 min-w-[140px] bg-btn-black-bg hover:bg-btn-black-hover-header-bg text-white px-4 py-2 rounded-sm text-[15px] font-medium transition-all duration-200"
+              className="flex items-center justify-center gap-2 min-w-[140px] bg-btn-black-bg hover:bg-btn-black-hover-header-bg text-white px-6 py-4 rounded-sm text-[15px] font-medium transition-all duration-200"
             >
-              <MousePointer2 className="rotate-90 w-4 h-4" />
-              Get Started
+              <LogIn className="w-4 h-4" />
+              Login
             </Link>
           </div>
 
@@ -167,12 +167,14 @@ export const Header = memo(({ activeSection }: HeaderProps = {}) => {
       {activeSection !== '/checkout' && (
         <button
           className="
-            fixed bottom-4 right-4 z-40
-            w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-24 lg:h-24
-            flex items-center justify-center
-            bg-btn-black-bg hover:bg-btn-black-hover-header-bg
-            text-white rounded-full shadow-xl cursor-pointer
-          "   
+          fixed bottom-4 right-4 z-40
+          w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-24 lg:h-24
+          flex items-center justify-center
+          bg-btn-black-bg hover:bg-btn-black-hover-header-bg
+          text-white rounded-full
+          shadow-[10px_0_25px_rgba(0,0,0,0.45)]
+          cursor-pointer
+        "
           onClick={() => setIsModalOpen(true)}
         >
           <ShoppingCart className="w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 lg:w-9 lg:h-9" />

@@ -21,7 +21,7 @@ export const About = () => {
           </h2>
 
           <p className="text-lg text-text-body leading-relaxed mb-6">
-            Find veterinary services, adoption resources, rescue support, and pet care information—all in one place.
+            Find veterinary services, and pet care information—all in one place.
           </p>
 
           <p className="text-lg text-text-body leading-relaxed">
