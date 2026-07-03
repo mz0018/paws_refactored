@@ -13,6 +13,7 @@ import {
   isSameMonth,
 } from 'date-fns'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { ErrorText } from '../ui/form/ErrorText'
 
 interface AppointmentCalendarProps {
   selectedDate: string
@@ -119,36 +120,44 @@ const AppointmentCalendar = ({
   const nextMonth = () => setCurrentMonth((prev) => addMonths(prev, 1))
 
   return (
-    <div className="w-full max-w-md mx-auto bg-white rounded-md p-5 shadow-sm">
-      <div className="flex items-center justify-between mb-4">
-        <button
-          type="button"
-          onClick={prevMonth}
-          className="p-2 rounded-sm hover:bg-gray-100 transition-colors text-text-body hover:text-btn-black-bg"
-          aria-label="Previous month"
-        >
-          <ChevronLeft size={20} />
-        </button>
+    <div className="w-full max-w-md mx-auto rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">
+      <div className="mb-6 flex items-center justify-between">
+        <div>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-gray-400">
+                Select Date
+            </p>
 
-        <h2 className="text-lg font-semibold text-text-body">
-          {format(currentMonth, 'MMMM yyyy')}
-        </h2>
+            <h2 className="text-2xl font-bold text-text-body">
+                {format(currentMonth, 'MMMM yyyy')}
+            </h2>
+        </div>
 
-        <button
-          type="button"
-          onClick={nextMonth}
-          className="p-2 rounded-sm hover:bg-gray-100 transition-colors text-text-body hover:text-btn-black-bg"
-          aria-label="Next month"
-        >
-          <ChevronRight size={20} />
-        </button>
-      </div>
+        <div className="flex gap-2">
+            <button
+                type="button"
+                onClick={prevMonth}
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-gray-200 text-text-body transition hover:border-btn-black-bg hover:text-btn-black-bg"
+                aria-label="Previous month"
+            >
+                <ChevronLeft size={18} />
+            </button>
+
+            <button
+                type="button"
+                onClick={nextMonth}
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-gray-200 text-text-body transition hover:border-btn-black-bg hover:text-btn-black-bg"
+                aria-label="Next month"
+            >
+                <ChevronRight size={18} />
+            </button>
+        </div>
+    </div>
 
       <div className="grid grid-cols-7 mb-1">
         {DAY_HEADERS.map((day) => (
           <div
             key={day}
-            className="text-center text-xs font-medium text-gray-500 py-2"
+            className="py-3 text-center text-xs font-semibold uppercase tracking-wider text-gray-400"
           >
             {day}
           </div>
@@ -174,7 +183,16 @@ const AppointmentCalendar = ({
               aria-current={isTodayDate ? 'date' : undefined}
               onClick={() => handleDayClick(day)}
               className={`
-                aspect-square flex items-center justify-center text-sm rounded-sm transition-colors
+                h-11
+                w-11
+                mx-auto
+                flex
+                items-center
+                justify-center
+                rounded-full
+                text-sm
+                transition-all
+                duration-200
                 ${!inCurrentMonth ? 'text-gray-300' : ''}
                 ${
                   isSelected
@@ -199,53 +217,63 @@ const AppointmentCalendar = ({
         })}
       </div>
 
-      {selectedDate && (
-        <div className="mt-6">
-          <p className="text-sm font-medium text-text-body mb-3">
-            Available time slots for{' '}
-            <span className="font-semibold">
-              {selectedDateObj
-                ? format(selectedDateObj, 'MMMM d, yyyy')
-                : ''}
-            </span>
+      <div className="mt-8 border-t border-gray-200 pt-6">
+        <div className="mb-4">
+          <p className="text-xs font-semibold uppercase tracking-[0.15em] text-gray-400">
+            Select Time
           </p>
 
-          {slotsForSelectedDate.some((s) => s.available) ? (
-            <div className="grid grid-cols-4 sm:grid-cols-5 gap-2">
-              {slotsForSelectedDate.map(({ time, available }) => (
-                <button
-                  key={time}
-                  type="button"
-                  disabled={!available}
-                  aria-label={`${time}${available ? '' : ' (unavailable)'}`}
-                  aria-pressed={selectedTime === time}
-                  onClick={() => onTimeSelect(time)}
-                  className={`
-                    py-2.5 px-1 text-sm rounded-sm font-medium transition-colors
-                    ${
-                      selectedTime === time
-                        ? 'bg-btn-black-bg text-white'
-                        : available
-                          ? 'bg-white border border-gray-200 text-text-body hover:border-btn-black-bg hover:text-btn-black-bg'
-                          : 'bg-gray-50 text-gray-300 cursor-not-allowed border border-gray-100'
-                    }
-                    focus:outline-none focus:ring-2 focus:ring-btn-black-bg/40
-                  `}
-                >
-                  {time}
-                </button>
-              ))}
-            </div>
-          ) : (
+          <h3 className="text-lg font-semibold text-text-body">
+            {selectedDateObj
+              ? format(selectedDateObj, 'MMMM d, yyyy')
+              : 'Choose a date first'}
+          </h3>
+        </div>
+
+        {!selectedDate ? (
+          <div className="rounded-xl border border-dashed border-gray-300 bg-gray-50 p-6 text-center">
             <p className="text-sm text-gray-500">
+              Select a date from the calendar to view available time slots.
+            </p>
+          </div>
+        ) : slotsForSelectedDate.some((s) => s.available) ? (
+          <div className="grid grid-cols-4 sm:grid-cols-5 gap-2">
+            {slotsForSelectedDate.map(({ time, available }) => (
+              <button
+                key={time}
+                type="button"
+                disabled={!available}
+                aria-label={`${time}${available ? '' : ' (unavailable)'}`}
+                aria-pressed={selectedTime === time}
+                onClick={() => onTimeSelect(time)}
+                className={`
+                  h-11 rounded-full text-sm font-medium transition-all
+                  ${
+                    selectedTime === time
+                      ? 'bg-btn-black-bg text-white shadow-md'
+                      : available
+                      ? 'border border-gray-200 bg-white hover:border-btn-black-bg hover:bg-btn-black-bg/5'
+                      : 'border border-gray-100 bg-gray-100 text-gray-300 cursor-not-allowed'
+                  }
+                `}
+              >
+                {time}
+              </button>
+            ))}
+          </div>
+        ) : (
+          <div className="rounded-xl border border-red-100 bg-red-50 p-4">
+            <p className="text-sm text-red-600">
               No available time slots for this date.
             </p>
-          )}
-        </div>
-      )}
+          </div>
+        )}
+      </div>
 
       {error && (
-        <p className="mt-3 text-sm text-red-500">{error}</p>
+        <div className="pt-2">
+          <ErrorText message={error} />
+        </div>
       )}
     </div>
   )
