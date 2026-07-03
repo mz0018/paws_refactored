@@ -1,11 +1,29 @@
 import { Link } from 'react-router-dom';
-import { Input } from '../ui/form/Input'
 import { useInView } from '../hooks/useInView'
+import { FaFacebookF, FaGithub, FaLinkedinIn } from 'react-icons/fa'
 
 const companyLinks = [
   { name: "Appointment", path: "/appointment" },
   { name: "Products", path: "/product-overview" },
 ]
+
+const follow = [
+  {
+    name: "Facebook",
+    icon: FaFacebookF,
+    url: "https://www.facebook.com/HnzMnzMrtnz/",
+  },
+  {
+    name: "GitHub",
+    icon: FaGithub,
+    url: "https://github.com/mz0018",
+  },
+  {
+    name: "LinkedIn",
+    icon: FaLinkedinIn,
+    url: "https://www.linkedin.com/in/hanz-menzi-martinez-b9079b320/",
+  },
+];
 
 export const Footer = () => {
 
@@ -63,13 +81,34 @@ export const Footer = () => {
 
             <div>
               <h4 className="text-sm text-gray-400 font-semibold uppercase mb-5">
-                Follow Us
+                Follow ME
               </h4>
 
               <div className="flex gap-4">
-                <div className="w-11 h-11 rounded-full bg-white" />
-                <div className="w-11 h-11 rounded-full bg-white" />
-                <div className="w-11 h-11 rounded-full bg-white" />
+                {follow.map((social) => {
+                  const Icon = social.icon;
+
+                  return (
+                    <a
+                      key={social.name}
+                      href={social.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      aria-label={social.name}
+                      className="
+                        flex h-11 w-11 items-center justify-center
+                        rounded-full bg-white
+                        text-footer-bg
+                        transition-all duration-300
+                        hover:-translate-y-1
+                        hover:bg-btn-black-bg
+                        hover:text-white
+                      "
+                    >
+                      <Icon size={18} />
+                    </a>
+                  );
+                })}
               </div>
             </div>
           </div>
