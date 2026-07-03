@@ -46,10 +46,11 @@ const ProductOverview = () => {
                             onChange={(e) => setSearchQuery(e.target.value)}
                             placeholder="Search product by name"
                             icon={<Search size={16} />}
+                            label="Search"
                         />
                     </div>
-                    <FilterBy onChange={(e) => setFilteredBy(e.target.value)} value={filteredBy} options={PRODUCT_CATEGORIES} placeholder="All Categories" />
-                    <SortBy onChange={(e) => setSortBy(e.target.value)} value={sortBy} options={SORT_OPTIONS} placeholder="Default" />
+                    <FilterBy label="Filter" onChange={(e) => setFilteredBy(e.target.value)} value={filteredBy} options={PRODUCT_CATEGORIES} placeholder="All Categories" />
+                    <SortBy label="Sort" onChange={(e) => setSortBy(e.target.value)} value={sortBy} options={SORT_OPTIONS} placeholder="Default" />
                 </div>
             </div>
 
@@ -65,7 +66,7 @@ const ProductOverview = () => {
             ) : products.length === 0 ? (
                 <NotFound label='Products' />
             ) : (
-                <div className="max-w-7xl mx-auto">
+                <div className="max-w-9xl mx-auto bg-white p-5">
                     <div className="p-4 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
                         {products.map((product) => (
                             <div key={product._id}>
