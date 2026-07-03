@@ -108,6 +108,9 @@ const Signin = () => {
 
             <button
               type="button"
+              onClick={() =>
+                alert('Password reset is not available. Please contact the developer via Gmail for assistance.')
+              }
               className="text-sm font-medium text-text-body/70 transition-colors hover:text-btn-black-bg"
             >
               Forgot password?
